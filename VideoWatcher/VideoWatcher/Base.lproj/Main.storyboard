@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aJa-RC-MRW">
+    <device id="retina6_12" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Video Loading View Controller-->
+        <scene sceneID="vHv-Yh-5pu">
+            <objects>
+                <viewController storyboardIdentifier="VideoLoadingViewController" id="XWq-gC-ZhR" customClass="VideoLoadingViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nWc-VY-E2e">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="jLW-l7-Sf3">
+                                <rect key="frame" x="343.66666666666669" y="138" width="165" height="95"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="1l7-cJ-JYV"/>
+                                    <constraint firstAttribute="width" constant="165" id="P5b-oK-5MZ"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue3-e1-dBI">
+                                <rect key="frame" x="343.66666666666669" y="277" width="117" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="117" id="ph8-B0-gGA"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="yAn-Yg-SHr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.51372549020000002" green="0.75294117650000003" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCt-9o-gA5">
+                                <rect key="frame" x="343.66666666666669" y="237" width="120" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Tm5-uw-LvC"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="eA3-eq-bXV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="etY-Qp-hnh"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ue3-e1-dBI" firstAttribute="top" secondItem="MCt-9o-gA5" secondAttribute="bottom" constant="20" id="4qs-PO-CWo"/>
+                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ue3-e1-dBI" secondAttribute="trailing" constant="332.32999999999998" id="D7j-xR-2OC"/>
+                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="MCt-9o-gA5" secondAttribute="trailing" constant="329.32999999999998" id="H4W-Xr-G70"/>
+                            <constraint firstItem="MCt-9o-gA5" firstAttribute="top" secondItem="jLW-l7-Sf3" secondAttribute="bottom" constant="4" id="VcF-3f-KMm"/>
+                            <constraint firstItem="Ue3-e1-dBI" firstAttribute="leading" secondItem="MCt-9o-gA5" secondAttribute="leading" id="Zid-Ub-mwX"/>
+                            <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerX" secondItem="nWc-VY-E2e" secondAttribute="centerX" id="fp7-sZ-iM0"/>
+                            <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerY" secondItem="nWc-VY-E2e" secondAttribute="centerY" constant="-11" id="jVZ-Bq-Q92"/>
+                            <constraint firstItem="MCt-9o-gA5" firstAttribute="leading" secondItem="jLW-l7-Sf3" secondAttribute="leading" id="ncG-5g-khB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PLl-U4-HrW"/>
+                    <connections>
+                        <outlet property="lblTotalLoading" destination="Ue3-e1-dBI" id="kCQ-a0-Lxn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Zo-9n-cze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="781" y="737"/>
+        </scene>
+        <!--Video Watcher View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="VideoWatcherViewController" id="BYZ-38-t0r" customClass="VideoWatcherViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VDL-nh-VIk">
+                                <rect key="frame" x="59" y="0.0" width="734" height="372"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GJ9-zU-zif">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VDL-nh-VIk" secondAttribute="trailing" id="FIr-6O-7i6"/>
+                            <constraint firstItem="VDL-nh-VIk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fkG-qi-2Ek"/>
+                            <constraint firstItem="VDL-nh-VIk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rnQ-G3-uBa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VDL-nh-VIk" secondAttribute="bottom" id="uHn-DY-PH5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="mxI-dq-5e3"/>
+                    <connections>
+                        <outlet property="collectionViewVideos" destination="VDL-nh-VIk" id="0Tl-gx-Flg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1468" y="737"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GZQ-bv-2ij">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aJa-RC-MRW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yb4-HU-Slx">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="XWq-gC-ZhR" kind="relationship" relationship="rootViewController" id="Kfz-gf-fnY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ssH-6B-Lvp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="80.985915492957744" y="736.64122137404581"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="BarnettLabsIconTransparent" width="773" height="447"/>
+    </resources>
+</document>
