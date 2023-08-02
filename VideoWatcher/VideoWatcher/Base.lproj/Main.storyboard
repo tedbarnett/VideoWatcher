@@ -43,18 +43,32 @@
                                 <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umm-fc-grG">
+                                <rect key="frame" x="343.66666666666669" y="307" width="222.00000000000006" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="0uD-Fw-pBE"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Import from Files or iCloud Drive"/>
+                                <connections>
+                                    <action selector="btnImportFromFilesAction:" destination="XWq-gC-ZhR" eventType="touchUpInside" id="kiF-lg-6fl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="etY-Qp-hnh"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ue3-e1-dBI" firstAttribute="top" secondItem="MCt-9o-gA5" secondAttribute="bottom" constant="20" id="4qs-PO-CWo"/>
+                            <constraint firstItem="umm-fc-grG" firstAttribute="leading" secondItem="Ue3-e1-dBI" secondAttribute="leading" id="87r-ds-P1K"/>
                             <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ue3-e1-dBI" secondAttribute="trailing" constant="332.32999999999998" id="D7j-xR-2OC"/>
                             <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="MCt-9o-gA5" secondAttribute="trailing" constant="329.32999999999998" id="H4W-Xr-G70"/>
                             <constraint firstItem="MCt-9o-gA5" firstAttribute="top" secondItem="jLW-l7-Sf3" secondAttribute="bottom" constant="4" id="VcF-3f-KMm"/>
                             <constraint firstItem="Ue3-e1-dBI" firstAttribute="leading" secondItem="MCt-9o-gA5" secondAttribute="leading" id="Zid-Ub-mwX"/>
+                            <constraint firstItem="umm-fc-grG" firstAttribute="top" secondItem="Ue3-e1-dBI" secondAttribute="bottom" constant="10" id="aQU-56-PBs"/>
                             <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerX" secondItem="nWc-VY-E2e" secondAttribute="centerX" id="fp7-sZ-iM0"/>
                             <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerY" secondItem="nWc-VY-E2e" secondAttribute="centerY" constant="-11" id="jVZ-Bq-Q92"/>
                             <constraint firstItem="MCt-9o-gA5" firstAttribute="leading" secondItem="jLW-l7-Sf3" secondAttribute="leading" id="ncG-5g-khB"/>
+                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="umm-fc-grG" secondAttribute="trailing" symbolic="YES" id="vWI-Ym-CXc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PLl-U4-HrW"/>

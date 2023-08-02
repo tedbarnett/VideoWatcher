@@ -20,6 +20,8 @@
 		5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D32A78CAA600046C35 /* VideoWatcherCell.swift */; };
 		5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */; };
 		5F0AD6D82A78DDDA00046C35 /* VideoLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D72A78DDDA00046C35 /* VideoLoadingViewController.swift */; };
+		5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A09482A7A2D7F0002C5F0 /* Utility.swift */; };
+		5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A094A2A7A2DE50002C5F0 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		5F0AD6D32A78CAA600046C35 /* VideoWatcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWatcherCell.swift; sourceTree = "<group>"; };
 		5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoWatcherCell.xib; sourceTree = "<group>"; };
 		5F0AD6D72A78DDDA00046C35 /* VideoLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLoadingViewController.swift; sourceTree = "<group>"; };
+		5F3A09482A7A2D7F0002C5F0 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		5F3A094A2A7A2DE50002C5F0 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			children = (
 				5F0AD6992A78C81B00046C35 /* AppDelegate.swift */,
 				5F0AD69B2A78C81B00046C35 /* SceneDelegate.swift */,
+				5F3A09472A7A2D510002C5F0 /* Utility */,
 				5F0AD6CC2A78C92A00046C35 /* ViewControllers */,
 				5F0AD69F2A78C81B00046C35 /* Main.storyboard */,
 				5F0AD6A52A78C81B00046C35 /* Assets.xcassets */,
@@ -161,6 +166,15 @@
 				5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		5F3A09472A7A2D510002C5F0 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				5F3A09482A7A2D7F0002C5F0 /* Utility.swift */,
+				5F3A094A2A7A2DE50002C5F0 /* Constant.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,8 +309,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
 				5F0AD6D82A78DDDA00046C35 /* VideoLoadingViewController.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
+				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
 				5F0AD69E2A78C81B00046C35 /* VideoWatcherViewController.swift in Sources */,
 				5F0AD69A2A78C81B00046C35 /* AppDelegate.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,

@@ -11,7 +11,7 @@ import Photos
 class VideoWatcherViewController: UIViewController {
 
     @IBOutlet weak var collectionViewVideos: UICollectionView!
-    var videosArray: [PHAsset] = []
+    var videosArray: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,18 @@ class VideoWatcherViewController: UIViewController {
         self.collectionViewVideos.delegate = self
         self.collectionViewVideos.dataSource = self
         self.collectionViewVideos.register(UINib(nibName: "VideoWatcherCell", bundle: nil), forCellWithReuseIdentifier: "VideoWatcherCell")
+    }
+    
+    func startNextRandomVideoFrom(index: Int) {
+        print("index: ", index)
+        let randomIndex = Int.random(in: 0..<videosArray.count)
+        let randomAsset = videosArray[randomIndex]
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let cell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+                cell.playVideo(videoAsset: randomAsset)
+            }
+        }
     }
 }
 
@@ -60,11 +72,11 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
                 
             }
             
-            let skipForward = UIAction(title: "Skip forward", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                
+            let skipForward = UIAction(title: "Next video", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                self.startNextRandomVideoFrom(index: index)
             }
             
-            let skipBackward = UIAction(title: "Skip backward", image: UIImage(systemName: "backward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+            let skipBackward = UIAction(title: "Previous video", image: UIImage(systemName: "backward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
                 
             }
             
@@ -87,6 +99,7 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
         // Calculate the size of each cell based on the collectionView width and number of cells per row (3)
         let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
         let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
+        //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
@@ -108,14 +121,6 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 
 extension VideoWatcherViewController: VideoWatcherCellDelegate {
     func startNextRandomVideo(index: Int) {
-        //print("index: ", index)
-        let randomIndex = Int.random(in: 0..<videosArray.count)
-        let randomAsset = videosArray[randomIndex]
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(item: index, section: 0)
-            if let cell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
-                cell.playVideo(videoAsset: randomAsset)
-            }
-        }
+        self.startNextRandomVideoFrom(index: index)
     }
 }
