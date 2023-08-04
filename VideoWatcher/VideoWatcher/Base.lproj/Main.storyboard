@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aJa-RC-MRW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nnc-ze-vOg">
     <device id="retina6_12" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -78,7 +79,219 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Zo-9n-cze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="781" y="737"/>
+            <point key="canvasLocation" x="8967" y="1898"/>
+        </scene>
+        <!--Import From Photo Library View Controller-->
+        <scene sceneID="gZQ-b6-1bO">
+            <objects>
+                <viewController storyboardIdentifier="ImportFromPhotoLibraryViewController" id="nkh-zd-0Lc" customClass="ImportFromPhotoLibraryViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FvY-13-2ZD">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7gO-tV-JHE">
+                                <rect key="frame" x="276" y="58.666666666666657" width="300" height="276"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="Nun-8y-FCJ">
+                                        <rect key="frame" x="67.666666666666686" y="0.0" width="165" height="95"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="165" id="lbk-cR-Vxc"/>
+                                            <constraint firstAttribute="height" constant="95" id="q28-5i-Qn7"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-ae-dgq">
+                                        <rect key="frame" x="67.666666666666686" y="99" width="120" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="7Xx-VW-Ure"/>
+                                            <constraint firstAttribute="width" constant="120" id="8Io-x6-Rbs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yo7-WW-6j7">
+                                        <rect key="frame" x="67.666666666666686" y="134" width="165" height="4"/>
+                                        <color key="trackTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </progressView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ct-sS-HzF">
+                                        <rect key="frame" x="5" y="186" width="290" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="CjJ-GK-uPA"/>
+                                            <constraint firstAttribute="width" constant="290" id="imj-yg-xyW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Import video from Photo Library">
+                                            <color key="titleColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnImportAction:" destination="nkh-zd-0Lc" eventType="touchUpInside" id="hYd-TQ-icN"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7G9-fw-I8x">
+                                        <rect key="frame" x="100" y="236" width="100" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="8gf-wV-BVb"/>
+                                            <constraint firstAttribute="width" constant="100" id="adb-jd-CaN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Next">
+                                            <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnNextAction:" destination="nkh-zd-0Lc" eventType="touchUpInside" id="61T-fW-9E0"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41J-Yu-hVO">
+                                        <rect key="frame" x="67.666666666666686" y="147" width="88.666666666666686" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="fpL-M5-Mev"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-jy-5dz">
+                                        <rect key="frame" x="164.66666666666669" y="146" width="20" height="20"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="1ct-sS-HzF" firstAttribute="top" secondItem="0fe-jy-5dz" secondAttribute="bottom" constant="20" id="6Dy-r3-a7R"/>
+                                    <constraint firstAttribute="height" constant="276" id="6YF-81-2Ub"/>
+                                    <constraint firstItem="vhD-ae-dgq" firstAttribute="leading" secondItem="Nun-8y-FCJ" secondAttribute="leading" id="7tl-KQ-Krs"/>
+                                    <constraint firstAttribute="width" constant="300" id="8uD-xB-cw6"/>
+                                    <constraint firstItem="0fe-jy-5dz" firstAttribute="centerY" secondItem="41J-Yu-hVO" secondAttribute="centerY" id="9FY-09-ahU"/>
+                                    <constraint firstItem="Nun-8y-FCJ" firstAttribute="top" secondItem="7gO-tV-JHE" secondAttribute="top" id="CQ1-yk-rKm"/>
+                                    <constraint firstItem="Yo7-WW-6j7" firstAttribute="leading" secondItem="vhD-ae-dgq" secondAttribute="leading" id="GUv-ff-zDF"/>
+                                    <constraint firstItem="Yo7-WW-6j7" firstAttribute="width" secondItem="Nun-8y-FCJ" secondAttribute="width" id="Ipq-ax-Ivu"/>
+                                    <constraint firstItem="1ct-sS-HzF" firstAttribute="centerX" secondItem="7gO-tV-JHE" secondAttribute="centerX" id="KN2-zu-Ncg"/>
+                                    <constraint firstItem="Yo7-WW-6j7" firstAttribute="top" secondItem="vhD-ae-dgq" secondAttribute="bottom" constant="15" id="NGm-82-TSL"/>
+                                    <constraint firstItem="Nun-8y-FCJ" firstAttribute="centerX" secondItem="7gO-tV-JHE" secondAttribute="centerX" id="TeL-VA-hdn"/>
+                                    <constraint firstItem="0fe-jy-5dz" firstAttribute="leading" secondItem="41J-Yu-hVO" secondAttribute="trailing" constant="8.3333333333333144" id="Uhe-Ne-caG"/>
+                                    <constraint firstItem="41J-Yu-hVO" firstAttribute="leading" secondItem="Yo7-WW-6j7" secondAttribute="leading" id="epO-Ks-4KO"/>
+                                    <constraint firstItem="7G9-fw-I8x" firstAttribute="top" secondItem="1ct-sS-HzF" secondAttribute="bottom" constant="10" id="iWW-5n-xxf"/>
+                                    <constraint firstItem="41J-Yu-hVO" firstAttribute="top" secondItem="Yo7-WW-6j7" secondAttribute="bottom" constant="9" id="nBY-dn-6Vk"/>
+                                    <constraint firstItem="7G9-fw-I8x" firstAttribute="centerX" secondItem="7gO-tV-JHE" secondAttribute="centerX" id="vBC-ci-N9z"/>
+                                    <constraint firstItem="vhD-ae-dgq" firstAttribute="top" secondItem="Nun-8y-FCJ" secondAttribute="bottom" constant="4" id="vZG-mj-OSb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="G8y-6K-vot"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7gO-tV-JHE" firstAttribute="centerX" secondItem="FvY-13-2ZD" secondAttribute="centerX" id="JuN-fK-mB3"/>
+                            <constraint firstItem="7gO-tV-JHE" firstAttribute="centerY" secondItem="FvY-13-2ZD" secondAttribute="centerY" id="e0l-Mv-ZOK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kix-sa-b5F"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="0fe-jy-5dz" id="K3r-ua-yy9"/>
+                        <outlet property="btnImport" destination="1ct-sS-HzF" id="8Du-6L-0vz"/>
+                        <outlet property="btnNext" destination="7G9-fw-I8x" id="gFx-Lf-BRV"/>
+                        <outlet property="lblLoading" destination="41J-Yu-hVO" id="W2C-hg-rKo"/>
+                        <outlet property="progress" destination="Yo7-WW-6j7" id="gZa-ML-paY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AuN-or-tCd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="661" y="3134"/>
+        </scene>
+        <!--Import From Files View Controller-->
+        <scene sceneID="ZSL-4c-WW8">
+            <objects>
+                <viewController storyboardIdentifier="ImportFromFilesViewController" id="8kr-C2-H3p" customClass="ImportFromFilesViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DZE-ee-Ems">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRH-He-1zW">
+                                <rect key="frame" x="343.66666666666669" y="107" width="165" height="119"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="WNT-dm-ezG">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="95"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="95" id="8MJ-cU-pLE"/>
+                                            <constraint firstAttribute="width" constant="165" id="hpR-Ky-1Wn"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rr9-8Q-D9P">
+                                        <rect key="frame" x="0.0" y="99" width="120" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="PCw-ih-xl5"/>
+                                            <constraint firstAttribute="height" constant="20" id="QlO-ap-H9K"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="WNT-dm-ezG" firstAttribute="leading" secondItem="rRH-He-1zW" secondAttribute="leading" id="1Iy-o9-G6d"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rr9-8Q-D9P" secondAttribute="trailing" constant="20" symbolic="YES" id="7JP-zZ-BzA"/>
+                                    <constraint firstAttribute="width" constant="165" id="TKF-Pt-VMh"/>
+                                    <constraint firstItem="WNT-dm-ezG" firstAttribute="top" secondItem="rRH-He-1zW" secondAttribute="top" id="WZR-92-hGj"/>
+                                    <constraint firstAttribute="height" constant="119" id="XFB-IE-CyC"/>
+                                    <constraint firstItem="Rr9-8Q-D9P" firstAttribute="top" secondItem="WNT-dm-ezG" secondAttribute="bottom" constant="4" id="Zq7-na-S0s"/>
+                                    <constraint firstItem="Rr9-8Q-D9P" firstAttribute="leading" secondItem="rRH-He-1zW" secondAttribute="leading" id="scT-xc-SYS"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIM-gt-SQk">
+                                <rect key="frame" x="311" y="256" width="230" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="Fmk-sb-pRY"/>
+                                    <constraint firstAttribute="height" constant="45" id="hxh-l6-57b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Import video from Files">
+                                    <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnImportAction:" destination="8kr-C2-H3p" eventType="touchUpInside" id="5xJ-6F-sq8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Arb-K4-D99">
+                                <rect key="frame" x="376" y="321" width="100" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="A1U-4c-BHT"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="mcK-nB-FqA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnNextAction:" destination="8kr-C2-H3p" eventType="touchUpInside" id="DHY-QK-KeZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qf3-Ay-ozF"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="eIM-gt-SQk" firstAttribute="top" secondItem="rRH-He-1zW" secondAttribute="bottom" constant="30" id="QYF-NU-AmK"/>
+                            <constraint firstItem="Arb-K4-D99" firstAttribute="top" secondItem="eIM-gt-SQk" secondAttribute="bottom" constant="20" id="Qti-un-wja"/>
+                            <constraint firstItem="Arb-K4-D99" firstAttribute="centerX" secondItem="DZE-ee-Ems" secondAttribute="centerX" id="W4d-3I-d6P"/>
+                            <constraint firstItem="rRH-He-1zW" firstAttribute="centerX" secondItem="DZE-ee-Ems" secondAttribute="centerX" id="cdH-tq-tFk"/>
+                            <constraint firstItem="eIM-gt-SQk" firstAttribute="centerX" secondItem="DZE-ee-Ems" secondAttribute="centerX" id="nMl-vV-Az2"/>
+                            <constraint firstItem="rRH-He-1zW" firstAttribute="centerY" secondItem="DZE-ee-Ems" secondAttribute="centerY" constant="-30" id="v4r-Qf-GvZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="T5G-4J-Big"/>
+                    <connections>
+                        <outlet property="btnImport" destination="eIM-gt-SQk" id="KAB-dL-LFL"/>
+                        <outlet property="btnNext" destination="Arb-K4-D99" id="ocf-cL-iv1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E4b-Z4-Hjl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="661" y="4053"/>
         </scene>
         <!--Video Watcher View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -90,7 +303,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VDL-nh-VIk">
                                 <rect key="frame" x="59" y="0.0" width="734" height="372"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GJ9-zU-zif">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -116,7 +329,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1468" y="737"/>
+            <point key="canvasLocation" x="1476" y="4053"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GZQ-bv-2ij">
@@ -134,10 +347,74 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ssH-6B-Lvp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="80.985915492957744" y="736.64122137404581"/>
+            <point key="canvasLocation" x="8179" y="1898"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="Ejy-jx-dFs">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" id="sl9-3m-i4V" customClass="SplashViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R8o-um-bgb">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1a-4I-Jcp">
+                                <rect key="frame" x="343.66666666666669" y="137" width="165" height="119"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="yKo-w5-Kvy">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBd-0l-MV4">
+                                        <rect key="frame" x="0.0" y="99.000000000000227" width="120" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="119" id="Rox-DF-b1F"/>
+                                    <constraint firstAttribute="width" constant="165" id="rTs-i4-Iq5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="I56-SQ-ETO"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="S1a-4I-Jcp" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="E6m-eA-fcF"/>
+                            <constraint firstItem="S1a-4I-Jcp" firstAttribute="centerY" secondItem="R8o-um-bgb" secondAttribute="centerY" id="Qss-dY-TTM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="qF6-Ng-G2W"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Prp-rM-3XY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="661.26760563380287" y="2261.8320610687024"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="X08-SR-rmE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nnc-ze-vOg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pBK-2P-gNn">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sl9-3m-i4V" kind="relationship" relationship="rootViewController" id="Hqv-yc-zz4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yvQ-0j-MgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-89.436619718309871" y="2261.8320610687024"/>
         </scene>
     </scenes>
     <resources>
         <image name="BarnettLabsIconTransparent" width="773" height="447"/>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

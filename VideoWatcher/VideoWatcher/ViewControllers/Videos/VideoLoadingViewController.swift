@@ -110,7 +110,7 @@ class VideoLoadingViewController: UIViewController {
     func gotoVideoWatcherController() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "VideoWatcherViewController") as! VideoWatcherViewController
-            vc.videosArray = self.videosArray // Pass the videosArray to the next view controller
+            //vc.videosArray = self.videosArray // Pass the videosArray to the next view controller
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -130,7 +130,7 @@ extension VideoLoadingViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         
         if urls.count > 0 {
-            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideoFromFilesAndiCloud) {
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
                 
                 for url in urls {
                     do {

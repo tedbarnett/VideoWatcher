@@ -8,5 +8,5 @@
 import Foundation
 
 struct DirectoryName {
-    static let ImportedVideoFromFilesAndiCloud = "ImportedVideoFromFilesAndiCloud"
+    static let ImportedVideos = "ImportedVideos"
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Utility: NSObject {
     
@@ -20,9 +21,15 @@ class Utility: NSObject {
                     NSLog("Couldn't create document directory")
                 }
             }
-            NSLog("Document directory is \(filePath)")
+            //NSLog("Document directory is \(filePath)")
             return filePath
         }
         return nil
+    }
+    
+    class func getDeviceOrientation() -> UIInterfaceOrientation {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let orientation = windowScene?.interfaceOrientation
+        return orientation!
     }
 }
