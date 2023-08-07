@@ -81,9 +81,10 @@ class CoreDataManager {
             print("Error deleting video: \(error)")
         }
     }
-        
+    
     func getAllVideos() -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        //fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
         
         do {
             let videos = try context.fetch(fetchRequest)
@@ -95,23 +96,24 @@ class CoreDataManager {
     }
     
     func getRandomVideos(count: Int) -> [String] {
-            let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
             
-            do {
-                let videos = try context.fetch(fetchRequest)
-                
-                guard !videos.isEmpty else {
-                    return []
-                }
-                
-                // Shuffle the videos and take the first 'count' videos
-                let shuffledVideos = videos.shuffled()
-                let randomVideos = shuffledVideos.prefix(count)
-                
-                return randomVideos.compactMap { $0.videoURL }
-            } catch {
-                print("Error fetching random videos: \(error)")
+            guard !videos.isEmpty else {
                 return []
             }
+            
+            // Shuffle the videos and take the first 'count' videos
+            let shuffledVideos = videos.shuffled()
+            let randomVideos = shuffledVideos.prefix(count)
+            
+            return randomVideos.compactMap { $0.videoURL }
+        } catch {
+            print("Error fetching random videos: \(error)")
+            return []
         }
+    }
 }

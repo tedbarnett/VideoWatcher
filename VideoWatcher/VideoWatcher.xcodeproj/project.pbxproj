@@ -19,7 +19,6 @@
 		5F0AD6C02A78C81C00046C35 /* VideoWatcherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AD6BF2A78C81C00046C35 /* VideoWatcherUITestsLaunchTests.swift */; };
 		5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D32A78CAA600046C35 /* VideoWatcherCell.swift */; };
 		5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */; };
-		5F0AD6D82A78DDDA00046C35 /* VideoLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D72A78DDDA00046C35 /* VideoLoadingViewController.swift */; };
 		5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A09482A7A2D7F0002C5F0 /* Utility.swift */; };
 		5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A094A2A7A2DE50002C5F0 /* Constant.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
@@ -28,6 +27,7 @@
 		5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */; };
 		5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */; };
 		5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */; };
+		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,6 @@
 		5F0AD6BF2A78C81C00046C35 /* VideoWatcherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWatcherUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5F0AD6D32A78CAA600046C35 /* VideoWatcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWatcherCell.swift; sourceTree = "<group>"; };
 		5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoWatcherCell.xib; sourceTree = "<group>"; };
-		5F0AD6D72A78DDDA00046C35 /* VideoLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLoadingViewController.swift; sourceTree = "<group>"; };
 		5F3A09482A7A2D7F0002C5F0 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		5F3A094A2A7A2DE50002C5F0 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromPhotoLibraryViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				5F0AD6CE2A78C94D00046C35 /* Cell */,
-				5F0AD6D72A78DDDA00046C35 /* VideoLoadingViewController.swift */,
 				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
 				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
 				5F0AD69D2A78C81B00046C35 /* VideoWatcherViewController.swift */,
@@ -190,6 +189,7 @@
 				5F3A09482A7A2D7F0002C5F0 /* Utility.swift */,
 				5F3A094A2A7A2DE50002C5F0 /* Constant.swift */,
 				5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */,
+				5F516D282A80B6740033E404 /* Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -337,7 +337,6 @@
 			files = (
 				5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */,
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
-				5F0AD6D82A78DDDA00046C35 /* VideoLoadingViewController.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
 				5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */,
@@ -345,6 +344,7 @@
 				5F0AD69E2A78C81B00046C35 /* VideoWatcherViewController.swift in Sources */,
 				5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */,
 				5F0AD69A2A78C81B00046C35 /* AppDelegate.swift in Sources */,
+				5F516D292A80B6740033E404 /* Extensions.swift in Sources */,
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
@@ -535,8 +535,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -571,8 +570,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

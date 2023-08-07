@@ -12,9 +12,8 @@ class VideoWatcherViewController: UIViewController {
 
     @IBOutlet weak var collectionViewVideos: UICollectionView!
     var videosArray: [String] = []
-    var currentlyPlayingVideo: [Any] = [] // Array of currently playing video
-    var currentlyPlayingVideoStates: [IndexPath: (Any, Double)] = [:]
-    
+    var isDeviceRotating = false
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,8 +39,7 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func startNextRandomVideoFrom(index: Int) {
-        print("index: ", index)
-        //let randomIndex = Int.random(in: 0..<videosArray.count)
+        print("Changed RandomVideo at index: ", index)
         let videos = CoreDataManager.shared.getRandomVideos(count: 1)
         if videos.count > 0 {
             let randomAsset = videos.first!
@@ -49,37 +47,55 @@ class VideoWatcherViewController: UIViewController {
             DispatchQueue.main.async {
                 let indexPath = IndexPath(item: index, section: 0)
                 if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
-                    videoCell.playVideo(videoAsset: randomAsset, firstLoad: false)
+                    videoCell.playVideo(videoAsset: randomAsset)
                 }
             }
         }
     }
     
-    /*override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        // Save the current playback time before reloading the collection view
-        
-        //DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-        self.currentlyPlayingVideoStates.removeAll()
-            for (index, cell) in self.collectionViewVideos.visibleCells.enumerated() {
-                if let videoCell = cell as? VideoWatcherCell {
-                    if let player = videoCell.player, let currentItem = player.currentItem {
-                        let playbackTime = CMTimeGetSeconds(currentItem.currentTime())
-                        
-                        if let (videoURL, _) = self.currentlyPlayingVideoStates[IndexPath(item: index, section: 0)] {
-                            self.currentlyPlayingVideoStates[IndexPath(item: index, section: 0)] = (videoURL, playbackTime)
+        if UIApplication.shared.topViewController() is VideoWatcherViewController {
+            self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.playAllVideoPlayers(needToReloadCell: true)
+            }
+        }
+    }
+    
+    func pauseAllVideoPlayers(selectedIndex: Int, isPauseAll: Bool? = false) {
+        //print("index: ", selectedIndex)
+        for (index, cell) in self.collectionViewVideos.visibleCells.enumerated() {
+            if let videoCell = cell as? VideoWatcherCell {
+                if let player = videoCell.player {
+                    if isPauseAll == true {
+                        player.pause()
+                    }
+                    else {
+                        if index != selectedIndex {
+                            player.pause()
                         }
                     }
                 }
             }
-        //}
-        
-        // Reload the collection view to preserve video states
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.collectionViewVideos.reloadData()
         }
-    }*/
+    }
+    
+    func playAllVideoPlayers(needToReloadCell: Bool = false) {
+        for (_, cell) in self.collectionViewVideos.visibleCells.enumerated() {
+            if let videoCell = cell as? VideoWatcherCell {
+                if let player = videoCell.player {
+                    if needToReloadCell {
+                        videoCell.setupPlayer()
+                    }
+                    if player.isPlaying == false {
+                        player.play()
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -91,27 +107,17 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let videoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoWatcherCell", for: indexPath) as! VideoWatcherCell
+  
         videoCell.delegate = self
-        
-//        videoCell.setupPlayer()
-//        if let (videoAsset, playbackTime) = self.currentlyPlayingVideoStates[indexPath] {
-//            // Resume playing the stored video from the saved playback time
-//            videoCell.index = indexPath.row
-//            videoCell.playVideo(videoAsset: videoAsset, startDuration: playbackTime, firstLoad: false)
-//        } else {
-//            let randomIndex = Int.random(in: 0..<videosArray.count)
-//            let randomAsset = videosArray[randomIndex]
-//            videoCell.index = indexPath.row
-//            self.currentlyPlayingVideoStates[indexPath] = (randomAsset, 0)
-//            videoCell.playVideo(videoAsset: randomAsset, firstLoad: true)
-//        }
-        //let randomIndex = Int.random(in: 0..<videosArray.count)
-        //let randomAsset = videosArray[randomIndex]
-        
         videoCell.setupPlayer()
         videoCell.index = indexPath.row
-        videoCell.playVideo(videoAsset: self.videosArray[indexPath.row], firstLoad: true)
+        videoCell.playVideo(videoAsset: self.videosArray[indexPath.row])
+        
         return videoCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        self.playAllVideoPlayers(needToReloadCell: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -138,12 +144,52 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             }
             
             let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), identifier: nil, discoverabilityTitle: nil,attributes: .destructive, state: .off) { (_) in
+                self.showDeleteConfirmation(index: index)
             }
+            
+            self.pauseAllVideoPlayers(selectedIndex: index)
             
             return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [audio, skipForward, skipBackward, fullScreen, delete])
             
         }
         return context
+    }
+    
+    //Contect menu actions
+    @objc func showDeleteConfirmation(index: Int) {
+        let alertController = UIAlertController(
+            title: "Delete video",
+            message: "This video will be removed from this application. Are you sure you want to delete?",
+            preferredStyle: .actionSheet
+        )
+        
+        let deleteAction = UIAlertAction(title: "Delete video", style: .destructive) { _ in
+            // Performing the delete action
+            print("deleted video: \(self.videosArray[index])")
+            CoreDataManager.shared.deleteVideo(videoURL: self.videosArray[index])
+            self.startNextRandomVideoFrom(index: index)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let allVideos = CoreDataManager.shared.getAllVideos()
+                for video in allVideos {
+                    print("Video URL from COREDATA: \(video.videoURL ?? "N/A")")
+                }
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            // Set the source view for iPad and other devices with popover support
+            popoverController.sourceView = view
+            popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

@@ -9,78 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Video Loading View Controller-->
-        <scene sceneID="vHv-Yh-5pu">
-            <objects>
-                <viewController storyboardIdentifier="VideoLoadingViewController" id="XWq-gC-ZhR" customClass="VideoLoadingViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nWc-VY-E2e">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="jLW-l7-Sf3">
-                                <rect key="frame" x="343.66666666666669" y="138" width="165" height="95"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="95" id="1l7-cJ-JYV"/>
-                                    <constraint firstAttribute="width" constant="165" id="P5b-oK-5MZ"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue3-e1-dBI">
-                                <rect key="frame" x="343.66666666666669" y="277" width="117" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="117" id="ph8-B0-gGA"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="yAn-Yg-SHr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.51372549020000002" green="0.75294117650000003" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCt-9o-gA5">
-                                <rect key="frame" x="343.66666666666669" y="237" width="120" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="Tm5-uw-LvC"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="eA3-eq-bXV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umm-fc-grG">
-                                <rect key="frame" x="343.66666666666669" y="307" width="222.00000000000006" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="0uD-Fw-pBE"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Import from Files or iCloud Drive"/>
-                                <connections>
-                                    <action selector="btnImportFromFilesAction:" destination="XWq-gC-ZhR" eventType="touchUpInside" id="kiF-lg-6fl"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="etY-Qp-hnh"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Ue3-e1-dBI" firstAttribute="top" secondItem="MCt-9o-gA5" secondAttribute="bottom" constant="20" id="4qs-PO-CWo"/>
-                            <constraint firstItem="umm-fc-grG" firstAttribute="leading" secondItem="Ue3-e1-dBI" secondAttribute="leading" id="87r-ds-P1K"/>
-                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ue3-e1-dBI" secondAttribute="trailing" constant="332.32999999999998" id="D7j-xR-2OC"/>
-                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="MCt-9o-gA5" secondAttribute="trailing" constant="329.32999999999998" id="H4W-Xr-G70"/>
-                            <constraint firstItem="MCt-9o-gA5" firstAttribute="top" secondItem="jLW-l7-Sf3" secondAttribute="bottom" constant="4" id="VcF-3f-KMm"/>
-                            <constraint firstItem="Ue3-e1-dBI" firstAttribute="leading" secondItem="MCt-9o-gA5" secondAttribute="leading" id="Zid-Ub-mwX"/>
-                            <constraint firstItem="umm-fc-grG" firstAttribute="top" secondItem="Ue3-e1-dBI" secondAttribute="bottom" constant="10" id="aQU-56-PBs"/>
-                            <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerX" secondItem="nWc-VY-E2e" secondAttribute="centerX" id="fp7-sZ-iM0"/>
-                            <constraint firstItem="jLW-l7-Sf3" firstAttribute="centerY" secondItem="nWc-VY-E2e" secondAttribute="centerY" constant="-11" id="jVZ-Bq-Q92"/>
-                            <constraint firstItem="MCt-9o-gA5" firstAttribute="leading" secondItem="jLW-l7-Sf3" secondAttribute="leading" id="ncG-5g-khB"/>
-                            <constraint firstItem="etY-Qp-hnh" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="umm-fc-grG" secondAttribute="trailing" symbolic="YES" id="vWI-Ym-CXc"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="PLl-U4-HrW"/>
-                    <connections>
-                        <outlet property="lblTotalLoading" destination="Ue3-e1-dBI" id="kCQ-a0-Lxn"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Zo-9n-cze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="8967" y="1898"/>
-        </scene>
         <!--Import From Photo Library View Controller-->
         <scene sceneID="gZQ-b6-1bO">
             <objects>
@@ -330,24 +258,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1476" y="4053"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="GZQ-bv-2ij">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aJa-RC-MRW" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yb4-HU-Slx">
-                        <rect key="frame" x="0.0" y="0.0" width="852" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="XWq-gC-ZhR" kind="relationship" relationship="rootViewController" id="Kfz-gf-fnY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ssH-6B-Lvp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="8179" y="1898"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="Ejy-jx-dFs">
