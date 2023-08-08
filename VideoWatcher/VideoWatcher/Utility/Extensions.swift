@@ -46,3 +46,19 @@ extension UIApplication {
         return topViewController
     }
 }
+
+extension AVAsset {
+    func generateThumbnail(at time: CMTime = CMTime.zero) -> UIImage? {
+        let imageGenerator = AVAssetImageGenerator(asset: self)
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+            let thumbnailImage = UIImage(cgImage: thumbnailCGImage)
+            
+            return thumbnailImage
+        } catch {
+            print("Error generating thumbnail: \(error)")
+            return nil
+        }
+    }
+}

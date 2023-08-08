@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import SwiftyDropbox
 
 class ImportFromPhotoLibraryViewController: UIViewController {
 
@@ -31,7 +32,7 @@ class ImportFromPhotoLibraryViewController: UIViewController {
         self.progress.isHidden = true
         self.lblLoading.isHidden = true
         self.activityIndicator.isHidden = true
-        self.btnNext.isEnabled = false
+        //self.btnNext.isEnabled = false
         
         self.borderAndCornerRadius(view: self.btnImport)
         self.borderAndCornerRadius(view: self.btnNext)
@@ -67,15 +68,25 @@ class ImportFromPhotoLibraryViewController: UIViewController {
         present(picker, animated: true)
     }
     
-    @IBAction func btnNextAction(_ sender: Any) {
-        self.gotoImportFromFileVC()
-    }
-    
     func gotoImportFromFileVC() {
         DispatchQueue.main.async {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "ImportFromFilesViewController") as! ImportFromFilesViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @IBAction func btnNextAction(_ sender: Any) {
+        //self.gotoImportFromFileVC()
+        // OAuth 2 code flow with PKCE that grants a short-lived token with scopes, and performs refreshes of the token automatically.
+        let scopeRequest = ScopeRequest(scopeType: .user, scopes: ["account_info.read"], includeGrantedScopes: false)
+        DropboxClientsManager.authorizeFromControllerV2(
+            UIApplication.shared,
+            controller: self,
+            loadingStatusDelegate: nil,
+            openURL: { (url: URL) -> Void in UIApplication.shared.open(url, options: [:], completionHandler: nil) },
+            scopeRequest: scopeRequest
+        )
+        
     }
 }
 

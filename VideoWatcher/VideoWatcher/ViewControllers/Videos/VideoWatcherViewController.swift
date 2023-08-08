@@ -11,9 +11,10 @@ import Photos
 class VideoWatcherViewController: UIViewController {
 
     @IBOutlet weak var collectionViewVideos: UICollectionView!
-    var videosArray: [String] = []
+    var arrVideoData: [VideoTable] = []
     var isDeviceRotating = false
-        
+    var ellipsisButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,28 +23,70 @@ class VideoWatcherViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
+        
+        //self.title = "VideoWatcher"
     }
-
+    
     func setupUI() {
+        self.setupNavbar()
         self.collectionViewVideos.delegate = self
         self.collectionViewVideos.dataSource = self
         self.collectionViewVideos.register(UINib(nibName: "VideoWatcherCell", bundle: nil), forCellWithReuseIdentifier: "VideoWatcherCell")
         self.getRandomVideo()
     }
     
+    func setupNavbar() {
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.isHidden = false
+        navigationItem.hidesBackButton = true
+        self.setupRightMenuButton()
+    }
+    
+    func setupRightMenuButton() {
+        ellipsisButton = UIButton(type: .system)
+        ellipsisButton.tintColor = .white
+        ellipsisButton.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
+        self.setupMenuOptions()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ellipsisButton)
+    }
+    
+    func setupMenuOptions() {
+        let moreVideos = UIAction(title: "Import more videos",
+          image: UIImage(systemName: "square.and.arrow.down")) { _ in
+          
+        }
+
+        let favImage = UIImage(systemName: "heart.fill")?.withTintColor(.white,
+                  renderingMode: .alwaysOriginal)
+        let favorite = UIAction(title: "Favorite",
+          image: favImage) { _ in
+            self.moveToFavouriteList()
+        }
+        
+        let settings = UIAction(title: "Settings",
+          image: UIImage(systemName: "gearshape.fill")) { _ in
+          
+        }
+        
+        ellipsisButton.overrideUserInterfaceStyle = .dark
+        ellipsisButton.showsMenuAsPrimaryAction = true
+        ellipsisButton.menu = UIMenu(title: "", children: [moreVideos, favorite, settings])
+    }
+        
     func getRandomVideo() {
-        self.videosArray = CoreDataManager.shared.getRandomVideos(count: 6)
-        print(self.videosArray)
+        self.arrVideoData = CoreDataManager.shared.getRandomVideosData(count: 6)
+        for vdata in self.arrVideoData {
+            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
+        }
         self.collectionViewVideos.reloadData()
     }
     
     func startNextRandomVideoFrom(index: Int) {
         print("Changed RandomVideo at index: ", index)
-        let videos = CoreDataManager.shared.getRandomVideos(count: 1)
-        if videos.count > 0 {
-            let randomAsset = videos.first!
-            self.videosArray[index] = randomAsset
+        let videoData = CoreDataManager.shared.getRandomVideosData(count: 1)
+        if videoData.count > 0 {
+            let randomAsset = videoData.first!
+            self.arrVideoData[index] = randomAsset
             DispatchQueue.main.async {
                 let indexPath = IndexPath(item: index, section: 0)
                 if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
@@ -96,12 +139,28 @@ class VideoWatcherViewController: UIViewController {
             }
         }
     }
+    
+    func moveToFavouriteList() {
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FavouriteViewController") as! FavouriteViewController
+//        vc.modalPresentationStyle = .fullScreen
+//        vc.modalTransitionStyle = .crossDissolve
+//        self.present(vc, animated: true)
+        
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
 }
 
 extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.videosArray.count
+        return self.arrVideoData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -111,9 +170,27 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         videoCell.delegate = self
         videoCell.setupPlayer()
         videoCell.index = indexPath.row
-        videoCell.playVideo(videoAsset: self.videosArray[indexPath.row])
+        videoCell.playVideo(videoAsset: self.arrVideoData[indexPath.row])
+        videoCell.btnFavorite.tag = indexPath.row
+        videoCell.btnFavorite.addTarget(self, action: #selector(makeFavourite), for: .touchUpInside)
         
         return videoCell
+    }
+    
+    @objc func makeFavourite(sender: UIButton) {
+        let index = sender.tag
+        print("Favourite video: \(self.arrVideoData[index].videoURL ?? "")")
+        CoreDataManager.shared.updateIsFavorite(videoURL: self.arrVideoData[index].videoURL ?? "", isFavorite: true)
+        
+        sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        sender.tintColor = .systemPink
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let videoData = CoreDataManager.shared.getAllVideos()
+            for vdata in videoData {
+                print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
@@ -165,14 +242,14 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         
         let deleteAction = UIAlertAction(title: "Delete video", style: .destructive) { _ in
             // Performing the delete action
-            print("deleted video: \(self.videosArray[index])")
-            CoreDataManager.shared.deleteVideo(videoURL: self.videosArray[index])
+            print("deleted video: \(self.arrVideoData[index].videoURL ?? "")")
+            CoreDataManager.shared.updateIsDeleted(videoURL: self.arrVideoData[index].videoURL ?? "")
             self.startNextRandomVideoFrom(index: index)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                let allVideos = CoreDataManager.shared.getAllVideos()
-                for video in allVideos {
-                    print("Video URL from COREDATA: \(video.videoURL ?? "N/A")")
+                let videoData = CoreDataManager.shared.getAllVideos()
+                for vdata in videoData {
+                    print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
                 }
             }
         }
@@ -237,5 +314,11 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 extension VideoWatcherViewController: VideoWatcherCellDelegate {
     func startNextRandomVideo(index: Int) {
         self.startNextRandomVideoFrom(index: index)
+    }
+}
+
+extension VideoWatcherViewController: FavoriteViewControllerDelegate {
+    func startAllPanel() {
+        self.playAllVideoPlayers()
     }
 }

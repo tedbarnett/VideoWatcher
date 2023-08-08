@@ -28,6 +28,10 @@
 		5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */; };
 		5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
+		5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F516D2B2A80FDE50033E404 /* SwiftyDropbox */; };
+		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
+		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
+		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,9 @@
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5F9B81972A825D3900730F1B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,8 +165,9 @@
 		5F0AD6CC2A78C92A00046C35 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */,
+				5F9B81962A825D1500730F1B /* Initial load */,
 				5F0AD6CD2A78C94000046C35 /* Videos */,
+				5F9B81952A825D0800730F1B /* Favourite */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -167,8 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				5F0AD6CE2A78C94D00046C35 /* Cell */,
-				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
-				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
 				5F0AD69D2A78C81B00046C35 /* VideoWatcherViewController.swift */,
 			);
 			path = Videos;
@@ -203,6 +210,34 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		5F9B81952A825D0800730F1B /* Favourite */ = {
+			isa = PBXGroup;
+			children = (
+				5F9B81992A826AED00730F1B /* Cell */,
+				5F9B81972A825D3900730F1B /* FavoriteViewController.swift */,
+			);
+			path = Favourite;
+			sourceTree = "<group>";
+		};
+		5F9B81962A825D1500730F1B /* Initial load */ = {
+			isa = PBXGroup;
+			children = (
+				5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */,
+				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
+				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
+			);
+			path = "Initial load";
+			sourceTree = "<group>";
+		};
+		5F9B81992A826AED00730F1B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */,
+				5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -219,6 +254,9 @@
 			dependencies = (
 			);
 			name = VideoWatcher;
+			packageProductDependencies = (
+				5F516D2B2A80FDE50033E404 /* SwiftyDropbox */,
+			);
 			productName = VideoWatcher;
 			productReference = 5F0AD6962A78C81B00046C35 /* VideoWatcher.app */;
 			productType = "com.apple.product-type.application";
@@ -291,6 +329,9 @@
 				Base,
 			);
 			mainGroup = 5F0AD68D2A78C81A00046C35;
+			packageReferences = (
+				5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
+			);
 			productRefGroup = 5F0AD6972A78C81B00046C35 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -311,6 +352,7 @@
 				5F0AD6A62A78C81B00046C35 /* Assets.xcassets in Resources */,
 				5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */,
 				5F0AD6A12A78C81B00046C35 /* Main.storyboard in Resources */,
+				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +390,8 @@
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
+				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
+				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -700,6 +744,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5F516D2B2A80FDE50033E404 /* SwiftyDropbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
+			productName = SwiftyDropbox;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		5F0AD6A22A78C81B00046C35 /* VideoWatcher.xcdatamodeld */ = {

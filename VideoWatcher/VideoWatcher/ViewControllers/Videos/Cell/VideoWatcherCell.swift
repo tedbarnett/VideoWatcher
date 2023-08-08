@@ -20,6 +20,7 @@ class VideoWatcherCell: UICollectionViewCell {
     var playerLayer: AVPlayerLayer?
     var index = Int()
     var lblError: UILabel?
+    var btnFavorite = UIButton()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +29,7 @@ class VideoWatcherCell: UICollectionViewCell {
     
     func setupPlayer() {
         self.layoutIfNeeded()
-        DispatchQueue.main.async {            
+        DispatchQueue.main.async {
             if self.player == nil && self.playerLayer == nil {
                 self.player = AVPlayer()
                 self.playerLayer = AVPlayerLayer(player: self.player)
@@ -48,6 +49,20 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.lblError?.font = .boldSystemFont(ofSize: 12.0)
                 self.lblError?.lineBreakMode = .byTruncatingMiddle
                 self.addSubview(self.lblError!)
+                
+                self.btnFavorite.translatesAutoresizingMaskIntoConstraints = false
+                self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                self.btnFavorite.tintColor = .white
+                self.addSubview(self.btnFavorite)
+                self.btnFavorite.widthAnchor.constraint(equalToConstant: 30).isActive = true
+                self.btnFavorite.heightAnchor.constraint(equalToConstant: 30).isActive = true
+                self.btnFavorite.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+                self.btnFavorite.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+                self.btnFavorite.layer.shadowColor = UIColor.black.cgColor
+                self.btnFavorite.layer.shadowRadius = 1.0
+                self.btnFavorite.layer.shadowOpacity = 0.8
+                self.btnFavorite.layer.shadowOffset = CGSize(width: 0, height: 0)
+                self.btnFavorite.layer.masksToBounds = false
             }
             else {
                 self.lblError?.frame = CGRect(x: 10, y: self.bounds.height - 23, width: self.bounds.width - 20, height: 13)
@@ -57,9 +72,9 @@ class VideoWatcherCell: UICollectionViewCell {
         }
     }
     
-    func playVideo(videoAsset: String, startDuration: Double? = 0.0) {
+    func playVideo(videoAsset: VideoTable, startDuration: Double? = 0.0) {
         DispatchQueue.main.async {
-            let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset)
+            let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
             let playerItem = AVPlayerItem(url: videoURL)
             self.player?.replaceCurrentItem(with: playerItem)
             self.player?.play()
@@ -69,6 +84,15 @@ class VideoWatcherCell: UICollectionViewCell {
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
                     self.delegate?.startNextRandomVideo(index: self.index)
                 }
+            }
+            
+            if videoAsset.isFavorite {
+                self.btnFavorite.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                self.btnFavorite.tintColor = .systemPink
+            }
+            else {
+                self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                self.btnFavorite.tintColor = .white
             }
             
             print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")

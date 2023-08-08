@@ -54,13 +54,13 @@ class CoreDataManager {
         }
     }
 
-    func updateIsDeleted(videoURL: String, isDeleted: Bool) {
+    func updateIsDeleted(videoURL: String) {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
 
         do {
             if let video = try context.fetch(fetchRequest).first {
-                video.is_Deleted = isDeleted
+                video.is_Deleted = true
                 try context.save()
             }
         } catch {
@@ -95,6 +95,29 @@ class CoreDataManager {
         }
     }
     
+    func getRandomVideosData(count: Int) -> [VideoTable] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            
+            guard !videos.isEmpty else {
+                return []
+            }
+            
+            // Shuffle the videos and take the first 'count' videos
+            let shuffledVideos = videos.shuffled()
+            let randomVideos = shuffledVideos.prefix(count)
+            
+            return Array(randomVideos)
+            
+        } catch {
+            print("Error fetching random videos: \(error)")
+            return []
+        }
+    }
+    
     func getRandomVideos(count: Int) -> [String] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
@@ -116,4 +139,39 @@ class CoreDataManager {
             return []
         }
     }
+    
+    func getAllFavoriteVideos() -> [VideoTable] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isFavorite == true")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            return videos
+        } catch {
+            print("Error fetching videos: \(error)")
+            return []
+        }
+    }
+    
+    /*func getRandomVideos(count: Int) -> [String] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            
+            guard !videos.isEmpty else {
+                return []
+            }
+            
+            // Shuffle the videos and take the first 'count' videos
+            let shuffledVideos = videos.shuffled()
+            let randomVideos = shuffledVideos.prefix(count)
+            
+            return randomVideos.compactMap { $0.videoURL }
+        } catch {
+            print("Error fetching random videos: \(error)")
+            return []
+        }
+    }*/
 }

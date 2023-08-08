@@ -58,15 +58,15 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7G9-fw-I8x">
-                                        <rect key="frame" x="100" y="236" width="100" height="40"/>
+                                        <rect key="frame" x="25" y="236" width="250" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8gf-wV-BVb"/>
-                                            <constraint firstAttribute="width" constant="100" id="adb-jd-CaN"/>
+                                            <constraint firstAttribute="width" constant="250" id="adb-jd-CaN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Next">
+                                        <state key="normal" title="Import video from Dropbox">
                                             <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -199,6 +199,11 @@
                                     <action selector="btnNextAction:" destination="8kr-C2-H3p" eventType="touchUpInside" id="DHY-QK-KeZ"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6k-n0-qYO">
+                                <rect key="frame" x="0.0" y="0.0" width="852" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.10433320419771688" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qf3-Ay-ozF"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -219,7 +224,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E4b-Z4-Hjl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="661" y="4053"/>
+            <point key="canvasLocation" x="660.56338028169023" y="4052.6717557251905"/>
+        </scene>
+        <!--Favorite View Controller-->
+        <scene sceneID="XK5-mL-XdJ">
+            <objects>
+                <viewController storyboardIdentifier="FavoriteViewController" id="9mp-i9-VXf" customClass="FavoriteViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nV7-4f-Oj6">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ARJ-3f-hkU">
+                                <rect key="frame" x="59" y="0.0" width="734" height="372"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0Uk-Mk-lhM">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rri-tE-MU8"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rri-tE-MU8" firstAttribute="trailing" secondItem="ARJ-3f-hkU" secondAttribute="trailing" id="O91-qu-gbT"/>
+                            <constraint firstItem="ARJ-3f-hkU" firstAttribute="top" secondItem="rri-tE-MU8" secondAttribute="top" id="Xhc-XX-dNe"/>
+                            <constraint firstItem="ARJ-3f-hkU" firstAttribute="leading" secondItem="rri-tE-MU8" secondAttribute="leading" id="drg-XH-AHv"/>
+                            <constraint firstItem="rri-tE-MU8" firstAttribute="bottom" secondItem="ARJ-3f-hkU" secondAttribute="bottom" id="l9H-73-fTJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="JNn-s8-ZSH"/>
+                    <connections>
+                        <outlet property="collectionViewFavorite" destination="ARJ-3f-hkU" id="bI8-EX-mFT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EXU-Vj-EDm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="4819"/>
         </scene>
         <!--Video Watcher View Controller-->
         <scene sceneID="tne-QT-ifu">
