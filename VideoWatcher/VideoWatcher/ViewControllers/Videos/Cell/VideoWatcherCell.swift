@@ -21,6 +21,7 @@ class VideoWatcherCell: UICollectionViewCell {
     var index = Int()
     var lblError: UILabel?
     var btnFavorite = UIButton()
+    var btnSpeaker = UIButton()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,6 +64,25 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnFavorite.layer.shadowOpacity = 0.8
                 self.btnFavorite.layer.shadowOffset = CGSize(width: 0, height: 0)
                 self.btnFavorite.layer.masksToBounds = false
+                
+                /*
+                 let unmute = UIImage(systemName: "speaker.wave.2", withConfiguration: imageConfiguration)
+                         let mute = UIImage(systemName: "speaker.slash", withConfiguration: imageConfiguration)
+                 */
+                self.btnSpeaker.translatesAutoresizingMaskIntoConstraints = false
+                self.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2"), for: .normal)
+                self.btnSpeaker.tintColor = .red
+                self.addSubview(self.btnSpeaker)
+                self.btnSpeaker.widthAnchor.constraint(equalToConstant: 30).isActive = true
+                self.btnSpeaker.heightAnchor.constraint(equalToConstant: 30).isActive = true
+                self.btnSpeaker.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+                self.btnSpeaker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+                self.btnSpeaker.layer.shadowColor = UIColor.black.cgColor
+                self.btnSpeaker.layer.shadowRadius = 1.0
+                self.btnSpeaker.layer.shadowOpacity = 0.5
+                self.btnSpeaker.layer.shadowOffset = CGSize(width: 0, height: 0)
+                self.btnSpeaker.layer.masksToBounds = false
+                self.btnSpeaker.isHidden = true
             }
             else {
                 self.lblError?.frame = CGRect(x: 10, y: self.bounds.height - 23, width: self.bounds.width - 20, height: 13)
@@ -72,18 +92,26 @@ class VideoWatcherCell: UICollectionViewCell {
         }
     }
     
-    func playVideo(videoAsset: VideoTable, startDuration: Double? = 0.0) {
+    func playVideo(videoAsset: VideoTable, startDuration: Double? = 0.0, isMuted: Bool) {
         DispatchQueue.main.async {
             let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
             let playerItem = AVPlayerItem(url: videoURL)
             self.player?.replaceCurrentItem(with: playerItem)
             self.player?.play()
-            self.player?.isMuted = true
+            //self.player?.isMuted = true
+            self.player?.isMuted = isMuted
             
             if self.player != nil && self.player?.currentItem != nil {
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
                     self.delegate?.startNextRandomVideo(index: self.index)
                 }
+            }
+            
+            if isMuted {
+                self.btnSpeaker.isHidden = true
+            }
+            else {
+                self.btnSpeaker.isHidden = false
             }
             
             if videoAsset.isFavorite {
@@ -95,90 +123,31 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnFavorite.tintColor = .white
             }
             
+            //self.setSpeakerMuteUnmute(indexToChange: self.index)
+                        
             print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
             self.lblError?.text = "\(videoURL.lastPathComponent)"
         }
     }
     
-    
-    /*func setupPlayer() {
-        let player = AVPlayer()
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.frame = bounds
-        layer.addSublayer(playerLayer)
-        self.player = player
-        self.playerLayer = playerLayer
-        
-        self.lblError = UILabel(frame: CGRect(x: 10, y: bounds.height - 23, width: bounds.width - 20, height: 13))
-        self.lblError?.textColor = UIColor(red: 202.0/255.0, green: 204.0/255.0, blue: 66.0/255.0, alpha: 1.0)
-        self.lblError?.textAlignment = .left
-        self.lblError?.font = .boldSystemFont(ofSize: 12.0)
-//        self.lblError?.backgroundColor = .red
-        self.lblError?.lineBreakMode = .byTruncatingMiddle
-        self.addSubview(self.lblError!)
-        
-        self.lblError?.layer.shadowColor = UIColor.black.cgColor
-        self.lblError?.layer.shadowRadius = 1.0
-        self.lblError?.layer.shadowOpacity = 0.8
-        self.lblError?.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.lblError?.layer.masksToBounds = false
-    }*/
-    
-//    func playVideo(videoAsset: Any, startDuration: Double? = 0.0, firstLoad: Bool) {
-//
-//        if let vidAsset = videoAsset as? PHAsset {
-//
-//            PHCachingImageManager.default().requestAVAsset(forVideo: vidAsset, options: nil) { [weak self] (video, _, _) in
-//                if let video = video
-//                {
-//                    DispatchQueue.main.async {
-//                        let playerItem = AVPlayerItem(asset: video)
-//                        self?.player?.replaceCurrentItem(with: playerItem)
-//                        if startDuration ?? 0 > 0 {
-//                            let seekTime = CMTime(seconds: startDuration!, preferredTimescale: 1000)
-//                            self?.player?.seek(to: seekTime)
-//                        }
-//                        self?.player?.play()
-//                        self?.player?.isMuted = true
-//
-//                        if self?.player != nil && self?.player?.currentItem != nil {
-//                            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self?.player?.currentItem, queue: nil) { (_) in
-//                                self?.delegate?.startNextRandomVideo(index: self?.index ?? 0)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            var videoName = ""
-//            let assetResources = PHAssetResource.assetResources(for: vidAsset)
-//            if let resource = assetResources.first {
-//                videoName = resource.originalFilename
-//                print("Panel \(index), Video Name: \(videoName)")
-//                DispatchQueue.main.async {
-//                    self.lblError?.text = "\(videoName)"
-//                }
-//            }
-//        }
-//        else {
-//            if let videoURL = videoAsset as? URL {
-//                DispatchQueue.main.async {
-//                    let playerItem = AVPlayerItem(url: videoURL)
-//                    self.player?.replaceCurrentItem(with: playerItem)
-//                    self.player?.play()
-//                    self.player?.isMuted = true
-//
-//                    if self.player != nil && self.player?.currentItem != nil {
-//                        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
-//                            self.delegate?.startNextRandomVideo(index: self.index)
-//                        }
-//                    }
-//
-//                    print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
-//                    self.lblError?.text = "\(videoURL.lastPathComponent)"
-//                }
-//            }
-//        }
-//    }
+    func setSpeakerMuteUnmute(indexToChange: Int) {
+        if indexToChange == 0 && AppData.shared.panel1IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+        else if indexToChange == 1 && AppData.shared.panel2IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+        else if indexToChange == 2 && AppData.shared.panel3IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+        else if indexToChange == 3 && AppData.shared.panel4IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+        else if indexToChange == 4 && AppData.shared.panel5IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+        else if indexToChange == 5 && AppData.shared.panel6IsMute == false {
+            self.btnSpeaker.isHidden = false
+        }
+    }
 }

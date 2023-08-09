@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import SwiftyDropbox
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DropboxClientsManager.setupWithAppKey(DropBox.APIKey)
         setupNavigationAppearance()
+        setAudioCategory()
         
         return true
+    }
+    
+    func setAudioCategory() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+        } catch {
+            // Handle error if setting category fails
+            print("AVAudioSession setCategory failed: \(error.localizedDescription)")
+        }
     }
     
     func setupNavigationAppearance() {

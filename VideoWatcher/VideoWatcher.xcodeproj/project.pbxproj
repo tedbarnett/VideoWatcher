@@ -21,6 +21,7 @@
 		5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */; };
 		5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A09482A7A2D7F0002C5F0 /* Utility.swift */; };
 		5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A094A2A7A2DE50002C5F0 /* Constant.swift */; };
+		5F44B0642A8370BD00381E2D /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44B0632A8370BD00381E2D /* AppData.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
 		5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */; };
 		5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */; };
@@ -70,6 +71,7 @@
 		5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoWatcherCell.xib; sourceTree = "<group>"; };
 		5F3A09482A7A2D7F0002C5F0 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		5F3A094A2A7A2DE50002C5F0 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		5F44B0632A8370BD00381E2D /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromPhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFilesViewController.swift; sourceTree = "<group>"; };
 		5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -197,6 +199,7 @@
 				5F3A094A2A7A2DE50002C5F0 /* Constant.swift */,
 				5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */,
 				5F516D282A80B6740033E404 /* Extensions.swift */,
+				5F44B0632A8370BD00381E2D /* AppData.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
+				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
 				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,

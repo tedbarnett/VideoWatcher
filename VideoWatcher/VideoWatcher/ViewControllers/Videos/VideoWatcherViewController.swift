@@ -72,7 +72,7 @@ class VideoWatcherViewController: UIViewController {
         ellipsisButton.showsMenuAsPrimaryAction = true
         ellipsisButton.menu = UIMenu(title: "", children: [moreVideos, favorite, settings])
     }
-        
+    
     func getRandomVideo() {
         self.arrVideoData = CoreDataManager.shared.getRandomVideosData(count: 6)
         for vdata in self.arrVideoData {
@@ -90,7 +90,7 @@ class VideoWatcherViewController: UIViewController {
             DispatchQueue.main.async {
                 let indexPath = IndexPath(item: index, section: 0)
                 if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
-                    videoCell.playVideo(videoAsset: randomAsset)
+                    videoCell.playVideo(videoAsset: randomAsset, isMuted: self.checkPanelIsMutedOrNot(index: index))
                 }
             }
         }
@@ -142,12 +142,6 @@ class VideoWatcherViewController: UIViewController {
     
     func moveToFavouriteList() {
         self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FavouriteViewController") as! FavouriteViewController
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.modalTransitionStyle = .crossDissolve
-//        self.present(vc, animated: true)
-        
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen
@@ -170,9 +164,11 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         videoCell.delegate = self
         videoCell.setupPlayer()
         videoCell.index = indexPath.row
-        videoCell.playVideo(videoAsset: self.arrVideoData[indexPath.row])
+        videoCell.playVideo(videoAsset: self.arrVideoData[indexPath.row], isMuted: self.checkPanelIsMutedOrNot(index: indexPath.row))
         videoCell.btnFavorite.tag = indexPath.row
         videoCell.btnFavorite.addTarget(self, action: #selector(makeFavourite), for: .touchUpInside)
+        videoCell.btnSpeaker.tag = indexPath.row
+        videoCell.btnSpeaker.addTarget(self, action: #selector(btnSpeakerAction), for: .touchUpInside)
         
         return videoCell
     }
@@ -193,6 +189,11 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         }
     }
     
+    @objc func btnSpeakerAction(sender: UIButton) {
+        let index = sender.tag
+        self.menuAudioAction(index: index)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
         self.playAllVideoPlayers(needToReloadCell: true)
     }
@@ -201,11 +202,13 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         self.configureContextMenu(index: indexPath.row)
     }
     
+    //Menu options for panels
     func configureContextMenu(index: Int) -> UIContextMenuConfiguration {
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
-            
-            let audio = UIAction(title: "Audio", image: UIImage(systemName: "speaker.slash"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                
+
+            let result = self.audioButtonTitleAndImage(index: index)
+            let audio = UIAction(title: result.0, image: result.1, identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                self.menuAudioAction(index: index)
             }
             
             let skipForward = UIAction(title: "Next video", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
@@ -230,6 +233,164 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             
         }
         return context
+    }
+    
+    func audioButtonTitleAndImage(index: Int) -> (String, UIImage) {
+        var title = "Unmute"
+        var speakerImage = UIImage(systemName: "speaker.wave.2")
+        
+        if index == 0 && AppData.shared.panel1IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        else if index == 1 && AppData.shared.panel2IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        else if index == 2 && AppData.shared.panel3IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        else if index == 3 && AppData.shared.panel4IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        else if index == 4 && AppData.shared.panel5IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        else if index == 5 && AppData.shared.panel6IsMute == false {
+            title = "Mute"
+            speakerImage = UIImage(systemName: "speaker.slash")
+        }
+        
+        return (title, speakerImage!)
+    }
+    
+    func menuAudioAction(index: Int) {
+        if index == 0 {
+            if AppData.shared.panel1IsMute {
+                AppData.shared.panel1IsMute = false
+            }
+            else {
+                AppData.shared.panel1IsMute = true
+            }
+        }
+        else if index == 1 {
+            if AppData.shared.panel2IsMute {
+                AppData.shared.panel2IsMute = false
+            }
+            else {
+                AppData.shared.panel2IsMute = true
+            }
+        }
+        else if index == 2 {
+            if AppData.shared.panel3IsMute {
+                AppData.shared.panel3IsMute = false
+            }
+            else {
+                AppData.shared.panel3IsMute = true
+            }
+        }
+        else if index == 3 {
+            if AppData.shared.panel4IsMute {
+                AppData.shared.panel4IsMute = false
+            }
+            else {
+                AppData.shared.panel4IsMute = true
+            }
+        }
+        else if index == 4 {
+            if AppData.shared.panel5IsMute {
+                AppData.shared.panel5IsMute = false
+            }
+            else {
+                AppData.shared.panel5IsMute = true
+            }
+        }
+        else if index == 5 {
+            if AppData.shared.panel6IsMute {
+                AppData.shared.panel6IsMute = false
+            }
+            else {
+                AppData.shared.panel6IsMute = true
+            }
+        }
+        
+        self.updateAudioStatusFor(index: index)
+    }
+    
+    func updateAudioStatusFor(index: Int) {
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(item: index, section: 0)
+            if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+                videoCell.setSpeakerMuteUnmute(indexToChange: index)
+                
+                let isMuted = self.checkPanelIsMutedOrNot(index: index)
+                videoCell.player?.isMuted = isMuted
+                if isMuted {
+                    videoCell.btnSpeaker.isHidden = true
+                }
+                else {
+                    videoCell.btnSpeaker.isHidden = false
+                }
+                print("AVPlayer is currently muted: \(videoCell.player?.isMuted ?? false)")
+            }
+        }
+    }
+    
+    func checkPanelIsMutedOrNot(index: Int) -> Bool {
+        if index == 0 {
+            if AppData.shared.panel1IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if index == 1 {
+            if AppData.shared.panel2IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if index == 2 {
+            if AppData.shared.panel3IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if index == 3 {
+            if AppData.shared.panel4IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if index == 4 {
+            if AppData.shared.panel5IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else if index == 5 {
+            if AppData.shared.panel6IsMute {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return false
+        }
     }
     
     //Contect menu actions
