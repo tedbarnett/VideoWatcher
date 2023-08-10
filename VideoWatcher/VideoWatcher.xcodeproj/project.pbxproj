@@ -30,6 +30,10 @@
 		5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
 		5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F516D2B2A80FDE50033E404 /* SwiftyDropbox */; };
+		5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */; };
+		5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */; };
+		5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */; };
+		5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */; };
 		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
 		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
 		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
@@ -79,6 +83,10 @@
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenVideoViewController.swift; sourceTree = "<group>"; };
+		5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClipViewController.swift; sourceTree = "<group>"; };
+		5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
+		5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmerThumb.swift; sourceTree = "<group>"; };
 		5F9B81972A825D3900730F1B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCell.xib; sourceTree = "<group>"; };
@@ -170,6 +178,8 @@
 				5F9B81962A825D1500730F1B /* Initial load */,
 				5F0AD6CD2A78C94000046C35 /* Videos */,
 				5F9B81952A825D0800730F1B /* Favourite */,
+				5F6D477D2A84B84D00CC1F82 /* Fullscreen */,
+				5F6D47822A84F9FF00CC1F82 /* Clip */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -200,6 +210,7 @@
 				5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */,
 				5F516D282A80B6740033E404 /* Extensions.swift */,
 				5F44B0632A8370BD00381E2D /* AppData.swift */,
+				5F6D47852A84FAC700CC1F82 /* Trimmer */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -211,6 +222,31 @@
 				5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		5F6D477D2A84B84D00CC1F82 /* Fullscreen */ = {
+			isa = PBXGroup;
+			children = (
+				5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */,
+			);
+			path = Fullscreen;
+			sourceTree = "<group>";
+		};
+		5F6D47822A84F9FF00CC1F82 /* Clip */ = {
+			isa = PBXGroup;
+			children = (
+				5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */,
+			);
+			path = Clip;
+			sourceTree = "<group>";
+		};
+		5F6D47852A84FAC700CC1F82 /* Trimmer */ = {
+			isa = PBXGroup;
+			children = (
+				5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */,
+				5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */,
+			);
+			path = Trimmer;
 			sourceTree = "<group>";
 		};
 		5F9B81952A825D0800730F1B /* Favourite */ = {
@@ -380,11 +416,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */,
 				5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */,
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
+				5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
 				5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */,
+				5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */,
 				5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */,
 				5F0AD69E2A78C81B00046C35 /* VideoWatcherViewController.swift in Sources */,
 				5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */,
@@ -394,6 +433,7 @@
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
+				5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */,
 				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,

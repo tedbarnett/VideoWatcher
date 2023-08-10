@@ -14,6 +14,7 @@ class VideoWatcherViewController: UIViewController {
     var arrVideoData: [VideoTable] = []
     var isDeviceRotating = false
     var ellipsisButton: UIButton!
+    private var isScreenVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,17 @@ class VideoWatcherViewController: UIViewController {
         super.viewWillAppear(animated)
         
         //self.title = "VideoWatcher"
+        self.isScreenVisible = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.isScreenVisible = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
     
     func setupUI() {
@@ -99,7 +111,7 @@ class VideoWatcherViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        if UIApplication.shared.topViewController() is VideoWatcherViewController {
+        if self.isScreenVisible {
             self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.playAllVideoPlayers(needToReloadCell: true)
@@ -149,6 +161,20 @@ class VideoWatcherViewController: UIViewController {
         vc.delegate = self
         self.present(navController, animated: true)
     }
+    
+    func moveToFullScreen(videoAsset: VideoTable, index: Int) {
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FullscreenVideoViewController") as! FullscreenVideoViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        
+        vc.isMuted = self.checkPanelIsMutedOrNot(index: index)
+        vc.videoAsset = videoAsset
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
 }
 
 extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -195,7 +221,11 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
-        self.playAllVideoPlayers(needToReloadCell: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if self.isScreenVisible {
+                self.playAllVideoPlayers()
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -220,7 +250,8 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             }
             
             let fullScreen = UIAction(title: "Full screen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                
+                //self.openVideoEditor(videoAsset: self.arrVideoData[index])
+                self.moveToFullScreen(videoAsset: self.arrVideoData[index], index: index)
             }
             
             let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), identifier: nil, discoverabilityTitle: nil,attributes: .destructive, state: .off) { (_) in
@@ -429,6 +460,23 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    func openVideoEditor(videoAsset: VideoTable) {
+        let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
+        let videoPath = videoURL.absoluteString
+        if UIVideoEditorController.canEditVideo(atPath: videoPath) {
+            let editController = UIVideoEditorController()
+            editController.videoPath = videoPath
+            editController.delegate = self
+            present(editController, animated: true)
+        }
+    }
+}
+
+extension VideoWatcherViewController: UIVideoEditorControllerDelegate, UINavigationControllerDelegate {
+    func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
+        print(editedVideoPath)
+    }
 }
 
 extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
@@ -480,6 +528,16 @@ extension VideoWatcherViewController: VideoWatcherCellDelegate {
 
 extension VideoWatcherViewController: FavoriteViewControllerDelegate {
     func startAllPanel() {
-        self.playAllVideoPlayers()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}
+
+extension VideoWatcherViewController: FullscreenVideoViewControllerDelegate {
+    func startAllPanels() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
     }
 }

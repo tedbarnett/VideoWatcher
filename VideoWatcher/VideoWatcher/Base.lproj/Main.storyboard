@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -74,7 +75,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41J-Yu-hVO">
-                                        <rect key="frame" x="67.666666666666686" y="147" width="88.666666666666686" height="18"/>
+                                        <rect key="frame" x="67.666666666666686" y="147" width="89" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="fpL-M5-Mev"/>
                                         </constraints>
@@ -83,7 +84,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-jy-5dz">
-                                        <rect key="frame" x="164.66666666666669" y="146" width="20" height="20"/>
+                                        <rect key="frame" x="165" y="146" width="20" height="20"/>
                                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
                                 </subviews>
@@ -264,6 +265,142 @@
             </objects>
             <point key="canvasLocation" x="1475" y="4819"/>
         </scene>
+        <!--Fullscreen Video View Controller-->
+        <scene sceneID="X7i-0d-D9D">
+            <objects>
+                <viewController storyboardIdentifier="FullscreenVideoViewController" id="dFs-d6-2CU" customClass="FullscreenVideoViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nQJ-2p-KeC">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qtt-cd-O46">
+                                <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xr7-ck-eqF">
+                                <rect key="frame" x="0.0" y="313" width="852" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpg-Ke-pMf">
+                                        <rect key="frame" x="401" y="6" width="50" height="48.666666666666671"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="YGp-6J-kQg"/>
+                                            <constraint firstAttribute="width" constant="50" id="zcI-lG-DZX"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" backgroundImage="play.circle.fill" catalog="system"/>
+                                        <state key="selected" backgroundImage="pause.circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="playPauseButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="7gf-2Q-UJE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-cA-pZO">
+                                        <rect key="frame" x="341" y="5" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="All-O8-9cg"/>
+                                            <constraint firstAttribute="width" constant="50" id="grz-eG-3H0"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal">
+                                            <imageReference key="image" image="speaker.wave.2.fill" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <state key="selected">
+                                            <imageReference key="image" image="speaker.slash.fill" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="muteButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="wdM-dM-LSa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTn-ZY-GSK">
+                                        <rect key="frame" x="466" y="5" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="aPx-X7-W4q"/>
+                                            <constraint firstAttribute="width" constant="50" id="rQt-a2-YbX"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal">
+                                            <imageReference key="image" image="timeline.selection" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="trimButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="c5y-dZ-Vtx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="zpg-Ke-pMf" firstAttribute="centerX" secondItem="xr7-ck-eqF" secondAttribute="centerX" id="QWP-7K-Gc9"/>
+                                    <constraint firstItem="aYV-cA-pZO" firstAttribute="centerY" secondItem="zpg-Ke-pMf" secondAttribute="centerY" id="TAM-a8-pex"/>
+                                    <constraint firstItem="zpg-Ke-pMf" firstAttribute="top" secondItem="xr7-ck-eqF" secondAttribute="top" constant="5" id="cS1-uD-ONg"/>
+                                    <constraint firstItem="mTn-ZY-GSK" firstAttribute="centerY" secondItem="zpg-Ke-pMf" secondAttribute="centerY" id="gLs-Mb-3Hl"/>
+                                    <constraint firstAttribute="height" constant="80" id="gjO-9A-JDU"/>
+                                    <constraint firstItem="mTn-ZY-GSK" firstAttribute="leading" secondItem="zpg-Ke-pMf" secondAttribute="trailing" constant="15" id="ul0-yn-cl9"/>
+                                    <constraint firstItem="zpg-Ke-pMf" firstAttribute="leading" secondItem="aYV-cA-pZO" secondAttribute="trailing" constant="10" id="xAX-WF-sXV"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLJ-6v-HK3">
+                                <rect key="frame" x="733" y="10" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="48o-09-hky"/>
+                                    <constraint firstAttribute="height" constant="50" id="RpX-2F-Yg3"/>
+                                </constraints>
+                                <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="ic_close" symbolScale="large"/>
+                                </state>
+                                <state key="selected" backgroundImage="pause.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="B9m-65-On3"/>
+                                    <action selector="playPauseButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="Xyf-GR-3Jo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ehA-F8-3KF"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xr7-ck-eqF" firstAttribute="centerX" secondItem="nQJ-2p-KeC" secondAttribute="centerX" id="7jY-8l-YNo"/>
+                            <constraint firstItem="Qtt-cd-O46" firstAttribute="leading" secondItem="nQJ-2p-KeC" secondAttribute="leading" id="FGD-OT-Xsf"/>
+                            <constraint firstItem="xr7-ck-eqF" firstAttribute="top" secondItem="ehA-F8-3KF" secondAttribute="bottom" constant="-59" id="GwJ-YB-YgC"/>
+                            <constraint firstItem="ehA-F8-3KF" firstAttribute="trailing" secondItem="qLJ-6v-HK3" secondAttribute="trailing" constant="10" id="IQG-lm-pU2"/>
+                            <constraint firstItem="qLJ-6v-HK3" firstAttribute="top" secondItem="ehA-F8-3KF" secondAttribute="top" constant="10" id="QoO-Mb-MUy"/>
+                            <constraint firstAttribute="bottom" secondItem="Qtt-cd-O46" secondAttribute="bottom" id="R9O-hG-QQA"/>
+                            <constraint firstAttribute="trailing" secondItem="Qtt-cd-O46" secondAttribute="trailing" id="XIb-Cc-hd6"/>
+                            <constraint firstItem="xr7-ck-eqF" firstAttribute="bottom" secondItem="nQJ-2p-KeC" secondAttribute="bottom" id="Xmu-qF-4BN"/>
+                            <constraint firstItem="Qtt-cd-O46" firstAttribute="top" secondItem="nQJ-2p-KeC" secondAttribute="top" id="fr8-gm-xTj"/>
+                            <constraint firstItem="xr7-ck-eqF" firstAttribute="leading" secondItem="nQJ-2p-KeC" secondAttribute="leading" id="rXj-Uf-n8z"/>
+                            <constraint firstAttribute="trailing" secondItem="xr7-ck-eqF" secondAttribute="trailing" id="yFo-1s-Yqh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="qLJ-6v-HK3" id="9oY-vV-7eC"/>
+                        <outlet property="muteButton" destination="aYV-cA-pZO" id="tjh-3v-dCd"/>
+                        <outlet property="playPauseButton" destination="zpg-Ke-pMf" id="Uuk-Is-mke"/>
+                        <outlet property="trimButton" destination="mTn-ZY-GSK" id="uAx-Cb-ZV2"/>
+                        <outlet property="viewButtonContainer" destination="xr7-ck-eqF" id="hhZ-Nh-yys"/>
+                        <outlet property="viewPlayerContainer" destination="Qtt-cd-O46" id="b93-XV-ERI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wcs-Zx-z8p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1474.6478873239437" y="5614.5038167938928"/>
+        </scene>
+        <!--Create Clip View Controller-->
+        <scene sceneID="6YD-Ki-Vxb">
+            <objects>
+                <viewController storyboardIdentifier="CreateClipViewController" id="QQt-XL-1RX" customClass="CreateClipViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="G1R-hf-WNP">
+                        <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ZNS-HB-uC1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P7J-ej-8ft" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="6346"/>
+        </scene>
         <!--Video Watcher View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -366,6 +503,12 @@
     </scenes>
     <resources>
         <image name="BarnettLabsIconTransparent" width="773" height="447"/>
+        <image name="ic_close" width="20" height="20.666666030883789"/>
+        <image name="pause.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="speaker.slash.fill" catalog="system" width="118" height="128"/>
+        <image name="speaker.wave.2.fill" catalog="system" width="128" height="88"/>
+        <image name="timeline.selection" catalog="system" width="128" height="67"/>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

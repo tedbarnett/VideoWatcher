@@ -65,10 +65,6 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnFavorite.layer.shadowOffset = CGSize(width: 0, height: 0)
                 self.btnFavorite.layer.masksToBounds = false
                 
-                /*
-                 let unmute = UIImage(systemName: "speaker.wave.2", withConfiguration: imageConfiguration)
-                         let mute = UIImage(systemName: "speaker.slash", withConfiguration: imageConfiguration)
-                 */
                 self.btnSpeaker.translatesAutoresizingMaskIntoConstraints = false
                 self.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2"), for: .normal)
                 self.btnSpeaker.tintColor = .red
