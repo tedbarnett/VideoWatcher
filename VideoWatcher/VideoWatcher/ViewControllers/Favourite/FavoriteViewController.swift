@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Kingfisher
+import AVFoundation
+import AVKit
 
 protocol FavoriteViewControllerDelegate: AnyObject {
     func startAllPanel()
@@ -16,6 +19,9 @@ class FavoriteViewController: UIViewController {
     weak var delegate: FavoriteViewControllerDelegate?
     @IBOutlet weak var collectionViewFavorite: UICollectionView!
     var arrFavoriteVideoData: [VideoTable] = []
+    var arrClips: [Any] = []
+    var player: AVPlayer?
+    var playerViewController: AVPlayerViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +30,12 @@ class FavoriteViewController: UIViewController {
     }
     
     func setupUI() {
-        self.title = "Favorite"
+        self.title = "Clips"
         self.setupNavbar()
         self.collectionViewFavorite.delegate = self
         self.collectionViewFavorite.dataSource = self
         self.collectionViewFavorite.register(UINib(nibName: "FavoriteCell", bundle: nil), forCellWithReuseIdentifier: "FavoriteCell")
-        self.getFavoriteVideo()
+        self.getAllClips()
     }
     
     func setupNavbar() {
@@ -52,11 +58,6 @@ class FavoriteViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
-    func getFavoriteVideo() {
-        self.arrFavoriteVideoData = CoreDataManager.shared.getAllFavoriteVideos()
-        self.collectionViewFavorite.reloadData()
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -64,27 +65,73 @@ class FavoriteViewController: UIViewController {
             self.collectionViewFavorite.reloadData()
         }
     }
+    
+    func getFavoriteVideo() {
+        self.arrFavoriteVideoData = CoreDataManager.shared.getAllFavoriteVideos()
+        self.collectionViewFavorite.reloadData()
+    }
+    
+    func getAllClips() {
+        let wholeFavVideos = CoreDataManager.shared.getAllFavoriteVideos()
+        let allClipse = CoreDataManager.shared.getAllClips()
+        self.arrClips.append(contentsOf: wholeFavVideos)
+        print(self.arrClips.count)
+        self.arrClips.append(contentsOf: allClipse)
+        print(self.arrClips.count)
+        self.collectionViewFavorite.reloadData()
+    }
 }
 
 extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.arrFavoriteVideoData.count
+        return self.arrClips.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteCell", for: indexPath) as! FavoriteCell
         cell.setupCell()
-        cell.setThumbnailImageOfVideo(videoAsset: self.arrFavoriteVideoData[indexPath.row])
-        cell.btnFavorite?.addTarget(self, action: #selector(removeFavorite), for: .touchUpInside)
-        
+        let clip = self.arrClips[indexPath.row]
+        if let aClip = clip as? VideoClip {
+            let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(aClip.thumbnailURL ?? "")
+            cell.imgThumbnail.kf.setImage(with: thumbURL)
+        }
+        else {
+            let vClip = clip as! VideoTable
+            let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(vClip.thumbnailURL ?? "")
+            cell.imgThumbnail.kf.setImage(with: thumbURL)
+        }
+        //cell.btnFavorite?.isHidden = true
+        cell.btnPlay.tag = indexPath.row
+        cell.btnPlay.addTarget(self, action: #selector(btnPlayAction), for: .touchUpInside)
+
         return cell
     }
     
-    @objc func removeFavorite(sender: UIButton) {
+    @objc func btnPlayAction(sender: UIButton) {
         let index = sender.tag
+        let clip = self.arrClips[index]
+        var clipURL: URL?
+        if let aClip = clip as? VideoClip {
+            clipURL = Utility.getDirectoryPath(folderName: DirectoryName.SavedClips)!.appendingPathComponent(aClip.clipURL ?? "")
+        }
+        else {
+            let vClip = clip as! VideoTable
+            clipURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(vClip.videoURL ?? "")
+        }
         
+        let playerItem = AVPlayerItem(url: clipURL!)
+        player = AVPlayer(playerItem: playerItem)
+        
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+        
+        if let playerViewController = playerViewController {
+            present(playerViewController, animated: true) {
+                self.player?.play()
+            }
+        }
     }
 }
 
@@ -97,15 +144,19 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
             let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
             let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
             //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
-            print("Cell size isLandscape: \(CGSize(width: cellWidth, height: cellHeight))")
+            //print("Cell size isLandscape: \(CGSize(width: cellWidth, height: cellHeight))")
             return CGSize(width: cellWidth, height: cellHeight)
         }
         else {
             // Calculate the size of each cell based on the collectionView width and number of cells per row (3)
-            let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
+            /*let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
             let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
             //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
             print("Cell size isPortrait: \(CGSize(width: cellWidth, height: cellHeight))")
+            return CGSize(width: cellWidth, height: cellHeight)*/
+            let cellWidth = (collectionView.bounds.width - 25) / 2.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
+            let cellHeight = (collectionView.bounds.height - 30) / 3.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
+            //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
             return CGSize(width: cellWidth, height: cellHeight)
         }
     }

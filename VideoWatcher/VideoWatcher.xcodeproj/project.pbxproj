@@ -37,6 +37,16 @@
 		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
 		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
 		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
+		5FFE5BBB2A8607A400CF095D /* VideoClip+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BB92A8607A400CF095D /* VideoClip+CoreDataClass.swift */; };
+		5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BBA2A8607A400CF095D /* VideoClip+CoreDataProperties.swift */; };
+		5FFE5BBF2A86432000CF095D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5FFE5BBE2A86432000CF095D /* Kingfisher */; };
+		5FFE5BC52A865C5F00CF095D /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BC22A865C5F00CF095D /* Toast.swift */; };
+		5FFE5BC62A865C5F00CF095D /* ToastConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BC32A865C5F00CF095D /* ToastConfiguration.swift */; };
+		5FFE5BC72A865C5F00CF095D /* ToastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BC42A865C5F00CF095D /* ToastDelegate.swift */; };
+		5FFE5BC92A865C6D00CF095D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BC82A865C6D00CF095D /* ToastView.swift */; };
+		5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BCB2A865C7E00CF095D /* IconAppleToastView.swift */; };
+		5FFE5BCF2A865C7E00CF095D /* TextAppleToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BCC2A865C7E00CF095D /* TextAppleToastView.swift */; };
+		5FFE5BD02A865C7E00CF095D /* AppleToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BCD2A865C7E00CF095D /* AppleToastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +100,15 @@
 		5F9B81972A825D3900730F1B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCell.xib; sourceTree = "<group>"; };
+		5FFE5BB92A8607A400CF095D /* VideoClip+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoClip+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		5FFE5BBA2A8607A400CF095D /* VideoClip+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoClip+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		5FFE5BC22A865C5F00CF095D /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		5FFE5BC32A865C5F00CF095D /* ToastConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastConfiguration.swift; sourceTree = "<group>"; };
+		5FFE5BC42A865C5F00CF095D /* ToastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDelegate.swift; sourceTree = "<group>"; };
+		5FFE5BC82A865C6D00CF095D /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		5FFE5BCB2A865C7E00CF095D /* IconAppleToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconAppleToastView.swift; sourceTree = "<group>"; };
+		5FFE5BCC2A865C7E00CF095D /* TextAppleToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAppleToastView.swift; sourceTree = "<group>"; };
+		5FFE5BCD2A865C7E00CF095D /* AppleToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleToastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FFE5BBF2A86432000CF095D /* Kingfisher in Frameworks */,
 				5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +231,7 @@
 				5F516D282A80B6740033E404 /* Extensions.swift */,
 				5F44B0632A8370BD00381E2D /* AppData.swift */,
 				5F6D47852A84FAC700CC1F82 /* Trimmer */,
+				5FFE5BC02A865C4A00CF095D /* ToastViewSwift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -218,6 +239,8 @@
 		5F4CF33C2A7D157200FDF5B1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				5FFE5BB92A8607A400CF095D /* VideoClip+CoreDataClass.swift */,
+				5FFE5BBA2A8607A400CF095D /* VideoClip+CoreDataProperties.swift */,
 				5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */,
 				5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */,
 			);
@@ -277,6 +300,36 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		5FFE5BC02A865C4A00CF095D /* ToastViewSwift */ = {
+			isa = PBXGroup;
+			children = (
+				5FFE5BC22A865C5F00CF095D /* Toast.swift */,
+				5FFE5BC32A865C5F00CF095D /* ToastConfiguration.swift */,
+				5FFE5BC42A865C5F00CF095D /* ToastDelegate.swift */,
+				5FFE5BC12A865C5300CF095D /* ToastViews */,
+			);
+			path = ToastViewSwift;
+			sourceTree = "<group>";
+		};
+		5FFE5BC12A865C5300CF095D /* ToastViews */ = {
+			isa = PBXGroup;
+			children = (
+				5FFE5BCA2A865C7100CF095D /* AppleToastView */,
+				5FFE5BC82A865C6D00CF095D /* ToastView.swift */,
+			);
+			path = ToastViews;
+			sourceTree = "<group>";
+		};
+		5FFE5BCA2A865C7100CF095D /* AppleToastView */ = {
+			isa = PBXGroup;
+			children = (
+				5FFE5BCD2A865C7E00CF095D /* AppleToastView.swift */,
+				5FFE5BCB2A865C7E00CF095D /* IconAppleToastView.swift */,
+				5FFE5BCC2A865C7E00CF095D /* TextAppleToastView.swift */,
+			);
+			path = AppleToastView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -295,6 +348,7 @@
 			name = VideoWatcher;
 			packageProductDependencies = (
 				5F516D2B2A80FDE50033E404 /* SwiftyDropbox */,
+				5FFE5BBE2A86432000CF095D /* Kingfisher */,
 			);
 			productName = VideoWatcher;
 			productReference = 5F0AD6962A78C81B00046C35 /* VideoWatcher.app */;
@@ -370,6 +424,7 @@
 			mainGroup = 5F0AD68D2A78C81A00046C35;
 			packageReferences = (
 				5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
+				5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 5F0AD6972A78C81B00046C35 /* Products */;
 			projectDirPath = "";
@@ -417,26 +472,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */,
+				5FFE5BC52A865C5F00CF095D /* Toast.swift in Sources */,
 				5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */,
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
+				5FFE5BC72A865C5F00CF095D /* ToastDelegate.swift in Sources */,
 				5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
 				5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */,
 				5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */,
 				5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */,
+				5FFE5BC62A865C5F00CF095D /* ToastConfiguration.swift in Sources */,
 				5F0AD69E2A78C81B00046C35 /* VideoWatcherViewController.swift in Sources */,
 				5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */,
 				5F0AD69A2A78C81B00046C35 /* AppDelegate.swift in Sources */,
 				5F516D292A80B6740033E404 /* Extensions.swift in Sources */,
+				5FFE5BC92A865C6D00CF095D /* ToastView.swift in Sources */,
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
+				5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
 				5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */,
+				5FFE5BD02A865C7E00CF095D /* AppleToastView.swift in Sources */,
 				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
+				5FFE5BBB2A8607A400CF095D /* VideoClip+CoreDataClass.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
+				5FFE5BCF2A865C7E00CF095D /* TextAppleToastView.swift in Sources */,
+				5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +862,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -805,6 +877,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
 			productName = SwiftyDropbox;
+		};
+		5FFE5BBE2A86432000CF095D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 

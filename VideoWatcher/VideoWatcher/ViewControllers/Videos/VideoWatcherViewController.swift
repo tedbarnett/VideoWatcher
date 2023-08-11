@@ -20,6 +20,14 @@ class VideoWatcherViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupUI()
+        
+        /*let clips = CoreDataManager.shared.getAllClips()
+        for clip in clips {
+            print("clip name: \(clip.clipURL ?? "")")
+            print("clip videos: \(clip.video?.videoURL ?? "")")
+            print("Thumb URL: \(clip.thumbnailURL ?? "")")
+        }
+        print(clips)*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,20 +71,24 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func setupMenuOptions() {
-        let moreVideos = UIAction(title: "Import more videos",
+        /*let moreVideos = UIAction(title: "Manage videos",
           image: UIImage(systemName: "square.and.arrow.down")) { _ in
           
         }
-
-        let favImage = UIImage(systemName: "heart.fill")?.withTintColor(.white,
-                  renderingMode: .alwaysOriginal)
-        let favorite = UIAction(title: "Favorite",
-          image: favImage) { _ in
+         let favImage = UIImage(systemName: "heart.fill")?..withTintColor(.white,
+         renderingMode: .alwaysOriginal)
+         UIImage(systemName: "gearshape.fill")
+         */
+        
+        let moreVideos = UIAction(title: "Manage videos", image: nil) { _ in
+          
+        }
+        
+        let favorite = UIAction(title: "Play clips", image: nil) { _ in
             self.moveToFavouriteList()
         }
         
-        let settings = UIAction(title: "Settings",
-          image: UIImage(systemName: "gearshape.fill")) { _ in
+        let settings = UIAction(title: "Settings", image: nil) { _ in
           
         }
         
@@ -201,6 +213,81 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     
     @objc func makeFavourite(sender: UIButton) {
         let index = sender.tag
+        let videoAsset = self.arrVideoData[index]
+        if videoAsset.isFavorite == true {
+            return
+        }
+        
+        let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
+        let asset = AVAsset(url: videoURL)
+        let duration = asset.duration
+        let durationTime = CMTimeGetSeconds(duration)
+        
+        print(durationTime)
+        print("Duration: \(durationTime) VideoName: \(videoAsset.videoURL ?? "")")
+        if durationTime > 30 {
+            self.showBottomSheet(sender: sender, duration: durationTime, index: index, videoAsset: videoAsset)
+        }
+        else {
+            self.generateThumbnailOfVideo(videoAsset: videoAsset)
+            self.makeEntireVideoFavorite(index: index, sender: sender)
+        }
+    }
+    
+    func showBottomSheet(sender: UIButton, duration: Float64, index: Int, videoAsset: VideoTable) {
+        var message = ""
+        if duration >= 3600 {
+            let hours = Int(duration / 3600)
+            let minutes = Int((duration.truncatingRemainder(dividingBy: 3600)) / 60)
+            let seconds = Int(duration.truncatingRemainder(dividingBy: 60))
+            message = String(format: "This video is %d hours %02d minutes %02d seconds long. Do you want to favorite the entire video, or select a shorter clip within the video?", hours, minutes, seconds)
+        } else if duration >= 60 {
+            let minutes = Int(duration / 60)
+            let seconds = Int(duration.truncatingRemainder(dividingBy: 60))
+            message = String(format: "This video is %d:%02d minutes long. Do you want to favorite the entire video, or select a shorter clip within the video?", minutes, seconds)
+        } else {
+            message = String(format: "This video is %d seconds long. Do you want to favorite the entire video, or select a shorter clip within the video?", Int(duration))
+        }
+        
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        
+        let entireVideoAction = UIAlertAction(title: "Entire Video", style: .default) { _ in
+            // Handle "Entire Video" action
+            self.generateThumbnailOfVideo(videoAsset: videoAsset)
+            self.makeEntireVideoFavorite(index: index, sender: sender)
+        }
+        
+        let shorterClipAction = UIAlertAction(title: "Shorter Clip", style: .default) { _ in
+            // Handle "Shorter Clip" action
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "CreateClipViewController") as! CreateClipViewController
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            navController.modalTransitionStyle = .crossDissolve
+            vc.delegate = self
+            vc.isFromHome = true
+            vc.videoAsset = self.arrVideoData[index]
+            self.present(navController, animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            // Handle "Cancel" action
+        }
+        
+        alertController.addAction(entireVideoAction)
+        alertController.addAction(shorterClipAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = [.up]
+        }
+        
+        present(alertController, animated: true, completion: nil)
+
+    }
+    
+    func makeEntireVideoFavorite(index: Int, sender: UIButton) {
         print("Favourite video: \(self.arrVideoData[index].videoURL ?? "")")
         CoreDataManager.shared.updateIsFavorite(videoURL: self.arrVideoData[index].videoURL ?? "", isFavorite: true)
         
@@ -211,6 +298,35 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             let videoData = CoreDataManager.shared.getAllVideos()
             for vdata in videoData {
                 print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
+            }
+        }
+    }
+    
+    func generateThumbnailOfVideo(videoAsset: VideoTable) {
+        
+        if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+            let destinationURL = directoryURL.appendingPathComponent("\(videoAsset.videoURL ?? "")")
+            if let directoryThumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails) {
+                let destinationThumbURL = directoryThumbURL.appendingPathComponent("\(videoAsset.videoURL ?? "").jpg")
+              
+                DispatchQueue.main.async {
+                    let asset = AVAsset(url: destinationURL)
+                    if let thumbnailImage = asset.generateThumbnail() {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                            if let imageData = thumbnailImage.jpegData(compressionQuality: 0.6) {
+                                do {
+                                    try imageData.write(to: destinationThumbURL)
+                                    
+                                    CoreDataManager.shared.saveThumbnailOfVideo(videoURL: videoAsset.videoURL ?? "", thumbULR: destinationThumbURL.lastPathComponent)
+                                                                        
+                                    print("Thumbnail saved successfully!")
+                                } catch {
+                                    print("Error saving Thumbnail: \(error)")
+                                }
+                            }
+                        })
+                    }
+                }
             }
         }
     }
@@ -492,8 +608,13 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
         }
         else {
             // Calculate the size of each cell based on the collectionView width and number of cells per row (3)
-            let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
-            let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
+//            let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
+//            let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
+//            //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
+//            return CGSize(width: cellWidth, height: cellHeight)
+            
+            let cellWidth = (collectionView.bounds.width - 25) / 2.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
+            let cellHeight = (collectionView.bounds.height - 30) / 3.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
             //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
             return CGSize(width: cellWidth, height: cellHeight)
         }
@@ -541,3 +662,12 @@ extension VideoWatcherViewController: FullscreenVideoViewControllerDelegate {
         }
     }
 }
+
+extension VideoWatcherViewController: CreateClipViewControllerDelegate {
+    func startAllPanelsFromClips() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}
+

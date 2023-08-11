@@ -25,8 +25,7 @@ class CoreDataManager {
         return persistentContainer.viewContext
     }
 
-    // MARK: - CRUD Functions
-
+    // MARK: - CRUD Functions for videos
     func saveVideo(videoURL: String) {
         let video = VideoTable(context: context)
         video.videoURL = videoURL
@@ -153,25 +152,44 @@ class CoreDataManager {
         }
     }
     
-    /*func getRandomVideos(count: Int) -> [String] {
+    func saveThumbnailOfVideo(videoURL: String, thumbULR: String) {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
+
+        do {
+            if let video = try context.fetch(fetchRequest).first {
+                video.thumbnailURL = thumbULR
+                try context.save()
+            }
+        } catch {
+            print("Error updating isFavorite: \(error)")
+        }
+    }
+    
+    // MARK: - CRUD Functions for clips
+    func saveClip(clipURL: String, thumbnailURL: String, videoAsset: VideoTable) {
+        let clip = VideoClip(context: context)
+        clip.clipURL = clipURL
+        clip.thumbnailURL = thumbnailURL
+        clip.video = videoAsset
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving clip: \(error)")
+        }
+    }
+    
+    func getAllClips() -> [VideoClip] {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
         
         do {
             let videos = try context.fetch(fetchRequest)
-            
-            guard !videos.isEmpty else {
-                return []
-            }
-            
-            // Shuffle the videos and take the first 'count' videos
-            let shuffledVideos = videos.shuffled()
-            let randomVideos = shuffledVideos.prefix(count)
-            
-            return randomVideos.compactMap { $0.videoURL }
+            return videos
         } catch {
-            print("Error fetching random videos: \(error)")
+            print("Error fetching clips: \(error)")
             return []
         }
-    }*/
+    }
+    
 }

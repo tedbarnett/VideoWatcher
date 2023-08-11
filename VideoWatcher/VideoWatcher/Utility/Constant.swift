@@ -9,6 +9,8 @@ import Foundation
 
 struct DirectoryName {
     static let ImportedVideos = "ImportedVideos"
+    static let SavedClips = "SavedClips"
+    static let Thumbnails = "Thumbnails"
 }
 
 struct DropBox {

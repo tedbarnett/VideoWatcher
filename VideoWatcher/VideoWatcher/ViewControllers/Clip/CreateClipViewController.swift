@@ -9,8 +9,13 @@ import UIKit
 import AVKit
 import Photos
 
+protocol CreateClipViewControllerDelegate: AnyObject {
+    func startAllPanelsFromClips()
+}
+
 class CreateClipViewController: UIViewController {
     
+    weak var delegate: CreateClipViewControllerDelegate?
     let playerController = AVPlayerViewController()
     var trimmer: VideoTrimmer!
     var timingStackView: UIStackView!
@@ -23,6 +28,7 @@ class CreateClipViewController: UIViewController {
     private var asset: AVAsset!
     var videoAsset: VideoTable?
     var finalTrimmedAsset: AVAsset?
+    var isFromHome = false
 
     // MARK: - UIViewController
     override func viewDidLoad() {
@@ -117,10 +123,10 @@ class CreateClipViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.isHidden = false
         navigationItem.hidesBackButton = true
-        self.setupRightMenuButton()
+        self.setupMenuButton()
     }
     
-    func setupRightMenuButton() {
+    func setupMenuButton() {
         let closeButton = UIButton(type: .system)
         closeButton.tintColor = .white
         closeButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
@@ -134,58 +140,15 @@ class CreateClipViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: generateClip)
     }
     
-    @objc func generateButtonTapped() {
-        self.showAlertWithTextField()
+    @objc func closeButtonTapped() {
+        if self.isFromHome {
+            self.delegate?.startAllPanelsFromClips()
+        }
+        self.dismiss(animated: true)
     }
     
-    func createClip(clipName: String) {
-        // Create a temporary directory URL
-        
-        guard let avAsset = self.finalTrimmedAsset else {
-            print("AVAsset is nil")
-            return
-        }
-        
-        let tempDirectory = FileManager.default.temporaryDirectory
-        let tempFileURL = tempDirectory.appendingPathComponent(clipName)
-        
-        // Export the AVAsset to the temporary file
-        let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetHighestQuality)
-        exportSession?.outputURL = tempFileURL
-        exportSession?.outputFileType = .mp4
-        
-        exportSession?.exportAsynchronously(completionHandler: {
-            switch exportSession?.status {
-            case .completed:
-                print("Export completed")
-                
-                // Request permission to access the photo library
-                PHPhotoLibrary.requestAuthorization { status in
-                    if status == .authorized {
-                        PHPhotoLibrary.shared().performChanges {
-                            // Create a change request to add the exported asset to the photo library
-                            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: tempFileURL)
-                        } completionHandler: { success, error in
-                            if success {
-                                print("Asset saved successfully")
-                                self.showAlert(title: "", message: "Clip saved successfully in Photo Library") { result in }
-                            } else if let error = error {
-                                print("Error saving asset: \(error.localizedDescription)")
-                                self.showAlert(title: "", message: "Error saving clip: \(error.localizedDescription)") { result in }
-                            }
-                        }
-                    } else {
-                        print("Permission not granted")
-                    }
-                }
-                
-            case .failed:
-                print("Export failed: \(exportSession?.error?.localizedDescription ?? "Unknown error")")
-                
-            default:
-                break
-            }
-        })
+    @objc func generateButtonTapped() {
+        self.showAlertWithTextField()
     }
     
     func showAlertWithTextField() {
@@ -196,13 +159,12 @@ class CreateClipViewController: UIViewController {
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
-            if let text = alertController.textFields?.first?.text, !text.isEmpty {
+            if let name = alertController.textFields?.first?.text, !name.isEmpty {
                 // Valid text entered, perform your action here
-                print("Text entered: \(text)")
-                //self?.createClip(clipName: text)
-                self?.showAlert(title: "", message: "Working on it") { result in}
+                print("Text name: \(name)")
+                self?.saveClip(clipName: name)
             } else {
-                // Blank text entered, show an error message or handle as needed
+                // Blank text entered, showing an error message
                 self?.showValidationError()
             }
         }
@@ -225,8 +187,82 @@ class CreateClipViewController: UIViewController {
         present(validationAlert, animated: true)
     }
     
-    @objc func closeButtonTapped() {
-        self.dismiss(animated: true)
+    // MARK: - Input
+    func saveClip(clipName: String) {
+        // Create a temporary directory URL
+        
+        guard let avAsset = self.finalTrimmedAsset else {
+            print("AVAsset is nil")
+            return
+        }
+        
+        if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.SavedClips) {
+            let destinationURL = directoryURL.appendingPathComponent("\(clipName).mp4")
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                self.showAlert(title: "Clip name already exist", message: "Please choose another name") { result in
+                    self.showAlertWithTextField()
+                }
+            }
+            else {
+                // Export the AVAsset to the temporary file
+                let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetHighestQuality)
+                exportSession?.outputURL = destinationURL
+                exportSession?.outputFileType = .mp4
+                
+                exportSession?.exportAsynchronously(completionHandler: {
+                    switch exportSession?.status {
+                    case .completed:
+                        print("Export completed")
+                        //CoreDataManager.shared.saveClip(clipURL: destinationURL.lastPathComponent, videoAsset: self.videoAsset!)
+                        print("clip saved to document directory path: \(destinationURL)")
+                        
+                        if let directoryThumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails) {
+                            let destinationThumbURL = directoryThumbURL.appendingPathComponent("\(clipName).jpg")
+                          
+                            DispatchQueue.main.async {
+                                let asset = AVAsset(url: destinationURL)
+                                if let thumbnailImage = asset.generateThumbnail() {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                                        if let imageData = thumbnailImage.jpegData(compressionQuality: 0.6) {
+                                            do {
+                                                try imageData.write(to: destinationThumbURL)
+                                                
+                                                CoreDataManager.shared.saveClip(clipURL: destinationURL.lastPathComponent, thumbnailURL: destinationThumbURL.lastPathComponent, videoAsset: self.videoAsset!)
+                                                                                                
+                                                self.showClipSavedToast()
+                                                print("Thumbnail saved successfully!")
+                                            } catch {
+                                                print("Error saving Thumbnail: \(error)")
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                        
+                        let clips = CoreDataManager.shared.getAllClips()
+                        print(clips)
+                    case .failed:
+                        print("Export failed: \(exportSession?.error?.localizedDescription ?? "Unknown error")")
+                        self.showAlert(title: "Error saving clip", message: "failed: \(exportSession?.error?.localizedDescription ?? "Unknown error")") { result in}
+                    default:
+                        break
+                    }
+                })
+            }
+        }
+    }
+    
+    func showClipSavedToast() {
+        let config = ToastConfiguration(
+            direction: .top,
+            autoHide: true,
+            enablePanToClose: true,
+            displayTime: 2,
+            animationTime: 0.2
+        )
+        let toast = Toast.text("Clip saved!", config: config)
+        toast.show(haptic: .success)
     }
     
     // MARK: - Input
