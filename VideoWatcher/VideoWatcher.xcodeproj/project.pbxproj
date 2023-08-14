@@ -30,6 +30,9 @@
 		5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
 		5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F516D2B2A80FDE50033E404 /* SwiftyDropbox */; };
+		5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */; };
+		5F51AF722A89F25300C79409 /* ManageVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF702A89F25300C79409 /* ManageVideoCell.swift */; };
+		5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F51AF712A89F25300C79409 /* ManageVideoCell.xib */; };
 		5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */; };
 		5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */; };
 		5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */; };
@@ -93,6 +96,9 @@
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideosViewController.swift; sourceTree = "<group>"; };
+		5F51AF702A89F25300C79409 /* ManageVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideoCell.swift; sourceTree = "<group>"; };
+		5F51AF712A89F25300C79409 /* ManageVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManageVideoCell.xib; sourceTree = "<group>"; };
 		5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenVideoViewController.swift; sourceTree = "<group>"; };
 		5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClipViewController.swift; sourceTree = "<group>"; };
 		5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 				5F9B81952A825D0800730F1B /* Favourite */,
 				5F6D477D2A84B84D00CC1F82 /* Fullscreen */,
 				5F6D47822A84F9FF00CC1F82 /* Clip */,
+				5F51AF6C2A89EB7200C79409 /* Manage Videos */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -245,6 +252,24 @@
 				5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		5F51AF6C2A89EB7200C79409 /* Manage Videos */ = {
+			isa = PBXGroup;
+			children = (
+				5F51AF6F2A89F23B00C79409 /* Cell */,
+				5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */,
+			);
+			path = "Manage Videos";
+			sourceTree = "<group>";
+		};
+		5F51AF6F2A89F23B00C79409 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5F51AF702A89F25300C79409 /* ManageVideoCell.swift */,
+				5F51AF712A89F25300C79409 /* ManageVideoCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		5F6D477D2A84B84D00CC1F82 /* Fullscreen */ = {
@@ -446,6 +471,7 @@
 				5F0AD6A62A78C81B00046C35 /* Assets.xcassets in Resources */,
 				5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */,
 				5F0AD6A12A78C81B00046C35 /* Main.storyboard in Resources */,
+				5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */,
 				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +513,7 @@
 				5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */,
 				5F0AD69A2A78C81B00046C35 /* AppDelegate.swift in Sources */,
 				5F516D292A80B6740033E404 /* Extensions.swift in Sources */,
+				5F51AF722A89F25300C79409 /* ManageVideoCell.swift in Sources */,
 				5FFE5BC92A865C6D00CF095D /* ToastView.swift in Sources */,
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
@@ -501,6 +528,7 @@
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
 				5FFE5BCF2A865C7E00CF095D /* TextAppleToastView.swift in Sources */,
 				5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */,
+				5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

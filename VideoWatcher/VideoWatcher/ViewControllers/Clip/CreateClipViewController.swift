@@ -155,7 +155,7 @@ class CreateClipViewController: UIViewController {
         let alertController = UIAlertController(title: "Name for this clip?", message:  nil, preferredStyle: .alert)
         
         alertController.addTextField { textField in
-            textField.placeholder = "Text"
+            textField.placeholder = "Clip name"
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in

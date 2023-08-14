@@ -102,10 +102,11 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
             let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(vClip.thumbnailURL ?? "")
             cell.imgThumbnail.kf.setImage(with: thumbURL)
         }
-        //cell.btnFavorite?.isHidden = true
+        
         cell.btnPlay.tag = indexPath.row
         cell.btnPlay.addTarget(self, action: #selector(btnPlayAction), for: .touchUpInside)
 
+        
         return cell
     }
     

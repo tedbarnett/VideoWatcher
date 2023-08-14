@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="VideoClip" representedClassName=".VideoClip" syncable="YES">
         <attribute name="clipURL" optional="YES" attributeType="String"/>
+        <attribute name="is_Deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String"/>
         <relationship name="video" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoTable" inverseName="clips" inverseEntity="VideoTable"/>
     </entity>

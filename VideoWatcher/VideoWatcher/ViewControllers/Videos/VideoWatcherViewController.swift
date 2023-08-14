@@ -21,13 +21,13 @@ class VideoWatcherViewController: UIViewController {
         
         self.setupUI()
         
-        /*let clips = CoreDataManager.shared.getAllClips()
+        let clips = CoreDataManager.shared.getAllClips()
         for clip in clips {
             print("clip name: \(clip.clipURL ?? "")")
             print("clip videos: \(clip.video?.videoURL ?? "")")
             print("Thumb URL: \(clip.thumbnailURL ?? "")")
         }
-        print(clips)*/
+        //print(clips)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +81,7 @@ class VideoWatcherViewController: UIViewController {
          */
         
         let moreVideos = UIAction(title: "Manage videos", image: nil) { _ in
-          
+            self.moveToManageVideosVC()
         }
         
         let favorite = UIAction(title: "Play clips", image: nil) { _ in
@@ -187,6 +187,18 @@ class VideoWatcherViewController: UIViewController {
         vc.delegate = self
         self.present(navController, animated: true)
     }
+    
+    func moveToManageVideosVC() {
+        self.isScreenVisible = false
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ManageVideosViewController") as! ManageVideosViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .overCurrentContext
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
 }
 
 extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -233,7 +245,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             self.makeEntireVideoFavorite(index: index, sender: sender)
         }
     }
-    
+
     func showBottomSheet(sender: UIButton, duration: Float64, index: Int, videoAsset: VideoTable) {
         var message = ""
         if duration >= 3600 {
@@ -671,3 +683,10 @@ extension VideoWatcherViewController: CreateClipViewControllerDelegate {
     }
 }
 
+extension VideoWatcherViewController: ManageVideosViewControllerDelegate {
+    func restartAllPanel() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}

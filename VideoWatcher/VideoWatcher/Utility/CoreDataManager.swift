@@ -66,6 +66,20 @@ class CoreDataManager {
             print("Error updating isDeleted: \(error)")
         }
     }
+    
+    func renameVideo(videoURL: String, newVideoURL: String) {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
+
+        do {
+            if let video = try context.fetch(fetchRequest).first {
+                video.videoURL = newVideoURL
+                try context.save()
+            }
+        } catch {
+            print("Error updating isDeleted: \(error)")
+        }
+    }
 
     func deleteVideo(videoURL: String) {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
@@ -172,6 +186,7 @@ class CoreDataManager {
         clip.clipURL = clipURL
         clip.thumbnailURL = thumbnailURL
         clip.video = videoAsset
+        clip.is_Deleted = false
         
         do {
             try context.save()
@@ -182,6 +197,7 @@ class CoreDataManager {
     
     func getAllClips() -> [VideoClip] {
         let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
         
         do {
             let videos = try context.fetch(fetchRequest)
@@ -192,4 +208,31 @@ class CoreDataManager {
         }
     }
     
+    func deleteClip(clipURL: String) {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "clipURL == %@", clipURL)
+
+        do {
+            if let clip = try context.fetch(fetchRequest).first {
+                context.delete(clip)
+                try context.save()
+            }
+        } catch {
+            print("Error deleting clip: \(error)")
+        }
+    }
+    
+    func renameClip(clipURL: String, newClipURL: String) {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "clipURL == %@", clipURL)
+
+        do {
+            if let video = try context.fetch(fetchRequest).first {
+                video.clipURL = newClipURL
+                try context.save()
+            }
+        } catch {
+            print("Error renaming clip: \(error)")
+        }
+    }
 }
