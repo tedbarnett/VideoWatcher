@@ -100,12 +100,21 @@ class VideoWatcherViewController: UIViewController {
     func getRandomVideo() {
         self.arrVideoData = CoreDataManager.shared.getRandomVideosData(count: 6)
         for vdata in self.arrVideoData {
-            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
+            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted) | clip: \(vdata.clips?.count ?? 0)")
         }
         self.collectionViewVideos.reloadData()
     }
     
-    func startNextRandomVideoFrom(index: Int) {
+    func startNextRandomVideoFrom(index: Int, isRandom: Bool) {
+        if isRandom == false {
+            let currentVideo = self.arrVideoData[index]
+            print("currentVideo: ", currentVideo.videoURL ?? "")
+            self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
+        }
+        else {
+            self.assignOriginalPreviousIndexesToCopy(index: index)
+        }
+        
         print("Changed RandomVideo at index: ", index)
         let videoData = CoreDataManager.shared.getRandomVideosData(count: 1)
         if videoData.count > 0 {
@@ -117,6 +126,190 @@ class VideoWatcherViewController: UIViewController {
                     videoCell.playVideo(videoAsset: randomAsset, isMuted: self.checkPanelIsMutedOrNot(index: index))
                 }
             }
+        }
+    }
+    
+    func startPreviousVideoAt(panel: Int) {
+        
+        var videoAsset: VideoTable?
+        
+        if panel == 0 {
+            if AppData.shared.panel1PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel1PreviousVideos[AppData.shared.panel1PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel1PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        else if panel == 1 {
+            if AppData.shared.panel2PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel2PreviousVideos[AppData.shared.panel2PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel2PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        else if panel == 2 {
+            if AppData.shared.panel3PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel3PreviousVideos[AppData.shared.panel3PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel3PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        else if panel == 3 {
+            if AppData.shared.panel4PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel4PreviousVideos[AppData.shared.panel4PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel4PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        else if panel == 4 {
+            if AppData.shared.panel5PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel5PreviousVideos[AppData.shared.panel5PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel5PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        else if panel == 5 {
+            if AppData.shared.panel6PreviousVideosIndexCopy >= 0 {
+                let prevVideoURL = AppData.shared.panel6PreviousVideos[AppData.shared.panel6PreviousVideosIndexCopy]
+                print("PREV: prevVideoURL: \(prevVideoURL)")
+                AppData.shared.panel6PreviousVideosIndexCopy -= 1
+                
+                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                
+            } else {
+                // No more previous videos in array2, play a random video from array1
+                //playNextVideo()
+                print("PREV: No previous video for panel: \(panel)")
+            }
+        }
+        
+        DispatchQueue.main.async {
+            if videoAsset != nil {
+                let indexPath = IndexPath(item: panel, section: 0)
+                if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+                    videoCell.playVideo(videoAsset: videoAsset!, isMuted: self.checkPanelIsMutedOrNot(index: panel))
+                }
+            }
+        }
+    }
+        
+    func assignOriginalPreviousIndexesToCopy(index: Int) {
+        if index == 0 {
+            AppData.shared.panel1PreviousVideosIndexCopy = AppData.shared.panel1PreviousVideosIndex
+        }
+        else if index == 1 {
+            AppData.shared.panel2PreviousVideosIndexCopy = AppData.shared.panel2PreviousVideosIndex
+        }
+        else if index == 2 {
+            AppData.shared.panel3PreviousVideosIndexCopy = AppData.shared.panel3PreviousVideosIndex
+        }
+        else if index == 3 {
+            AppData.shared.panel4PreviousVideosIndexCopy = AppData.shared.panel4PreviousVideosIndex
+        }
+        else if index == 4 {
+            AppData.shared.panel5PreviousVideosIndexCopy = AppData.shared.panel5PreviousVideosIndex
+        }
+        else if index == 5 {
+            AppData.shared.panel6PreviousVideosIndexCopy = AppData.shared.panel6PreviousVideosIndex
+        }
+    }
+    
+    func appendVideoInPreviousList(panel: Int, currentVideo: VideoTable) {
+        
+        if panel == 0 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel1PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel1PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel1PreviousVideos.append(videoURL)
+            AppData.shared.panel1PreviousVideosIndex = AppData.shared.panel1PreviousVideos.count - 1
+            AppData.shared.panel1PreviousVideosIndexCopy = AppData.shared.panel1PreviousVideos.count - 1
+            print("Panel 1 previous videos: \(AppData.shared.panel1PreviousVideos)")
+        }
+        else if panel == 1 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel2PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel2PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel2PreviousVideos.append(videoURL)
+            AppData.shared.panel2PreviousVideosIndex = AppData.shared.panel2PreviousVideos.count - 1
+            AppData.shared.panel2PreviousVideosIndexCopy = AppData.shared.panel2PreviousVideos.count - 1
+            print("Panel 2 previous videos: \(AppData.shared.panel2PreviousVideos)")
+        }
+        else if panel == 2 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel3PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel3PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel3PreviousVideos.append(videoURL)
+            AppData.shared.panel3PreviousVideosIndex = AppData.shared.panel3PreviousVideos.count - 1
+            AppData.shared.panel3PreviousVideosIndexCopy = AppData.shared.panel3PreviousVideos.count - 1
+            print("Panel 3 previous videos: \(AppData.shared.panel3PreviousVideos)")
+        }
+        else if panel == 3 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel4PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel4PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel4PreviousVideos.append(videoURL)
+            AppData.shared.panel4PreviousVideosIndex = AppData.shared.panel4PreviousVideos.count - 1
+            AppData.shared.panel4PreviousVideosIndexCopy = AppData.shared.panel4PreviousVideos.count - 1
+            print("Panel 4 previous videos: \(AppData.shared.panel4PreviousVideos)")
+        }
+        else if panel == 4 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel5PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel5PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel5PreviousVideos.append(videoURL)
+            AppData.shared.panel5PreviousVideosIndex = AppData.shared.panel5PreviousVideos.count - 1
+            AppData.shared.panel5PreviousVideosIndexCopy = AppData.shared.panel5PreviousVideos.count - 1
+            print("Panel 5 previous videos: \(AppData.shared.panel5PreviousVideos)")
+        }
+        else if panel == 5 {
+            let videoURL = currentVideo.videoURL ?? ""
+            if let existingIndex = AppData.shared.panel6PreviousVideos.firstIndex(of: videoURL) {
+                AppData.shared.panel6PreviousVideos.remove(at: existingIndex)
+            }
+            AppData.shared.panel6PreviousVideos.append(videoURL)
+            AppData.shared.panel6PreviousVideosIndex = AppData.shared.panel6PreviousVideos.count - 1
+            AppData.shared.panel6PreviousVideosIndexCopy = AppData.shared.panel6PreviousVideos.count - 1
+            print("Panel 6 previous videos: \(AppData.shared.panel6PreviousVideos)")
         }
     }
     
@@ -155,9 +348,37 @@ class VideoWatcherViewController: UIViewController {
                 if let player = videoCell.player {
                     if needToReloadCell {
                         videoCell.setupPlayer()
+                        if let currentItem = player.currentItem, let asset = currentItem.asset as? AVURLAsset {
+                            let url = asset.url.lastPathComponent
+                            print("Current AVPlayerItem URL: \(url)")
+                            self.setFavIcon(cell: videoCell, videoURL: url)
+                        }
                     }
                     if player.isPlaying == false {
                         player.play()
+                    }
+                }
+            }
+        }
+    }
+    
+    func setFavIcon(cell: VideoWatcherCell, videoURL: String) {
+        
+        if let videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: videoURL) {
+            print("Reload Name: \(videoAsset.videoURL ?? "") | isFav: \(videoAsset.isFavorite) | isDeleted: \(videoAsset.is_Deleted) | clip: \(videoAsset.clips?.count ?? 0)")
+            DispatchQueue.main.async {
+                if videoAsset.isFavorite {
+                    cell.btnFavorite.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                    cell.btnFavorite.tintColor = .red
+                }
+                else {
+                    if (videoAsset.clips?.count ?? 0) > 0 {
+                        cell.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
+                        cell.btnFavorite.tintColor = .white
+                    }
+                    else {
+                        cell.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                        cell.btnFavorite.tintColor = .white
                     }
                 }
             }
@@ -365,16 +586,20 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
 
             let result = self.audioButtonTitleAndImage(index: index)
-            let audio = UIAction(title: result.0, image: result.1, identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+            let muteUnmute = UIAction(title: result.0, image: result.1, identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
                 self.menuAudioAction(index: index)
             }
             
-            let skipForward = UIAction(title: "Next video", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                self.startNextRandomVideoFrom(index: index)
+            let nextVideo = UIAction(title: "Next video", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                self.startNextRandomVideoFrom(index: index, isRandom: false)
             }
             
-            let skipBackward = UIAction(title: "Previous video", image: UIImage(systemName: "backward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                
+            let previousVideo = UIAction(title: "Previous video", image: UIImage(systemName: "backward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                self.startPreviousVideoAt(panel: index)
+            }
+            if self.isPreviousVideoDisabled(panel: index) {
+                previousVideo.state = .off
+                previousVideo.attributes = .disabled
             }
             
             let fullScreen = UIAction(title: "Full screen", image: UIImage(systemName: "arrow.up.left.and.arrow.down.right"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
@@ -388,12 +613,13 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             
             self.pauseAllVideoPlayers(selectedIndex: index)
             
-            return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [audio, skipForward, skipBackward, fullScreen, delete])
+            return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, nextVideo, previousVideo, fullScreen, delete])
             
         }
         return context
     }
     
+    //MARK: - Mute/unmute menu actions
     func audioButtonTitleAndImage(index: Int) -> (String, UIImage) {
         var title = "Unmute"
         var speakerImage = UIImage(systemName: "speaker.wave.2")
@@ -552,7 +778,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         }
     }
     
-    //Contect menu actions
+    //MARK: - Delete menu actions
     @objc func showDeleteConfirmation(index: Int) {
         let alertController = UIAlertController(
             title: "Delete video",
@@ -564,7 +790,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             // Performing the delete action
             print("deleted video: \(self.arrVideoData[index].videoURL ?? "")")
             CoreDataManager.shared.updateIsDeleted(videoURL: self.arrVideoData[index].videoURL ?? "")
-            self.startNextRandomVideoFrom(index: index)
+            self.startNextRandomVideoFrom(index: index, isRandom: true)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 let videoData = CoreDataManager.shared.getAllVideos()
@@ -589,15 +815,59 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         present(alertController, animated: true, completion: nil)
     }
     
-    func openVideoEditor(videoAsset: VideoTable) {
-        let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
-        let videoPath = videoURL.absoluteString
-        if UIVideoEditorController.canEditVideo(atPath: videoPath) {
-            let editController = UIVideoEditorController()
-            editController.videoPath = videoPath
-            editController.delegate = self
-            present(editController, animated: true)
+    //MARK: - Previous audio action methods
+    func isPreviousVideoDisabled(panel: Int) -> Bool {
+        
+        if panel == 0 {
+            if AppData.shared.panel1PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
         }
+        else if panel == 1 {
+            if AppData.shared.panel2PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        else if panel == 2 {
+            if AppData.shared.panel3PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        else if panel == 3 {
+            if AppData.shared.panel4PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        else if panel == 4 {
+            if AppData.shared.panel5PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        else if panel == 5 {
+            if AppData.shared.panel6PreviousVideosIndexCopy != -1 {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        
+        return true
     }
 }
 
@@ -623,7 +893,7 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 //            let cellWidth = (collectionView.bounds.width - 30) / 3.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
 //            let cellHeight = (collectionView.bounds.height - 25) / 2.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
 //            //print("Cell size: ", CGSize(width: cellWidth, height: cellHeight))
-//            return CGSize(width: cellWidth, height: cellHeight)
+//             return CGSize(width: cellWidth, height: cellHeight)
             
             let cellWidth = (collectionView.bounds.width - 25) / 2.0 // Subtract 30 to consider 10px spacing on both sides and 10px spacing between cells
             let cellHeight = (collectionView.bounds.height - 30) / 3.0// Subtract 25 to consider 10px spacing on top and bottom and 5px spacing between cells
@@ -655,7 +925,7 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 
 extension VideoWatcherViewController: VideoWatcherCellDelegate {
     func startNextRandomVideo(index: Int) {
-        self.startNextRandomVideoFrom(index: index)
+        self.startNextRandomVideoFrom(index: index, isRandom: true)
     }
 }
 

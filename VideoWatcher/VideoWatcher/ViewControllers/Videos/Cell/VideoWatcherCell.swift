@@ -75,7 +75,7 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnSpeaker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
                 self.btnSpeaker.layer.shadowColor = UIColor.black.cgColor
                 self.btnSpeaker.layer.shadowRadius = 1.0
-                self.btnSpeaker.layer.shadowOpacity = 0.5
+                self.btnSpeaker.layer.shadowOpacity = 0.9
                 self.btnSpeaker.layer.shadowOffset = CGSize(width: 0, height: 0)
                 self.btnSpeaker.layer.masksToBounds = false
                 self.btnSpeaker.isHidden = true
@@ -112,15 +112,19 @@ class VideoWatcherCell: UICollectionViewCell {
             
             if videoAsset.isFavorite {
                 self.btnFavorite.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                self.btnFavorite.tintColor = .systemPink
+                self.btnFavorite.tintColor = .red
             }
             else {
-                self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
-                self.btnFavorite.tintColor = .white
+                if (videoAsset.clips?.count ?? 0) > 0 {
+                    self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
+                    self.btnFavorite.tintColor = .white
+                }
+                else {
+                    self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                    self.btnFavorite.tintColor = .white
+                }
             }
-            
-            //self.setSpeakerMuteUnmute(indexToChange: self.index)
-                        
+                                    
             print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
             self.lblError?.text = "\(videoURL.lastPathComponent)"
         }

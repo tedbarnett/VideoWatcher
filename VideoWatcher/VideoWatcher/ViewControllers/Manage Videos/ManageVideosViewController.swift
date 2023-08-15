@@ -333,7 +333,7 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         )
         
         let clip = self.arrClips[indexPath.row]
-        let deleteAction = UIAlertAction(title: "Delete video", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title: "Delete clip", style: .destructive) { _ in
             // Performing the delete action
             
             if let aClip = clip as? VideoClip {

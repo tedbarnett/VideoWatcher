@@ -27,7 +27,7 @@ class FullscreenVideoViewController: UIViewController {
     var isMuted = false
     var videoAsset: VideoTable?
     var isClosedTap = false
-    let gradientColors = [UIColor.black.withAlphaComponent(0.9), UIColor.clear]
+    let gradientColors = [UIColor.red.withAlphaComponent(0.9), UIColor.clear]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +66,10 @@ class FullscreenVideoViewController: UIViewController {
         self.applyShadowToButtons(view: trimButton)
         self.applyShadowToButtons(view: closeButton)
                 
+        var frame = self.viewButtonContainer.frame
+        frame.size.width = self.view.frame.size.width
+        self.viewButtonContainer.frame = frame
+        
         viewButtonContainer.applyBottomToTopGradient(colors: self.gradientColors)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewButtonTapped))
@@ -164,7 +168,6 @@ class FullscreenVideoViewController: UIViewController {
     }
     
     // MARK: Play/Pause Button Action
-    
     @IBAction func playPauseButtonTapped(_ sender: UIButton) {
         if player?.rate == 0 {
             player?.play()

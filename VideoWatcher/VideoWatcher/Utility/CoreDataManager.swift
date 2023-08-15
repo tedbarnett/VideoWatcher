@@ -108,6 +108,25 @@ class CoreDataManager {
         }
     }
     
+    func getVideoDataFrom(videoURL: String) -> VideoTable? {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            if let video = videos.first {
+                print("Fetched video: \(video)")
+                return video
+            } else {
+                print("No matching video found.")
+                return nil
+            }
+        } catch {
+            print("Error fetching video: \(error)")
+            return nil
+        }
+    }
+    
     func getRandomVideosData(count: Int) -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
