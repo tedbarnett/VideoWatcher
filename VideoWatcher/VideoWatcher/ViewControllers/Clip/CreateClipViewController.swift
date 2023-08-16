@@ -22,6 +22,7 @@ class CreateClipViewController: UIViewController {
     var leadingTrimLabel: UILabel!
     var currentTimeLabel: UILabel!
     var trailingTrimLabel: UILabel!
+    var startSeconds = String()
     
     private var wasPlaying = false
     private var player: AVPlayer! {playerController.player}
@@ -227,7 +228,7 @@ class CreateClipViewController: UIViewController {
                                             do {
                                                 try imageData.write(to: destinationThumbURL)
                                                 
-                                                CoreDataManager.shared.saveClip(clipURL: destinationURL.lastPathComponent, thumbnailURL: destinationThumbURL.lastPathComponent, videoAsset: self.videoAsset!)
+                                                CoreDataManager.shared.saveClip(clipURL: destinationURL.lastPathComponent, thumbnailURL: destinationThumbURL.lastPathComponent, videoAsset: self.videoAsset!, startSeconds: self.startSeconds)
                                                                                                 
                                                 self.showClipSavedToast()
                                                 print("Thumbnail saved successfully!")
@@ -240,8 +241,8 @@ class CreateClipViewController: UIViewController {
                             }
                         }
                         
-                        let clips = CoreDataManager.shared.getAllClips()
-                        print(clips)
+                        //let clips = CoreDataManager.shared.getAllClips()
+                        //print(clips)
                     case .failed:
                         print("Export failed: \(exportSession?.error?.localizedDescription ?? "Unknown error")")
                         self.showAlert(title: "Error saving clip", message: "failed: \(exportSession?.error?.localizedDescription ?? "Unknown error")") { result in}
@@ -313,6 +314,8 @@ class CreateClipViewController: UIViewController {
 
     // MARK: - Private
     private func updateLabels() {
+        self.startSeconds = trimmer.selectedRange.start.displayTotalSeconds
+        print("Start seconds: \(self.startSeconds)")
         leadingTrimLabel.text = trimmer.selectedRange.start.displayString
         currentTimeLabel.text = trimmer.progress.displayString
         trailingTrimLabel.text = trimmer.selectedRange.end.displayString

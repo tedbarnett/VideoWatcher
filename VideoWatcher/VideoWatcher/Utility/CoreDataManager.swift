@@ -200,13 +200,13 @@ class CoreDataManager {
     }
     
     // MARK: - CRUD Functions for clips
-    func saveClip(clipURL: String, thumbnailURL: String, videoAsset: VideoTable) {
+    func saveClip(clipURL: String, thumbnailURL: String, videoAsset: VideoTable, startSeconds: String) {
         let clip = VideoClip(context: context)
         clip.clipURL = clipURL
         clip.thumbnailURL = thumbnailURL
         clip.video = videoAsset
         clip.is_Deleted = false
-        
+        clip.startSeconds = startSeconds
         do {
             try context.save()
         } catch {
@@ -253,5 +253,49 @@ class CoreDataManager {
         } catch {
             print("Error renaming clip: \(error)")
         }
+    }
+    
+    func generateCSVFromVideoClips() -> URL? {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        
+        do {
+            let videoClips = try context.fetch(fetchRequest)
+            
+            // Create a string for CSV content
+            var csvString = "File Name,Start (secs),Clip Title\n"
+            
+            for videoClip in videoClips {
+                if let clipURL = videoClip.clipURL,
+                   let startSeconds = videoClip.startSeconds {
+                    
+                    csvString += "\"\(videoClip.video?.videoURL ?? "")\",\"\(startSeconds)\",\"\(self.removeFileExtension(from: clipURL))\"\n"
+                }
+            }
+            
+            // Create a temporary file to hold the CSV content
+            let tempDirectoryURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent("Favorites(from VideoWatcher).csv")
+            
+            // Write the CSV content to the temporary file
+            do {
+                try csvString.write(to: tempDirectoryURL, atomically: true, encoding: .utf8)
+                return tempDirectoryURL
+                
+            } catch {
+                print("Error writing CSV content to temporary file: \(error)")
+                return nil
+            }
+            
+        } catch {
+            print("Error fetching VideoClip records: \(error)")
+            return nil
+        }
+    }
+    
+    func removeFileExtension(from filename: String) -> String {
+        if let dotIndex = filename.lastIndex(of: ".") {
+            return String(filename[..<dotIndex])
+        }
+        return filename
     }
 }

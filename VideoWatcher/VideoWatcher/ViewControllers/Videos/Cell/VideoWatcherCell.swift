@@ -10,7 +10,8 @@ import AVFoundation
 import Photos
 
 protocol VideoWatcherCellDelegate: AnyObject {
-    func startNextRandomVideo(index: Int)
+    func startNextRandomVideo(index: Int, isRandom: Bool)
+    func startPreviousVideo(index: Int)
 }
 
 class VideoWatcherCell: UICollectionViewCell {
@@ -22,6 +23,14 @@ class VideoWatcherCell: UICollectionViewCell {
     var lblError: UILabel?
     var btnFavorite = UIButton()
     var btnSpeaker = UIButton()
+    
+    var slidingAnimation: CATransition = {
+        let transition = CATransition()
+        transition.type = .push
+        transition.subtype = .fromRight
+        transition.duration = 0.5
+        return transition
+    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -79,6 +88,15 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnSpeaker.layer.shadowOffset = CGSize(width: 0, height: 0)
                 self.btnSpeaker.layer.masksToBounds = false
                 self.btnSpeaker.isHidden = true
+                
+                // Add swipe gesture recognizers
+                let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipe(_:)))
+                leftSwipe.direction = .left
+                self.addGestureRecognizer(leftSwipe)
+                
+                let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipe(_:)))
+                rightSwipe.direction = .right
+                self.addGestureRecognizer(rightSwipe)
             }
             else {
                 self.lblError?.frame = CGRect(x: 10, y: self.bounds.height - 23, width: self.bounds.width - 20, height: 13)
@@ -99,7 +117,7 @@ class VideoWatcherCell: UICollectionViewCell {
             
             if self.player != nil && self.player?.currentItem != nil {
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
-                    self.delegate?.startNextRandomVideo(index: self.index)
+                    self.delegate?.startNextRandomVideo(index: self.index, isRandom: true)
                 }
             }
             
@@ -149,5 +167,81 @@ class VideoWatcherCell: UICollectionViewCell {
         else if indexToChange == 5 && AppData.shared.panel6IsMute == false {
             self.btnSpeaker.isHidden = false
         }
+    }
+    
+    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            self.delegate?.startNextRandomVideo(index: self.index, isRandom: false)
+            animateSlidingEffect(.fromRight)
+        } else if gesture.direction == .right {
+            if self.checkPreviousVideoAvailable() {
+                self.delegate?.startPreviousVideo(index: self.index)
+                animateSlidingEffect(.fromLeft)
+            }
+        }
+    }
+    
+    func checkPreviousVideoAvailable() -> Bool {
+        if self.index == 0 {
+            if AppData.shared.panel1PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        else if self.index == 1 {
+            if AppData.shared.panel2PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        else if self.index == 2 {
+            if AppData.shared.panel3PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        else if self.index == 3 {
+            if AppData.shared.panel4PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        else if self.index == 4 {
+            if AppData.shared.panel5PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        else if self.index == 5 {
+            if AppData.shared.panel6PreviousVideosIndexCopy >= 0 {
+                return true
+            }
+            else
+            {
+                print("PREV: No previous video for panel: \(self.index)")
+                return false
+            }
+        }
+        return false
+    }
+    
+    func animateSlidingEffect(_ subtype: CATransitionSubtype) {
+        slidingAnimation.subtype = subtype
+        playerLayer?.add(slidingAnimation, forKey: "transition")
     }
 }

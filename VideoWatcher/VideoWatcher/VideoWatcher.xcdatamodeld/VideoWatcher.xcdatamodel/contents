@@ -3,6 +3,7 @@
     <entity name="VideoClip" representedClassName=".VideoClip" syncable="YES">
         <attribute name="clipURL" optional="YES" attributeType="String"/>
         <attribute name="is_Deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="startSeconds" optional="YES" attributeType="String"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String"/>
         <relationship name="video" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoTable" inverseName="clips" inverseEntity="VideoTable"/>
     </entity>

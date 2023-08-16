@@ -102,6 +102,29 @@ extension CMTime {
         formatter.allowedUnits = [.minute, .second]
         return String(format: "%@.%03d", formatter.string(from: offset) ?? "00:00", nanoseconds)
     }
+    
+    var displaySeconds: String {
+        let offset = seconds
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.minute, .second]
+        return formatter.string(from: offset) ?? "00:00"
+    }
+    
+    var displayStringWithHours: String {
+        let offset = seconds
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.hour, .minute, .second]
+        return formatter.string(from: offset) ?? "00:00:00"
+    }
+    
+    var displayTotalSeconds: String {
+        let totalSeconds = Int(seconds)
+        return String(totalSeconds)
+    }
 }
 
 extension UIViewController {

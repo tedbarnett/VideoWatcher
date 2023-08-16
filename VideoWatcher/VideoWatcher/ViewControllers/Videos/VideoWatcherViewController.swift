@@ -26,6 +26,7 @@ class VideoWatcherViewController: UIViewController {
             print("clip name: \(clip.clipURL ?? "")")
             print("clip videos: \(clip.video?.videoURL ?? "")")
             print("Thumb URL: \(clip.thumbnailURL ?? "")")
+            print("start seconds: \(clip.startSeconds ?? "")")
         }
         //print(clips)
     }
@@ -924,8 +925,12 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension VideoWatcherViewController: VideoWatcherCellDelegate {
-    func startNextRandomVideo(index: Int) {
-        self.startNextRandomVideoFrom(index: index, isRandom: true)
+    func startNextRandomVideo(index: Int, isRandom: Bool) {
+        self.startNextRandomVideoFrom(index: index, isRandom: isRandom)
+    }
+    
+    func startPreviousVideo(index: Int) {
+        self.startPreviousVideoAt(panel: index)
     }
 }
 

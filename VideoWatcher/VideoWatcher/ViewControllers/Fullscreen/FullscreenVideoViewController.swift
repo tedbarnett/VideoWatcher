@@ -27,7 +27,7 @@ class FullscreenVideoViewController: UIViewController {
     var isMuted = false
     var videoAsset: VideoTable?
     var isClosedTap = false
-    let gradientColors = [UIColor.red.withAlphaComponent(0.9), UIColor.clear]
+    let gradientColors = [UIColor.black.withAlphaComponent(0.9), UIColor.clear]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,9 +150,6 @@ class FullscreenVideoViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             self.viewPlayerContainer.bounds = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
             self.playerLayer?.frame = self.viewPlayerContainer.bounds
-            print("size: \(size)")
-            print("self.playerLayer?.frame: \(self.playerLayer?.frame)")
-            print("self.viewPlayerContainer.bounds: \(self.viewPlayerContainer.bounds)")
             
             var frame = self.viewButtonContainer.frame
             frame.size.width = size.width

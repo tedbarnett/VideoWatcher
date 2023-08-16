@@ -2,7 +2,7 @@
 //  VideoClip+CoreDataProperties.swift
 //  VideoWatcher
 //
-//  Created by MyMac on 14/08/23.
+//  Created by MyMac on 16/08/23.
 //
 //
 
@@ -17,8 +17,9 @@ extension VideoClip {
     }
 
     @NSManaged public var clipURL: String?
-    @NSManaged public var thumbnailURL: String?
     @NSManaged public var is_Deleted: Bool
+    @NSManaged public var thumbnailURL: String?
+    @NSManaged public var startSeconds: String?
     @NSManaged public var video: VideoTable?
 
 }
