@@ -38,6 +38,29 @@ class CoreDataManager {
             print("Error saving video: \(error)")
         }
     }
+    
+    func getRandomVideos(count: Int) -> [VideoTable] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            
+            guard !videos.isEmpty else {
+                return []
+            }
+            
+            // Shuffle the videos and take the first 'count' videos
+            let shuffledVideos = videos.shuffled()
+            let randomVideos = shuffledVideos.prefix(count)
+            
+            return Array(randomVideos)
+            
+        } catch {
+            print("Error fetching random videos: \(error)")
+            return []
+        }
+    }
 
     func updateIsFavorite(videoURL: String, isFavorite: Bool) {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
@@ -108,7 +131,20 @@ class CoreDataManager {
         }
     }
     
-    func getVideoDataFrom(videoURL: String) -> VideoTable? {
+    func getAllVideosExceptDeleted() -> [VideoTable] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        
+        do {
+            let videos = try context.fetch(fetchRequest)
+            return videos
+        } catch {
+            print("Error fetching videos: \(error)")
+            return []
+        }
+    }
+    
+    func getVideoFrom(videoURL: String) -> VideoTable? {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
         
@@ -127,54 +163,9 @@ class CoreDataManager {
         }
     }
     
-    func getRandomVideosData(count: Int) -> [VideoTable] {
-        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
-        
-        do {
-            let videos = try context.fetch(fetchRequest)
-            
-            guard !videos.isEmpty else {
-                return []
-            }
-            
-            // Shuffle the videos and take the first 'count' videos
-            let shuffledVideos = videos.shuffled()
-            let randomVideos = shuffledVideos.prefix(count)
-            
-            return Array(randomVideos)
-            
-        } catch {
-            print("Error fetching random videos: \(error)")
-            return []
-        }
-    }
-    
-    func getRandomVideos(count: Int) -> [String] {
-        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
-        
-        do {
-            let videos = try context.fetch(fetchRequest)
-            
-            guard !videos.isEmpty else {
-                return []
-            }
-            
-            // Shuffle the videos and take the first 'count' videos
-            let shuffledVideos = videos.shuffled()
-            let randomVideos = shuffledVideos.prefix(count)
-            
-            return randomVideos.compactMap { $0.videoURL }
-        } catch {
-            print("Error fetching random videos: \(error)")
-            return []
-        }
-    }
-    
     func getAllFavoriteVideos() -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "isFavorite == true")
+        fetchRequest.predicate = NSPredicate(format: "isFavorite == true AND is_Deleted == false")
         
         do {
             let videos = try context.fetch(fetchRequest)
@@ -196,6 +187,18 @@ class CoreDataManager {
             }
         } catch {
             print("Error updating isFavorite: \(error)")
+        }
+    }
+    
+    func getDeletedVideos() -> [VideoTable] {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == true")
+        do {
+            let videos = try context.fetch(fetchRequest)
+            return videos
+        } catch {
+            print("Error fetching videos: \(error)")
+            return []
         }
     }
     
@@ -238,6 +241,20 @@ class CoreDataManager {
             }
         } catch {
             print("Error deleting clip: \(error)")
+        }
+    }
+    
+    func updateClipIsDeleted(clipURL: String) {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "clipURL == %@", clipURL)
+
+        do {
+            if let clip = try context.fetch(fetchRequest).first {
+                clip.is_Deleted = true
+                try context.save()
+            }
+        } catch {
+            print("Error updating isDeleted: \(error)")
         }
     }
     
@@ -297,5 +314,17 @@ class CoreDataManager {
             return String(filename[..<dotIndex])
         }
         return filename
+    }
+    
+    func getDeletedClips() -> [VideoClip] {
+        let fetchRequest: NSFetchRequest<VideoClip> = VideoClip.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == true")
+        do {
+            let videos = try context.fetch(fetchRequest)
+            return videos
+        } catch {
+            print("Error fetching clips: \(error)")
+            return []
+        }
     }
 }

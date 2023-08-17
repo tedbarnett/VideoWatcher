@@ -89,17 +89,21 @@ class VideoWatcherViewController: UIViewController {
             self.moveToFavouriteList()
         }
         
+        let myStats = UIAction(title: "My stats", image: nil) { _ in
+            self.moveToMyStats()
+        }
+        
         let settings = UIAction(title: "Settings", image: nil) { _ in
           
         }
         
         ellipsisButton.overrideUserInterfaceStyle = .dark
         ellipsisButton.showsMenuAsPrimaryAction = true
-        ellipsisButton.menu = UIMenu(title: "", children: [moreVideos, favorite, settings])
+        ellipsisButton.menu = UIMenu(title: "", children: [moreVideos, favorite, myStats, settings])
     }
     
     func getRandomVideo() {
-        self.arrVideoData = CoreDataManager.shared.getRandomVideosData(count: 6)
+        self.arrVideoData = CoreDataManager.shared.getRandomVideos(count: 6)
         for vdata in self.arrVideoData {
             print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted) | clip: \(vdata.clips?.count ?? 0)")
         }
@@ -117,7 +121,7 @@ class VideoWatcherViewController: UIViewController {
         }
         
         print("Changed RandomVideo at index: ", index)
-        let videoData = CoreDataManager.shared.getRandomVideosData(count: 1)
+        let videoData = CoreDataManager.shared.getRandomVideos(count: 1)
         if videoData.count > 0 {
             let randomAsset = videoData.first!
             self.arrVideoData[index] = randomAsset
@@ -140,7 +144,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel1PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -154,7 +158,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel2PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -168,7 +172,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel3PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -182,7 +186,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel4PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -196,7 +200,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel5PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -210,7 +214,7 @@ class VideoWatcherViewController: UIViewController {
                 print("PREV: prevVideoURL: \(prevVideoURL)")
                 AppData.shared.panel6PreviousVideosIndexCopy -= 1
                 
-                videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: prevVideoURL)
+                videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: prevVideoURL)
                 
             } else {
                 // No more previous videos in array2, play a random video from array1
@@ -364,8 +368,7 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func setFavIcon(cell: VideoWatcherCell, videoURL: String) {
-        
-        if let videoAsset = CoreDataManager.shared.getVideoDataFrom(videoURL: videoURL) {
+        if let videoAsset = CoreDataManager.shared.getVideoFrom(videoURL: videoURL) {
             print("Reload Name: \(videoAsset.videoURL ?? "") | isFav: \(videoAsset.isFavorite) | isDeleted: \(videoAsset.is_Deleted) | clip: \(videoAsset.clips?.count ?? 0)")
             DispatchQueue.main.async {
                 if videoAsset.isFavorite {
@@ -373,9 +376,24 @@ class VideoWatcherViewController: UIViewController {
                     cell.btnFavorite.tintColor = .red
                 }
                 else {
-                    if (videoAsset.clips?.count ?? 0) > 0 {
-                        cell.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
-                        cell.btnFavorite.tintColor = .white
+                    if let clipsSet = videoAsset.clips {
+                        var totalClips: [VideoClip] = []
+                        let clipsArray = clipsSet.allObjects as? [VideoClip] ?? []
+                        for clip in clipsArray {
+                            print("Clip URL: \(clip.clipURL ?? "")")
+                            if clip.is_Deleted == false {
+                                totalClips.append(clip)
+                            }
+                        }
+                        
+                        if totalClips.count > 0 {
+                            cell.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
+                            cell.btnFavorite.tintColor = .white
+                        }
+                        else {
+                            cell.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                            cell.btnFavorite.tintColor = .white
+                        }
                     }
                     else {
                         cell.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -389,6 +407,16 @@ class VideoWatcherViewController: UIViewController {
     func moveToFavouriteList() {
         self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
+    
+    func moveToMyStats() {
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyStatsViewController") as! MyStatsViewController
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .crossDissolve
@@ -960,6 +988,15 @@ extension VideoWatcherViewController: CreateClipViewControllerDelegate {
 
 extension VideoWatcherViewController: ManageVideosViewControllerDelegate {
     func restartAllPanel() {
+        self.isScreenVisible = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}
+
+extension VideoWatcherViewController: MyStatsViewControllerDelegate {
+    func startAllPanelAgain() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.playAllVideoPlayers(needToReloadCell: true)
         }

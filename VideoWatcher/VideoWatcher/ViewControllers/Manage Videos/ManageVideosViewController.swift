@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 import AVFoundation
 import AVKit
+import PhotosUI
 
 protocol ManageVideosViewControllerDelegate: AnyObject {
     func restartAllPanel()
@@ -24,6 +25,17 @@ class ManageVideosViewController: UIViewController {
     @IBOutlet weak var viewContainerTrailing: NSLayoutConstraint!
     @IBOutlet weak var viewContainerTop: NSLayoutConstraint!
     @IBOutlet weak var viewContainerBottom: NSLayoutConstraint!
+    
+    //Import from Photo Lib outlets and variables
+    @IBOutlet var viewPhotoLibLoading: UIView!
+    @IBOutlet weak var activityIndicatorPhotoLib: UIActivityIndicatorView!
+    @IBOutlet weak var lblLoadingPhotoLib: UILabel!
+    @IBOutlet weak var progressPhotoLib: UIProgressView!
+    private var selection = [String: PHPickerResult]()
+    private var selectedAssetIdentifiers = [String]()
+    private var selectedAssetIdentifierIterator: IndexingIterator<[String]>?
+    private var currentAssetIdentifier: String?
+    var totalProgress: Float = 0.0
     
     var indexpathToRename: IndexPath?
     var arrClips: [Any] = []
@@ -45,11 +57,25 @@ class ManageVideosViewController: UIViewController {
         self.adjustPopupConstraints()
         self.setupMenuOptions()
         self.getAllClips()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.viewPhotoLibLoading.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
+            self.viewContainer.addSubview(self.viewPhotoLibLoading)
+            self.hidePhotoLibLoadingView()
+        }
+    }
+    
+    func showPhotoLibLoadingView() {
+        self.viewPhotoLibLoading.isHidden = false
+        
+    }
+    
+    func hidePhotoLibLoadingView() {
+        self.viewPhotoLibLoading.isHidden = true
     }
     
     func setupMenuOptions() {
         let PhotoLibrary = UIAction(title: "Photo Library", image: nil) { _ in
-            
+            self.presentPicker()
         }
         
         let GoogleDrive = UIAction(title: "Google Drive", image: nil) { _ in
@@ -78,6 +104,12 @@ class ManageVideosViewController: UIViewController {
             self.viewContainerTop.constant = 80
             self.viewContainerBottom.constant = 80
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            UIView.animate(withDuration: 0.2) {
+                
+            }
+        }
     }
     
     @IBAction func btnPlusAction(_ sender: Any) {
@@ -104,6 +136,29 @@ class ManageVideosViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         self.adjustPopupConstraints()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.viewPhotoLibLoading.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
+        }
+    }
+    
+    //MARK: - Import from Photo Lib
+    private func presentPicker() {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        // Set the filter type according to the user’s selection.
+        configuration.filter = .videos
+        // Set the mode to avoid transcoding, if possible, if your app supports arbitrary image/video encodings.
+        configuration.preferredAssetRepresentationMode = .current
+        // Set the selection behavior to respect the user’s selection order.
+        configuration.selection = .default//.ordered
+        // Set the selection limit to enable multiselection.
+        configuration.selectionLimit = 0
+        // Set the preselected asset identifiers with the identifiers that the app tracks.
+        configuration.preselectedAssetIdentifiers = selectedAssetIdentifiers
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
 }
 
@@ -149,7 +204,7 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
                 
         return cell
     }
-    //
+    
     @objc func btnPlayAction(sender: UIButton) {
         let index = sender.tag
         let clip = self.arrClips[index]
@@ -344,7 +399,7 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
                     let destinationURL = directoryURL.appendingPathComponent(aClip.clipURL ?? "")
                     if FileManager.default.fileExists(atPath: destinationURL.path) {
                         try? FileManager.default.removeItem(at: destinationURL)
-                        CoreDataManager.shared.deleteClip(clipURL: "\(aClip.clipURL ?? "")")
+                        CoreDataManager.shared.updateClipIsDeleted(clipURL: "\(aClip.clipURL ?? "")")
                     }
                 }
                 
@@ -385,5 +440,116 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         }
         
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension ManageVideosViewController: PHPickerViewControllerDelegate {
+    /// - Tag: ParsePickerResults
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        picker.dismiss(animated: true, completion: {
+            
+            let existingSelection = self.selection
+            var newSelection = [String: PHPickerResult]()
+            for result in results {
+                let identifier = result.assetIdentifier!
+                newSelection[identifier] = existingSelection[identifier] ?? result
+            }
+            
+            // Track the selection in case the user deselects it later.
+            self.selection = newSelection
+            self.selectedAssetIdentifiers = results.map(\.assetIdentifier!)
+            self.selectedAssetIdentifierIterator = self.selectedAssetIdentifiers.makeIterator()
+            
+            if self.selectedAssetIdentifiers.count > 0 {
+                DispatchQueue.main.async {
+                    self.showPhotoLibLoadingView()
+                    self.progressPhotoLib.isHidden = false
+                    self.totalProgress = 0.0
+                    self.lblLoadingPhotoLib.isHidden = false
+                    self.lblLoadingPhotoLib.text = "Loading \(self.selectedAssetIdentifiers.count) videos"
+                    self.activityIndicatorPhotoLib.isHidden = false
+                    self.activityIndicatorPhotoLib.startAnimating()
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.copyVideosToDocumentDirectory()
+                }
+            }
+        })
+    }
+    
+    func copyVideosToDocumentDirectory() {
+        let group = DispatchGroup()
+        
+        for assetIdentifier in selectedAssetIdentifiers {
+            if let result = selection[assetIdentifier] {
+                let itemProvider = result.itemProvider
+                
+                if itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                    group.enter()
+                    itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+                        
+                        self?.totalProgress += 1
+                        if let url = url, error == nil {
+                            self?.copyVideoFileToDocumentDirectory(url: url)
+                        } else if let error = error {
+                            print("Error loading video file: \(error)")
+                        }
+                        DispatchQueue.main.async {
+                            self?.updateProgressBar()
+                        }
+                        group.leave()
+                    }
+                }
+            }
+        }
+        
+        group.notify(queue: .main, execute: { // executed after all async calls in for loop finish
+            print("done with all async calls")
+            self.hidePhotoLibLoadingView()
+            self.showNewVideoImportedToast()
+        })
+    }
+
+    func copyVideoFileToDocumentDirectory(url: URL) {
+        do {
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                
+                let destinationURL = directoryURL.appendingPathComponent(url.lastPathComponent)
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    return
+                }
+                
+                try FileManager.default.copyItem(at: url, to: destinationURL) //Copy videos from Files or iCloud drive to app's document directory
+                CoreDataManager.shared.saveVideo(videoURL: destinationURL.lastPathComponent)
+                print("Video copied to document directory: \(destinationURL)")
+                /*let allVideos = CoreDataManager.shared.getAllVideos()
+                for video in allVideos {
+                    print("Video URL from COREDATA: \(video.videoURL ?? "N/A")")
+                }*/
+            }
+        }
+        catch {
+            print("Error copying video: \(error)")
+        }
+    }
+    
+    func updateProgressBar() {
+        let progress = self.totalProgress / Float(self.selectedAssetIdentifiers.count)
+        print("Progress: \(progress)")
+        self.progressPhotoLib.progress = progress
+    }
+    
+    func showNewVideoImportedToast() {
+        let config = ToastConfiguration(
+            direction: .top,
+            autoHide: true,
+            enablePanToClose: true,
+            displayTime: 3,
+            animationTime: 0.2
+        )
+        let toast = Toast.text("New videos imported successfully", config: config)
+        toast.show(haptic: .success)
     }
 }

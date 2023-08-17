@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyStatTableViewCell" rowHeight="93" id="KGk-i7-Jjw" customClass="MyStatTableViewCell" customModule="VideoWatcher" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="326" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="326" height="71"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4x-0R-xzB">
+                        <rect key="frame" x="20" y="5" width="286" height="61"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3vy-3t-5Qm">
+                                <rect key="frame" x="0.0" y="0.0" width="7" height="61"/>
+                                <color key="backgroundColor" red="0.19736426767676762" green="0.0" blue="0.014751683014876811" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="Idq-wt-ODZ"/>
+                                    <constraint firstAttribute="width" constant="7" id="NE8-2r-mRI"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total video minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgf-kT-CsK">
+                                <rect key="frame" x="15" y="9" width="155" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="kcz-f3-HrW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKp-sE-4Dr">
+                                <rect key="frame" x="15" y="34" width="95" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="WPS-8X-Jwu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.11744398089370345" green="0.11744398089370345" blue="0.11744398089370345" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="zKp-sE-4Dr" firstAttribute="top" secondItem="bgf-kT-CsK" secondAttribute="bottom" constant="4" id="CmI-mo-HVJ"/>
+                            <constraint firstItem="3vy-3t-5Qm" firstAttribute="top" secondItem="Q4x-0R-xzB" secondAttribute="top" id="Mjx-Rh-D1M"/>
+                            <constraint firstItem="bgf-kT-CsK" firstAttribute="leading" secondItem="3vy-3t-5Qm" secondAttribute="trailing" constant="8" id="SIo-FC-x0S"/>
+                            <constraint firstAttribute="height" constant="61" id="c9X-6j-H2g"/>
+                            <constraint firstItem="bgf-kT-CsK" firstAttribute="top" secondItem="Q4x-0R-xzB" secondAttribute="top" constant="9" id="gbt-3w-SxK"/>
+                            <constraint firstItem="3vy-3t-5Qm" firstAttribute="leading" secondItem="Q4x-0R-xzB" secondAttribute="leading" id="n83-KD-rbR"/>
+                            <constraint firstItem="zKp-sE-4Dr" firstAttribute="leading" secondItem="3vy-3t-5Qm" secondAttribute="trailing" constant="8" id="yoG-rh-5fr"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="Q4x-0R-xzB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="2dm-m4-CAR"/>
+                    <constraint firstAttribute="trailing" secondItem="Q4x-0R-xzB" secondAttribute="trailing" constant="20" id="DPy-rw-slS"/>
+                    <constraint firstItem="Q4x-0R-xzB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="E01-7G-G8S"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="lblMinutes" destination="zKp-sE-4Dr" id="1pb-63-kpN"/>
+                <outlet property="lblTitle" destination="bgf-kT-CsK" id="VJ3-21-FsP"/>
+            </connections>
+            <point key="canvasLocation" x="134.35114503816794" y="-15.140845070422536"/>
+        </tableViewCell>
+    </objects>
+</document>

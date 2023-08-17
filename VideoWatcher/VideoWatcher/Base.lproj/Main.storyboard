@@ -128,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AuN-or-tCd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="661" y="3134"/>
+            <point key="canvasLocation" x="-514" y="4052"/>
         </scene>
         <!--Import From Files View Controller-->
         <scene sceneID="ZSL-4c-WW8">
@@ -225,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E4b-Z4-Hjl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660.56338028169023" y="4052.6717557251905"/>
+            <point key="canvasLocation" x="227" y="4051"/>
         </scene>
         <!--Favorite View Controller-->
         <scene sceneID="XK5-mL-XdJ">
@@ -263,7 +263,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXU-Vj-EDm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1475" y="4819"/>
+            <point key="canvasLocation" x="1030" y="4804"/>
+        </scene>
+        <!--My Stats View Controller-->
+        <scene sceneID="wWu-hS-pxT">
+            <objects>
+                <viewController storyboardIdentifier="MyStatsViewController" id="0kt-fs-eiz" customClass="MyStatsViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VDe-g5-rs4">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zo3-aA-xex">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eVm-Cq-B59"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="eVm-Cq-B59" firstAttribute="bottom" secondItem="zo3-aA-xex" secondAttribute="bottom" id="MDc-Oc-np9"/>
+                            <constraint firstItem="eVm-Cq-B59" firstAttribute="trailing" secondItem="zo3-aA-xex" secondAttribute="trailing" id="Ndw-bV-0rH"/>
+                            <constraint firstItem="zo3-aA-xex" firstAttribute="top" secondItem="eVm-Cq-B59" secondAttribute="top" id="Q4G-Xv-Ses"/>
+                            <constraint firstItem="zo3-aA-xex" firstAttribute="leading" secondItem="eVm-Cq-B59" secondAttribute="leading" id="nuw-6e-CMz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tblMyStats" destination="zo3-aA-xex" id="7nI-ya-JL2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wiz-eR-NnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1030" y="5514"/>
         </scene>
         <!--Fullscreen Video View Controller-->
         <scene sceneID="X7i-0d-D9D">
@@ -383,7 +413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcs-Zx-z8p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1474.6478873239437" y="5614.5038167938928"/>
+            <point key="canvasLocation" x="1781" y="4804"/>
         </scene>
         <!--Create Clip View Controller-->
         <scene sceneID="6YD-Ki-Vxb">
@@ -398,7 +428,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P7J-ej-8ft" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1475" y="6346"/>
+            <point key="canvasLocation" x="2581" y="4804"/>
         </scene>
         <!--Video Watcher View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -436,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1476" y="4053"/>
+            <point key="canvasLocation" x="1031" y="4053"/>
         </scene>
         <!--Manage Videos View Controller-->
         <scene sceneID="DFJ-uL-tCi">
@@ -499,7 +529,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qb8-EX-9ec">
                                         <rect key="frame" x="0.0" y="50" width="313" height="549"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableView>
                                 </subviews>
@@ -526,18 +556,86 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorPhotoLib" destination="FYc-9K-0Lx" id="12U-nd-nVA"/>
                         <outlet property="btnPlus" destination="4qU-24-4R2" id="r0O-fk-N9U"/>
+                        <outlet property="lblLoadingPhotoLib" destination="ahQ-rb-jly" id="SU9-Yz-ILt"/>
+                        <outlet property="progressPhotoLib" destination="seA-BZ-cUt" id="Krh-uB-dng"/>
                         <outlet property="tableViewClips" destination="qb8-EX-9ec" id="hzq-OU-Sa9"/>
                         <outlet property="viewContainer" destination="QqO-To-a9t" id="F7S-vi-Kk6"/>
                         <outlet property="viewContainerBottom" destination="vkR-QQ-kNJ" id="BfU-oU-8rQ"/>
                         <outlet property="viewContainerLeading" destination="38Z-0q-phy" id="iaM-D2-7rX"/>
                         <outlet property="viewContainerTop" destination="hgM-As-Z0o" id="Iue-5T-B6e"/>
                         <outlet property="viewContainerTrailing" destination="kPW-qW-rHj" id="Jo1-CJ-X63"/>
+                        <outlet property="viewPhotoLibLoading" destination="OTb-lL-vAW" id="781-j3-ZvV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="irL-HJ-6TE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="OTb-lL-vAW">
+                    <rect key="frame" x="0.0" y="0.0" width="397" height="164"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pmv-WO-Zqt">
+                            <rect key="frame" x="78.666666666666686" y="18" width="240" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHW-FX-TXo">
+                                    <rect key="frame" x="37.333333333333329" y="48" width="165" height="32"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="FYc-9K-0Lx">
+                                            <rect key="frame" x="97.666666666666657" y="12" width="20" height="20"/>
+                                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </activityIndicatorView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-rb-jly">
+                                            <rect key="frame" x="0.0" y="13" width="89.333333333333329" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="18" id="nxb-sU-D8k"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                            <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="seA-BZ-cUt">
+                                            <rect key="frame" x="0.0" y="0.0" width="165" height="4"/>
+                                            <color key="trackTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </progressView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="165" id="6JC-dZ-WGP"/>
+                                        <constraint firstItem="FYc-9K-0Lx" firstAttribute="centerY" secondItem="ahQ-rb-jly" secondAttribute="centerY" id="Dtu-Mf-Tk7"/>
+                                        <constraint firstItem="ahQ-rb-jly" firstAttribute="leading" secondItem="seA-BZ-cUt" secondAttribute="leading" id="Qtl-Ir-Gtr"/>
+                                        <constraint firstItem="ahQ-rb-jly" firstAttribute="top" secondItem="seA-BZ-cUt" secondAttribute="bottom" constant="9" id="boz-IN-r9L"/>
+                                        <constraint firstAttribute="height" constant="32" id="jbJ-ya-RzB"/>
+                                        <constraint firstAttribute="trailing" secondItem="seA-BZ-cUt" secondAttribute="trailing" id="qMb-WZ-PTq"/>
+                                        <constraint firstItem="seA-BZ-cUt" firstAttribute="leading" secondItem="NHW-FX-TXo" secondAttribute="leading" id="qr1-uG-OeZ"/>
+                                        <constraint firstItem="seA-BZ-cUt" firstAttribute="top" secondItem="NHW-FX-TXo" secondAttribute="top" id="sZa-90-Edo"/>
+                                        <constraint firstItem="FYc-9K-0Lx" firstAttribute="leading" secondItem="ahQ-rb-jly" secondAttribute="trailing" constant="8.3333333333333144" id="zDx-tJ-1cC"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="NHW-FX-TXo" firstAttribute="centerY" secondItem="Pmv-WO-Zqt" secondAttribute="centerY" id="6t5-pK-8UU"/>
+                                <constraint firstItem="NHW-FX-TXo" firstAttribute="centerX" secondItem="Pmv-WO-Zqt" secondAttribute="centerX" id="BiH-X2-52H"/>
+                                <constraint firstAttribute="width" constant="240" id="FcX-4m-ywH"/>
+                                <constraint firstAttribute="height" constant="128" id="opV-IF-zaZ"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="ChB-0D-3NQ"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Pmv-WO-Zqt" firstAttribute="centerY" secondItem="OTb-lL-vAW" secondAttribute="centerY" id="E46-j3-zd4"/>
+                        <constraint firstItem="Pmv-WO-Zqt" firstAttribute="centerX" secondItem="OTb-lL-vAW" secondAttribute="centerX" id="Y1u-gS-g9r"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="2133.5877862595421" y="4052.816901408451"/>
+            <point key="canvasLocation" x="1830" y="4053"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="Ejy-jx-dFs">
@@ -580,7 +678,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Prp-rM-3XY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="661.26760563380287" y="2261.8320610687024"/>
+            <point key="canvasLocation" x="-1253" y="4052"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="X08-SR-rmE">
@@ -598,7 +696,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yvQ-0j-MgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-89.436619718309871" y="2261.8320610687024"/>
+            <point key="canvasLocation" x="-1985" y="4052"/>
         </scene>
     </scenes>
     <resources>

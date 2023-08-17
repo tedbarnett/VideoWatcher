@@ -37,6 +37,9 @@
 		5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */; };
 		5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */; };
 		5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */; };
+		5F8075122A8E1C3200E646A4 /* MyStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */; };
+		5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */; };
+		5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */; };
 		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
 		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
 		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
@@ -103,6 +106,9 @@
 		5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClipViewController.swift; sourceTree = "<group>"; };
 		5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmerThumb.swift; sourceTree = "<group>"; };
+		5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatsViewController.swift; sourceTree = "<group>"; };
+		5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatTableViewCell.swift; sourceTree = "<group>"; };
+		5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyStatTableViewCell.xib; sourceTree = "<group>"; };
 		5F9B81972A825D3900730F1B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCell.xib; sourceTree = "<group>"; };
@@ -207,6 +213,7 @@
 				5F6D477D2A84B84D00CC1F82 /* Fullscreen */,
 				5F6D47822A84F9FF00CC1F82 /* Clip */,
 				5F51AF6C2A89EB7200C79409 /* Manage Videos */,
+				5F8075102A8E1C1200E646A4 /* Settings */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -295,6 +302,24 @@
 				5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */,
 			);
 			path = Trimmer;
+			sourceTree = "<group>";
+		};
+		5F8075102A8E1C1200E646A4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5F8075172A8E1E4900E646A4 /* Cell */,
+				5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		5F8075172A8E1E4900E646A4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */,
+				5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		5F9B81952A825D0800730F1B /* Favourite */ = {
@@ -470,6 +495,7 @@
 				5F0AD6A92A78C81B00046C35 /* LaunchScreen.storyboard in Resources */,
 				5F0AD6A62A78C81B00046C35 /* Assets.xcassets in Resources */,
 				5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */,
+				5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */,
 				5F0AD6A12A78C81B00046C35 /* Main.storyboard in Resources */,
 				5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */,
 				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
@@ -506,6 +532,7 @@
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
 				5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */,
+				5F8075122A8E1C3200E646A4 /* MyStatsViewController.swift in Sources */,
 				5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */,
 				5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */,
 				5FFE5BC62A865C5F00CF095D /* ToastConfiguration.swift in Sources */,
@@ -517,6 +544,7 @@
 				5FFE5BC92A865C6D00CF095D /* ToastView.swift in Sources */,
 				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
+				5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
 				5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,

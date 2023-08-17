@@ -133,14 +133,38 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnFavorite.tintColor = .red
             }
             else {
-                if (videoAsset.clips?.count ?? 0) > 0 {
+                if let clipsSet = videoAsset.clips {
+                    var totalClips: [VideoClip] = []
+                    let clipsArray = clipsSet.allObjects as? [VideoClip] ?? []
+                    for clip in clipsArray {
+                        // Now you have an array of VideoClip objects
+                        print("Clip URL: \(clip.clipURL ?? "")")
+                        if clip.is_Deleted == false {
+                            totalClips.append(clip)
+                        }
+                    }
+                    
+                    if totalClips.count > 0 {
+                        self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
+                        self.btnFavorite.tintColor = .white
+                    }
+                    else {
+                        self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                        self.btnFavorite.tintColor = .white
+                    }
+                }
+                else {
+                    self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                    self.btnFavorite.tintColor = .white
+                }
+                /*if (videoAsset.clips?.count ?? 0) > 0 {
                     self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
                     self.btnFavorite.tintColor = .white
                 }
                 else {
                     self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
                     self.btnFavorite.tintColor = .white
-                }
+                }*/
             }
                                     
             print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
