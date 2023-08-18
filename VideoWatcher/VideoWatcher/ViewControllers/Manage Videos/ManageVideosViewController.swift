@@ -99,16 +99,10 @@ class ManageVideosViewController: UIViewController {
             self.viewContainerBottom.constant = 20
         }
         else {
-            self.viewContainerLeading.constant = 40
-            self.viewContainerTrailing.constant = 40
+            self.viewContainerLeading.constant = 30
+            self.viewContainerTrailing.constant = 30
             self.viewContainerTop.constant = 80
             self.viewContainerBottom.constant = 80
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            UIView.animate(withDuration: 0.2) {
-                
-            }
         }
     }
     
@@ -175,8 +169,9 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         if let aClip = clip as? VideoClip {
             let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(aClip.thumbnailURL ?? "")
             cell.imgThumb.kf.setImage(with: thumbURL)
-            cell.lblClipName.text = "\(aClip.clipURL ?? "")"
-            
+            let clipName = "\(aClip.clipURL ?? "")"
+            cell.lblClipName.text = (clipName as NSString).deletingPathExtension
+                        
             let clipURL = Utility.getDirectoryPath(folderName: DirectoryName.SavedClips)!.appendingPathComponent(aClip.clipURL ?? "")
             let asset = AVAsset(url: clipURL)
             let duration = asset.duration
@@ -189,7 +184,8 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
             let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(vClip.thumbnailURL ?? "")
                         
             cell.imgThumb.kf.setImage(with: thumbURL)
-            cell.lblClipName.text = "\(vClip.videoURL ?? "")"
+            let videoName = "\(vClip.videoURL ?? "")"
+            cell.lblClipName.text = (videoName as NSString).deletingPathExtension
             
             let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(vClip.videoURL ?? "")
             let asset = AVAsset(url: videoURL)

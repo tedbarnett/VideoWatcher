@@ -50,17 +50,11 @@ class FavoriteViewController: UIViewController {
         closeButton.tintColor = .white
         closeButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        
-        let exportButton = UIButton(type: .system)
-        exportButton.tintColor = .white
-        exportButton.setTitle("Export favorite", for: .normal)
-        exportButton.addTarget(self, action: #selector(exportButtonTapped), for: .touchUpInside)
-        
+                
         let closeBarButtonItem = UIBarButtonItem(customView: closeButton)
-        let exportBarButtonItem = UIBarButtonItem(customView: exportButton)
-
+        
         // Create an array of UIBarButtonItem objects
-        let barButtonItems: [UIBarButtonItem] = [closeBarButtonItem, exportBarButtonItem]
+        let barButtonItems: [UIBarButtonItem] = [closeBarButtonItem]
 
         // Assign the array to navigationItem.rightBarButtonItems
         navigationItem.rightBarButtonItems = barButtonItems
@@ -69,17 +63,6 @@ class FavoriteViewController: UIViewController {
     @objc func closeButtonTapped() {
         self.delegate?.startAllPanel()
         self.dismiss(animated: true)
-    }
-    
-    @objc func exportButtonTapped() {
-        if let url = CoreDataManager.shared.generateCSVFromVideoClips() {
-            let activityViewController = UIActivityViewController(
-                activityItems: [url],
-                applicationActivities: nil
-            )
-            // Present the UIActivityViewController
-            present(activityViewController, animated: true, completion: nil)
-        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

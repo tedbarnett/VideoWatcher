@@ -16,6 +16,12 @@ class MyStatsViewController: UIViewController {
 
     weak var delegate: MyStatsViewControllerDelegate?
     @IBOutlet weak var tblMyStats: UITableView!
+    @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet weak var viewContainerLeading: NSLayoutConstraint!
+    @IBOutlet weak var viewContainerTrailing: NSLayoutConstraint!
+    @IBOutlet weak var viewContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var viewContainerBottom: NSLayoutConstraint!
+    
     //"Minutes watched (across all 6 panels)"
     var arrTitle = ["Total video minutes", "Total favorite video minutes", "Minutes deleted"]
     var totalVideoMinutes = 0
@@ -29,9 +35,10 @@ class MyStatsViewController: UIViewController {
     }
     
     func setupUI() {
-        self.title = "My Stats"
-        self.setupRightMenuButton()
-        
+        self.adjustPopupConstraints()
+        self.viewContainer.layer.cornerRadius = 10.0
+        self.viewContainer.layer.masksToBounds = true
+
         self.tblMyStats.delegate = self
         self.tblMyStats.dataSource = self
         self.tblMyStats.register(UINib(nibName: "MyStatTableViewCell", bundle: nil), forCellReuseIdentifier: "MyStatTableViewCell")
@@ -39,15 +46,7 @@ class MyStatsViewController: UIViewController {
         self.getMinutes()
     }
     
-    func setupRightMenuButton() {
-        let closeButton = UIButton(type: .system)
-        closeButton.tintColor = .white
-        closeButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-    }
-    
-    @objc func closeButtonTapped() {
+    @IBAction func closeButtonAction(_ sender: Any) {
         self.delegate?.startAllPanelAgain()
         self.dismiss(animated: true)
     }
@@ -118,6 +117,27 @@ class MyStatsViewController: UIViewController {
         
         let totalMinutes = Int(round(totalSeconds / 60))
         return totalMinutes
+    }
+    
+    func adjustPopupConstraints() {
+        if Utility.getDeviceOrientation().isLandscape {
+            self.viewContainerLeading.constant = 150
+            self.viewContainerTrailing.constant = 150
+            self.viewContainerTop.constant = 20
+            self.viewContainerBottom.constant = 20
+        }
+        else {
+            self.viewContainerLeading.constant = 30
+            self.viewContainerTrailing.constant = 30
+            self.viewContainerTop.constant = 80
+            self.viewContainerBottom.constant = 80
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        self.adjustPopupConstraints()
     }
 }
 

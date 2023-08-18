@@ -21,6 +21,9 @@
 		5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */; };
 		5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A09482A7A2D7F0002C5F0 /* Utility.swift */; };
 		5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A094A2A7A2DE50002C5F0 /* Constant.swift */; };
+		5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D55292A8F663100261490 /* SettingsViewController.swift */; };
+		5F3D552D2A8F670E00261490 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */; };
+		5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */; };
 		5F44B0642A8370BD00381E2D /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44B0632A8370BD00381E2D /* AppData.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
 		5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */; };
@@ -91,6 +94,9 @@
 		5F0AD6D42A78CAA600046C35 /* VideoWatcherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoWatcherCell.xib; sourceTree = "<group>"; };
 		5F3A09482A7A2D7F0002C5F0 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		5F3A094A2A7A2DE50002C5F0 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		5F3D55292A8F663100261490 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		5F44B0632A8370BD00381E2D /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromPhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFilesViewController.swift; sourceTree = "<group>"; };
@@ -309,6 +315,7 @@
 			children = (
 				5F8075172A8E1E4900E646A4 /* Cell */,
 				5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */,
+				5F3D55292A8F663100261490 /* SettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -318,6 +325,8 @@
 			children = (
 				5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */,
 				5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */,
+				5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */,
+				5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -498,6 +507,7 @@
 				5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */,
 				5F0AD6A12A78C81B00046C35 /* Main.storyboard in Resources */,
 				5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */,
+				5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */,
 				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +535,7 @@
 			files = (
 				5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */,
 				5FFE5BC52A865C5F00CF095D /* Toast.swift in Sources */,
+				5F3D552D2A8F670E00261490 /* SettingsTableViewCell.swift in Sources */,
 				5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */,
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
 				5FFE5BC72A865C5F00CF095D /* ToastDelegate.swift in Sources */,
@@ -546,6 +557,7 @@
 				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
+				5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */,
 				5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
 				5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */,

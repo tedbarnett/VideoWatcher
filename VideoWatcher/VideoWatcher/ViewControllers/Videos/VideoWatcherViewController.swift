@@ -94,7 +94,7 @@ class VideoWatcherViewController: UIViewController {
         }
         
         let settings = UIAction(title: "Settings", image: nil) { _ in
-          
+            self.moveToSettings()
         }
         
         ellipsisButton.overrideUserInterfaceStyle = .dark
@@ -133,7 +133,10 @@ class VideoWatcherViewController: UIViewController {
             }
         }
     }
-    
+    /*
+     I have a button(Import videos from Google Drive) in my view controller, on the click on button "Import videos from Google Drive", I want to open user's google drive with only video files. Then after user should able to select multiple video files and download it to app's document directory.
+     Write a swift 5 code for that.
+     */
     func startPreviousVideoAt(panel: Int) {
         
         var videoAsset: VideoTable?
@@ -415,11 +418,37 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func moveToMyStats() {
+        self.isScreenVisible = false
         self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyStatsViewController") as! MyStatsViewController
         let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .fullScreen
+        navController.modalPresentationStyle = .overCurrentContext
         navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
+    
+    func moveToSettings() {
+        self.isScreenVisible = false
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .overCurrentContext
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
+    
+    func moveToManageVideosVC() {
+        self.isScreenVisible = false
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ManageVideosViewController") as! ManageVideosViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .overCurrentContext
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
         vc.delegate = self
         self.present(navController, animated: true)
     }
@@ -434,18 +463,6 @@ class VideoWatcherViewController: UIViewController {
         
         vc.isMuted = self.checkPanelIsMutedOrNot(index: index)
         vc.videoAsset = videoAsset
-        vc.delegate = self
-        self.present(navController, animated: true)
-    }
-    
-    func moveToManageVideosVC() {
-        self.isScreenVisible = false
-        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ManageVideosViewController") as! ManageVideosViewController
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .overCurrentContext
-        navController.modalTransitionStyle = .crossDissolve
-        navController.navigationBar.isHidden = true
         vc.delegate = self
         self.present(navController, animated: true)
     }
@@ -997,6 +1014,16 @@ extension VideoWatcherViewController: ManageVideosViewControllerDelegate {
 
 extension VideoWatcherViewController: MyStatsViewControllerDelegate {
     func startAllPanelAgain() {
+        self.isScreenVisible = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}
+
+extension VideoWatcherViewController: SettingsViewControllerDelegate {
+    func restartAllPanels() {
+        self.isScreenVisible = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.playAllVideoPlayers(needToReloadCell: true)
         }
