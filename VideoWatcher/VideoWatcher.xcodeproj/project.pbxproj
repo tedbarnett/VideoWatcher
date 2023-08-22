@@ -30,7 +30,7 @@
 		5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */; };
 		5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */; };
 		5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */; };
-		5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */; };
+		5F4CF34C2A7D33D700FDF5B1 /* ImportVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
 		5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F516D2B2A80FDE50033E404 /* SwiftyDropbox */; };
 		5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */; };
@@ -103,7 +103,7 @@
 		5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportVideoViewController.swift; sourceTree = "<group>"; };
 		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideosViewController.swift; sourceTree = "<group>"; };
 		5F51AF702A89F25300C79409 /* ManageVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideoCell.swift; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 		5F9B81962A825D1500730F1B /* Initial load */ = {
 			isa = PBXGroup;
 			children = (
-				5F4CF34B2A7D33D700FDF5B1 /* SplashViewController.swift */,
+				5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */,
 				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
 				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
 			);
@@ -542,7 +542,7 @@
 				5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
-				5F4CF34C2A7D33D700FDF5B1 /* SplashViewController.swift in Sources */,
+				5F4CF34C2A7D33D700FDF5B1 /* ImportVideoViewController.swift in Sources */,
 				5F8075122A8E1C3200E646A4 /* MyStatsViewController.swift in Sources */,
 				5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */,
 				5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */,

@@ -55,7 +55,7 @@ class ManageVideosViewController: UIViewController {
         self.tableViewClips.dataSource = self
         self.tableViewClips.register(UINib(nibName: "ManageVideoCell", bundle: nil), forCellReuseIdentifier: "ManageVideoCell")
         self.adjustPopupConstraints()
-        self.setupMenuOptions()
+        //self.setupMenuOptions()
         self.getAllClips()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.viewPhotoLibLoading.frame = CGRect(x: 0, y: 0, width: self.viewContainer.frame.size.width, height: self.viewContainer.frame.size.height)
@@ -182,7 +182,7 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         else {
             let vClip = clip as! VideoTable
             let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(vClip.thumbnailURL ?? "")
-                        
+            
             cell.imgThumb.kf.setImage(with: thumbURL)
             let videoName = "\(vClip.videoURL ?? "")"
             cell.lblClipName.text = (videoName as NSString).deletingPathExtension
@@ -197,6 +197,9 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         
         cell.btnPlay.tag = indexPath.row
         cell.btnPlay.addTarget(self, action: #selector(btnPlayAction), for: .touchUpInside)
+        
+        cell.btnShare.tag = indexPath.row
+        cell.btnShare.addTarget(self, action: #selector(btnShareAction), for: .touchUpInside)
                 
         return cell
     }
@@ -226,6 +229,25 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    @objc func btnShareAction(sender: UIButton) {
+        let index = sender.tag
+        let clip = self.arrClips[index]
+        var clipURL: URL?
+        if let aClip = clip as? VideoClip {
+            clipURL = Utility.getDirectoryPath(folderName: DirectoryName.SavedClips)!.appendingPathComponent(aClip.clipURL ?? "")
+        }
+        else {
+            let vClip = clip as! VideoTable
+            clipURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(vClip.videoURL ?? "")
+        }
+        if clipURL != nil {
+            // Create an instance of UIActivityViewController
+            let activityViewController = UIActivityViewController(activityItems: [clipURL!], applicationActivities: nil)
+            // Present the UIActivityViewController
+            present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 57
     }
@@ -239,16 +261,31 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
         }
         
         // Swipe-to-rename action
+        /*let renameAction = UIContextualAction(style: .normal, title: "Rename") { (action, view, completionHandler) in
+            self.indexpathToRename = indexPath
+            self.showAlertWithRenameTextField()
+            completionHandler(true)
+        }*/
+        
+        deleteAction.backgroundColor = .red
+        //renameAction.backgroundColor = .blue
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // Swipe-to-rename action
         let renameAction = UIContextualAction(style: .normal, title: "Rename") { (action, view, completionHandler) in
             self.indexpathToRename = indexPath
             self.showAlertWithRenameTextField()
             completionHandler(true)
         }
         
-        deleteAction.backgroundColor = .red
         renameAction.backgroundColor = .blue
         
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, renameAction])
+        let configuration = UISwipeActionsConfiguration(actions: [renameAction])
         return configuration
     }
     
@@ -548,4 +585,5 @@ extension ManageVideosViewController: PHPickerViewControllerDelegate {
         let toast = Toast.text("New videos imported successfully", config: config)
         toast.show(haptic: .success)
     }
+    //I've video based app, when I go to background the app should stop video and when I comeback to foreground the app should start video play.
 }

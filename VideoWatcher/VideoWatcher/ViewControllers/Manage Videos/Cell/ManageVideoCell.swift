@@ -13,6 +13,7 @@ class ManageVideoCell: UITableViewCell {
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var lblClipName: UILabel!
     @IBOutlet weak var lblDuration: UILabel!
+    @IBOutlet weak var btnShare: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

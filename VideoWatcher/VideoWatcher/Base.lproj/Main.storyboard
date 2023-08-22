@@ -293,7 +293,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="xmark.circle" catalog="system"/>
+                                                <state key="normal" image="xmark" catalog="system"/>
                                                 <connections>
                                                     <action selector="btnCloseAction:" destination="2Fi-4r-wfS" eventType="touchUpInside" id="EpI-36-fnV"/>
                                                     <action selector="btnCloseAction:" destination="Q3I-ma-Ztu" eventType="touchUpInside" id="YHK-Ue-1gc"/>
@@ -378,7 +378,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="xmark.circle" catalog="system"/>
+                                                <state key="normal" image="xmark" catalog="system"/>
                                                 <connections>
                                                     <action selector="btnCloseAction:" destination="Q3I-ma-Ztu" eventType="touchUpInside" id="Rho-1V-wEv"/>
                                                     <action selector="btnCloseAction:" destination="2Fi-4r-wfS" eventType="touchUpInside" id="TLk-9l-VBe"/>
@@ -623,7 +623,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LRI-UO-Rin">
                                         <rect key="frame" x="0.0" y="0.0" width="313" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qU-24-4R2">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qU-24-4R2">
                                                 <rect key="frame" x="268" y="5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="gZH-No-TzS"/>
@@ -636,8 +636,8 @@
                                                     <action selector="btnPlusAction:" destination="2Fi-4r-wfS" eventType="touchUpInside" id="NI2-DT-ptS"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XuD-oY-vrI">
-                                                <rect key="frame" x="98.333333333333343" y="15.333333333333341" width="116.33333333333334" height="19.333333333333329"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Clips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XuD-oY-vrI">
+                                                <rect key="frame" x="105.33333333333334" y="15" width="102.33333333333334" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -650,7 +650,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="xmark.circle" catalog="system"/>
+                                                <state key="normal" image="xmark" catalog="system"/>
                                                 <connections>
                                                     <action selector="btnCloseAction:" destination="2Fi-4r-wfS" eventType="touchUpInside" id="7cN-XR-IKN"/>
                                                 </connections>
@@ -668,21 +668,30 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qb8-EX-9ec">
-                                        <rect key="frame" x="0.0" y="50" width="313" height="549"/>
+                                        <rect key="frame" x="0.0" y="50" width="313" height="513.33333333333337"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe left to delete. Swipe right to rename." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="VNy-7d-0h1">
+                                        <rect key="frame" x="10" y="573.33333333333337" width="293" height="15.666666666666629"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="LRI-UO-Rin" firstAttribute="top" secondItem="QqO-To-a9t" secondAttribute="top" id="21S-Kt-exR"/>
                                     <constraint firstItem="LRI-UO-Rin" firstAttribute="leading" secondItem="QqO-To-a9t" secondAttribute="leading" id="2gP-9D-RyC"/>
                                     <constraint firstAttribute="trailing" secondItem="qb8-EX-9ec" secondAttribute="trailing" id="5Z3-H7-PC0"/>
+                                    <constraint firstAttribute="bottom" secondItem="VNy-7d-0h1" secondAttribute="bottom" constant="10" id="EeN-20-vMi"/>
+                                    <constraint firstItem="VNy-7d-0h1" firstAttribute="top" secondItem="qb8-EX-9ec" secondAttribute="bottom" constant="10" id="FBp-vP-Zs3"/>
+                                    <constraint firstItem="VNy-7d-0h1" firstAttribute="leading" secondItem="QqO-To-a9t" secondAttribute="leading" constant="10" id="Hde-IM-2f6"/>
+                                    <constraint firstAttribute="trailing" secondItem="VNy-7d-0h1" secondAttribute="trailing" constant="10" id="IPV-lp-F5K"/>
                                     <constraint firstItem="qb8-EX-9ec" firstAttribute="top" secondItem="LRI-UO-Rin" secondAttribute="bottom" id="M0N-CA-pXv"/>
                                     <constraint firstItem="qb8-EX-9ec" firstAttribute="leading" secondItem="QqO-To-a9t" secondAttribute="leading" id="dje-JL-dZu"/>
                                     <constraint firstAttribute="trailing" secondItem="LRI-UO-Rin" secondAttribute="trailing" id="m3l-md-hb6"/>
-                                    <constraint firstAttribute="bottom" secondItem="qb8-EX-9ec" secondAttribute="bottom" id="zKY-la-p9A"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -776,50 +785,106 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1830" y="4053"/>
+            <point key="canvasLocation" x="1829.7709923664122" y="4052.816901408451"/>
         </scene>
-        <!--Splash View Controller-->
+        <!--Import Video View Controller-->
         <scene sceneID="Ejy-jx-dFs">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="sl9-3m-i4V" customClass="SplashViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImportVideoViewController" id="sl9-3m-i4V" customClass="ImportVideoViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R8o-um-bgb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1a-4I-Jcp">
-                                <rect key="frame" x="114" y="366.66666666666669" width="165" height="119"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-dc-Wmt">
+                                <rect key="frame" x="114" y="475" width="165" height="32"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BarnettLabsIconTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="yKo-w5-Kvy">
-                                        <rect key="frame" x="0.0" y="0.0" width="165" height="95"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBd-0l-MV4">
-                                        <rect key="frame" x="0.0" y="99.000000000000227" width="120" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <color key="textColor" red="0.60392156860000001" green="0.59215686270000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jxp-8w-0qZ">
+                                        <rect key="frame" x="97.333333333333343" y="12" width="20" height="20"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaL-a1-eTW">
+                                        <rect key="frame" x="0.0" y="13" width="89" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="jrH-76-YNO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVb-Np-QbE">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="4"/>
+                                        <color key="trackTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="119" id="Rox-DF-b1F"/>
-                                    <constraint firstAttribute="width" constant="165" id="rTs-i4-Iq5"/>
+                                    <constraint firstItem="jxp-8w-0qZ" firstAttribute="centerY" secondItem="aaL-a1-eTW" secondAttribute="centerY" id="7e3-JW-j7i"/>
+                                    <constraint firstItem="dVb-Np-QbE" firstAttribute="leading" secondItem="L8e-dc-Wmt" secondAttribute="leading" id="P4M-Ik-C4B"/>
+                                    <constraint firstAttribute="height" constant="32" id="QmT-zL-gbY"/>
+                                    <constraint firstItem="aaL-a1-eTW" firstAttribute="top" secondItem="dVb-Np-QbE" secondAttribute="bottom" constant="9" id="SSu-lB-rmO"/>
+                                    <constraint firstItem="jxp-8w-0qZ" firstAttribute="leading" secondItem="aaL-a1-eTW" secondAttribute="trailing" constant="8.3333333333333144" id="ZhZ-d5-MsR"/>
+                                    <constraint firstItem="aaL-a1-eTW" firstAttribute="leading" secondItem="dVb-Np-QbE" secondAttribute="leading" id="irA-Ml-m7M"/>
+                                    <constraint firstAttribute="trailing" secondItem="dVb-Np-QbE" secondAttribute="trailing" id="kci-eP-7VG"/>
+                                    <constraint firstAttribute="width" constant="165" id="t17-Ce-osS"/>
+                                    <constraint firstItem="dVb-Np-QbE" firstAttribute="top" secondItem="L8e-dc-Wmt" secondAttribute="top" id="vRD-pH-2n4"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nr-Y0-cPh">
+                                <rect key="frame" x="59.666666666666657" y="313" width="274" height="123"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="123" id="366-TZ-nKd"/>
+                                    <constraint firstAttribute="width" constant="274" id="PYt-fw-z0v"/>
+                                </constraints>
+                                <string key="text">Welcome to VideoWatcher.
+To start, add videos from your Apple Photo library, or from Google Drive or Dropbox. Click the "+" sign above to start that process.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMm-W7-wRs">
+                                <rect key="frame" x="106.66666666666669" y="471" width="180" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="F4g-b3-5cf"/>
+                                    <constraint firstAttribute="height" constant="40" id="zud-rQ-PjX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Play videos  ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <imageReference key="image" image="arrow.backward" catalog="system" symbolScale="default"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnPlayVideoAction:" destination="sl9-3m-i4V" eventType="touchUpInside" id="DQX-Fv-SKv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I56-SQ-ETO"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="S1a-4I-Jcp" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="E6m-eA-fcF"/>
-                            <constraint firstItem="S1a-4I-Jcp" firstAttribute="centerY" secondItem="R8o-um-bgb" secondAttribute="centerY" id="Qss-dY-TTM"/>
+                            <constraint firstItem="9Nr-Y0-cPh" firstAttribute="centerY" secondItem="R8o-um-bgb" secondAttribute="centerY" id="6TI-Kq-e7j"/>
+                            <constraint firstItem="UMm-W7-wRs" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="Dee-Wz-RYO"/>
+                            <constraint firstItem="9Nr-Y0-cPh" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="FoX-tu-jCl"/>
+                            <constraint firstItem="L8e-dc-Wmt" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="Jlr-Ux-aFy"/>
+                            <constraint firstItem="UMm-W7-wRs" firstAttribute="top" secondItem="9Nr-Y0-cPh" secondAttribute="bottom" constant="35" id="P0U-1i-F4o"/>
+                            <constraint firstItem="L8e-dc-Wmt" firstAttribute="top" secondItem="9Nr-Y0-cPh" secondAttribute="bottom" constant="39" id="Wr6-sm-mLQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qF6-Ng-G2W"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="jxp-8w-0qZ" id="h0C-1W-xZX"/>
+                        <outlet property="btnPlayVideos" destination="UMm-W7-wRs" id="N7C-Li-GYa"/>
+                        <outlet property="lblCenterText" destination="9Nr-Y0-cPh" id="nUH-DF-jIY"/>
+                        <outlet property="lblLoading" destination="aaL-a1-eTW" id="UgY-VM-xOi"/>
+                        <outlet property="progress" destination="dVb-Np-QbE" id="VVb-DA-LEy"/>
+                        <outlet property="viewLoading" destination="L8e-dc-Wmt" id="xae-GZ-4Ds"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Prp-rM-3XY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1253" y="4052"/>
+            <point key="canvasLocation" x="-1254.1984732824426" y="4051.4084507042257"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="X08-SR-rmE">
@@ -842,6 +907,7 @@
     </scenes>
     <resources>
         <image name="BarnettLabsIconTransparent" width="773" height="447"/>
+        <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <image name="ic_close" width="20" height="20.666666030883789"/>
         <image name="pause.circle.fill" catalog="system" width="128" height="123"/>
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
@@ -849,7 +915,7 @@
         <image name="speaker.slash.fill" catalog="system" width="118" height="128"/>
         <image name="speaker.wave.2.fill" catalog="system" width="128" height="88"/>
         <image name="timeline.selection" catalog="system" width="128" height="67"/>
-        <image name="xmark.circle" catalog="system" width="128" height="123"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

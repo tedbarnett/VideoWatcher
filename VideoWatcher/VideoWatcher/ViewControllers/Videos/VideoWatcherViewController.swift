@@ -38,6 +38,12 @@ class VideoWatcherViewController: UIViewController {
         self.isScreenVisible = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.setupNotificationObserversForAppState()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.isScreenVisible = false
@@ -49,6 +55,7 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func setupUI() {
+        self.title = "VideoWatcher"
         self.setupNavbar()
         self.collectionViewVideos.delegate = self
         self.collectionViewVideos.dataSource = self
@@ -72,21 +79,12 @@ class VideoWatcherViewController: UIViewController {
     }
     
     func setupMenuOptions() {
-        /*let moreVideos = UIAction(title: "Manage videos",
-          image: UIImage(systemName: "square.and.arrow.down")) { _ in
-          
-        }
-         let favImage = UIImage(systemName: "heart.fill")?..withTintColor(.white,
-         renderingMode: .alwaysOriginal)
-         UIImage(systemName: "gearshape.fill")
-         */
-        
-        let moreVideos = UIAction(title: "Manage videos", image: nil) { _ in
+        let moreVideos = UIAction(title: "Manage Clips", image: nil) { _ in
             self.moveToManageVideosVC()
         }
         
-        let favorite = UIAction(title: "Play clips", image: nil) { _ in
-            self.moveToFavouriteList()
+        let favorite = UIAction(title: "Add new videos", image: nil) { _ in
+            self.moveToAddNewVideoScreen()
         }
         
         let myStats = UIAction(title: "My stats", image: nil) { _ in
@@ -133,10 +131,7 @@ class VideoWatcherViewController: UIViewController {
             }
         }
     }
-    /*
-     I have a button(Import videos from Google Drive) in my view controller, on the click on button "Import videos from Google Drive", I want to open user's google drive with only video files. Then after user should able to select multiple video files and download it to app's document directory.
-     Write a swift 5 code for that.
-     */
+    
     func startPreviousVideoAt(panel: Int) {
         
         var videoAsset: VideoTable?
@@ -413,6 +408,17 @@ class VideoWatcherViewController: UIViewController {
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .crossDissolve
+        vc.delegate = self
+        self.present(navController, animated: true)
+    }
+    
+    func moveToAddNewVideoScreen() {
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ImportVideoViewController") as! ImportVideoViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        vc.isFromVideoPanel = true
         vc.delegate = self
         self.present(navController, animated: true)
     }
@@ -915,6 +921,58 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         
         return true
     }
+    
+    private func setupNotificationObserversForAppState() {
+        self.deinitNotificationObserversForAppState()
+        
+        // background event
+        NotificationCenter.default.addObserver(self, selector: #selector(stopAllPanelsVideos), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        // foreground event
+        NotificationCenter.default.addObserver(self, selector: #selector(startAllPanelsVideos), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    private func deinitNotificationObserversForAppState() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    @objc fileprivate func stopAllPanelsVideos() {
+        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+    }
+    
+    @objc fileprivate func startAllPanelsVideos() {
+        DispatchQueue.main.async {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+    
+    @objc func handleInterruption(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let interruptionTypeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeValue) else {
+            return
+        }
+        
+        switch interruptionType {
+        case .began:
+            // Interruption began, pause AVPlayer playback
+            self.stopAllPanelsVideos()
+        case .ended:
+            // Interruption ended, check if we should resume playback
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let interruptionOptions = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if interruptionOptions.contains(.shouldResume) {
+                    self.startAllPanelsVideos()
+                }
+            }
+        default:
+            break
+        }
+    }
 }
 
 extension VideoWatcherViewController: UIVideoEditorControllerDelegate, UINavigationControllerDelegate {
@@ -1023,6 +1081,15 @@ extension VideoWatcherViewController: MyStatsViewControllerDelegate {
 
 extension VideoWatcherViewController: SettingsViewControllerDelegate {
     func restartAllPanels() {
+        self.isScreenVisible = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+}
+
+extension VideoWatcherViewController: ImportVideoViewControllerDelegate {
+    func startAllPanelFromImport() {
         self.isScreenVisible = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.playAllVideoPlayers(needToReloadCell: true)
