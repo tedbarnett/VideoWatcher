@@ -82,12 +82,16 @@ class FullscreenVideoViewController: UIViewController {
             UIView.animate(withDuration: 0.2) {
                 self.viewButtonContainer.alpha = 0.0
                 self.closeButton.alpha = 0.0
+                self.muteButton.alpha = 0.0
+                self.trimButton.alpha = 0.0
             }
         } else {
             // Fade in animation
             UIView.animate(withDuration: 0.2) {
                 self.viewButtonContainer.alpha = 1.0
                 self.closeButton.alpha = 1.0
+                self.muteButton.alpha = 1.0
+                self.trimButton.alpha = 1.0
             }
         }
     }

@@ -22,6 +22,12 @@ class CreateClipViewController: UIViewController {
     var leadingTrimLabel: UILabel!
     var currentTimeLabel: UILabel!
     var trailingTrimLabel: UILabel!
+    var generateClip = UIButton(type: .system)
+    
+    var activityIndicatorButton: UIBarButtonItem!
+    var activityIndicator: UIActivityIndicatorView!
+    var saveClipButton: UIBarButtonItem!
+
     var startSeconds = String()
     
     private var wasPlaying = false
@@ -133,12 +139,43 @@ class CreateClipViewController: UIViewController {
         closeButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeButton)
-        
-        let generateClip = UIButton(type: .system)
-        generateClip.tintColor = .white
+                
+        /*generateClip.tintColor = .white
         generateClip.setTitle("Save clip", for: .normal)
         generateClip.addTarget(self, action: #selector(generateButtonTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: generateClip)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: generateClip)*/
+        
+        // Create the activity indicator button
+        activityIndicatorButton = UIBarButtonItem(customView: createActivityIndicator())
+        
+        // Create the Save Clip button
+        saveClipButton = UIBarButtonItem(title: "Save Clip", style: .plain, target: self, action: #selector(generateButtonTapped))
+        saveClipButton.tintColor = .white
+        self.saveClipButton.isEnabled = false
+        // Add the buttons to the navigation bar
+        navigationItem.rightBarButtonItems = [saveClipButton, activityIndicatorButton]
+    }
+    
+    func createActivityIndicator() -> UIView {
+        // Create the activity indicator view
+        activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.setColor(.white)
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }
+    
+    func startActivityIndicator() {
+        self.saveClipButton.isEnabled = false
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
+    @objc func saveClipButtonTapped() {
+        // Implement your save clip logic here
+        startActivityIndicator()
     }
     
     @objc func closeButtonTapped() {
@@ -163,6 +200,7 @@ class CreateClipViewController: UIViewController {
             if let name = alertController.textFields?.first?.text, !name.isEmpty {
                 // Valid text entered, perform your action here
                 print("Text name: \(name)")
+                self?.startActivityIndicator()
                 self?.saveClip(clipName: name)
             } else {
                 // Blank text entered, showing an error message
@@ -255,6 +293,7 @@ class CreateClipViewController: UIViewController {
     }
     
     func showClipSavedToast() {
+        self.stopActivityIndicator()
         let config = ToastConfiguration(
             direction: .top,
             autoHide: true,
@@ -278,7 +317,7 @@ class CreateClipViewController: UIViewController {
 
     @objc private func didEndTrimming(_ sender: VideoTrimmer) {
         updateLabels()
-
+        self.saveClipButton.isEnabled = true
         if wasPlaying == true {
             player.play()
         }

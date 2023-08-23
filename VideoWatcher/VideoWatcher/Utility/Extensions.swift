@@ -139,3 +139,16 @@ extension UIViewController {
         }
     }
 }
+
+extension UIActivityIndicatorView {
+    func setColor(_ color: UIColor) {
+        if self.style == .medium {
+            // For the medium style, you might need to set the color to both the color property and the tintColor
+            self.color = color
+            self.tintColor = color
+        } else {
+            // For other styles, just set the color property
+            self.color = color
+        }
+    }
+}

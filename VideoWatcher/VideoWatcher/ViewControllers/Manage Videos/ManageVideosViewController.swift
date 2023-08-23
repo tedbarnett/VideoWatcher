@@ -585,5 +585,4 @@ extension ManageVideosViewController: PHPickerViewControllerDelegate {
         let toast = Toast.text("New videos imported successfully", config: config)
         toast.show(haptic: .success)
     }
-    //I've video based app, when I go to background the app should stop video and when I comeback to foreground the app should start video play.
 }

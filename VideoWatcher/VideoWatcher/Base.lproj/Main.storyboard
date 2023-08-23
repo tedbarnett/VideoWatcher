@@ -465,49 +465,12 @@
                                             <action selector="playPauseButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="7gf-2Q-UJE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-cA-pZO">
-                                        <rect key="frame" x="111.66666666666669" y="5" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="All-O8-9cg"/>
-                                            <constraint firstAttribute="width" constant="50" id="grz-eG-3H0"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal">
-                                            <imageReference key="image" image="speaker.wave.2.fill" catalog="system" symbolScale="large"/>
-                                        </state>
-                                        <state key="selected">
-                                            <imageReference key="image" image="speaker.slash.fill" catalog="system" symbolScale="large"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="muteButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="wdM-dM-LSa"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTn-ZY-GSK">
-                                        <rect key="frame" x="236.66666666666663" y="5" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="aPx-X7-W4q"/>
-                                            <constraint firstAttribute="width" constant="50" id="rQt-a2-YbX"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal">
-                                            <imageReference key="image" image="timeline.selection" catalog="system" symbolScale="large"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="trimButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="c5y-dZ-Vtx"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="zpg-Ke-pMf" firstAttribute="centerX" secondItem="xr7-ck-eqF" secondAttribute="centerX" id="QWP-7K-Gc9"/>
-                                    <constraint firstItem="aYV-cA-pZO" firstAttribute="centerY" secondItem="zpg-Ke-pMf" secondAttribute="centerY" id="TAM-a8-pex"/>
                                     <constraint firstItem="zpg-Ke-pMf" firstAttribute="top" secondItem="xr7-ck-eqF" secondAttribute="top" constant="5" id="cS1-uD-ONg"/>
-                                    <constraint firstItem="mTn-ZY-GSK" firstAttribute="centerY" secondItem="zpg-Ke-pMf" secondAttribute="centerY" id="gLs-Mb-3Hl"/>
                                     <constraint firstAttribute="height" constant="80" id="gjO-9A-JDU"/>
-                                    <constraint firstItem="mTn-ZY-GSK" firstAttribute="leading" secondItem="zpg-Ke-pMf" secondAttribute="trailing" constant="15" id="ul0-yn-cl9"/>
-                                    <constraint firstItem="zpg-Ke-pMf" firstAttribute="leading" secondItem="aYV-cA-pZO" secondAttribute="trailing" constant="10" id="xAX-WF-sXV"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLJ-6v-HK3">
@@ -524,7 +487,39 @@
                                 <state key="selected" backgroundImage="pause.circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="closeButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="B9m-65-On3"/>
-                                    <action selector="playPauseButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="Xyf-GR-3Jo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-cA-pZO">
+                                <rect key="frame" x="10" y="69" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="All-O8-9cg"/>
+                                    <constraint firstAttribute="width" constant="50" id="grz-eG-3H0"/>
+                                </constraints>
+                                <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="speaker.wave.2.fill" catalog="system" symbolScale="large"/>
+                                </state>
+                                <state key="selected">
+                                    <imageReference key="image" image="speaker.slash.fill" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="muteButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="wdM-dM-LSa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTn-ZY-GSK">
+                                <rect key="frame" x="333" y="777" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="aPx-X7-W4q"/>
+                                    <constraint firstAttribute="width" constant="50" id="rQt-a2-YbX"/>
+                                </constraints>
+                                <color key="tintColor" red="0.97453315679999997" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="timeline.selection" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="trimButtonTapped:" destination="dFs-d6-2CU" eventType="touchUpInside" id="c5y-dZ-Vtx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -532,14 +527,18 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xr7-ck-eqF" firstAttribute="centerX" secondItem="nQJ-2p-KeC" secondAttribute="centerX" id="7jY-8l-YNo"/>
+                            <constraint firstItem="mTn-ZY-GSK" firstAttribute="centerY" secondItem="zpg-Ke-pMf" secondAttribute="centerY" id="8T7-tT-dgn"/>
+                            <constraint firstItem="aYV-cA-pZO" firstAttribute="top" secondItem="ehA-F8-3KF" secondAttribute="top" constant="10" id="C5l-CJ-7Ts"/>
                             <constraint firstItem="Qtt-cd-O46" firstAttribute="leading" secondItem="nQJ-2p-KeC" secondAttribute="leading" id="FGD-OT-Xsf"/>
                             <constraint firstItem="ehA-F8-3KF" firstAttribute="trailing" secondItem="qLJ-6v-HK3" secondAttribute="trailing" constant="10" id="IQG-lm-pU2"/>
                             <constraint firstItem="qLJ-6v-HK3" firstAttribute="top" secondItem="ehA-F8-3KF" secondAttribute="top" constant="10" id="QoO-Mb-MUy"/>
                             <constraint firstAttribute="bottom" secondItem="Qtt-cd-O46" secondAttribute="bottom" id="R9O-hG-QQA"/>
                             <constraint firstAttribute="trailing" secondItem="Qtt-cd-O46" secondAttribute="trailing" id="XIb-Cc-hd6"/>
                             <constraint firstItem="xr7-ck-eqF" firstAttribute="bottom" secondItem="nQJ-2p-KeC" secondAttribute="bottom" id="Xmu-qF-4BN"/>
+                            <constraint firstItem="ehA-F8-3KF" firstAttribute="trailing" secondItem="mTn-ZY-GSK" secondAttribute="trailing" constant="10" id="Z1G-dx-nVj"/>
                             <constraint firstItem="Qtt-cd-O46" firstAttribute="top" secondItem="nQJ-2p-KeC" secondAttribute="top" id="fr8-gm-xTj"/>
                             <constraint firstItem="xr7-ck-eqF" firstAttribute="leading" secondItem="nQJ-2p-KeC" secondAttribute="leading" id="rXj-Uf-n8z"/>
+                            <constraint firstItem="aYV-cA-pZO" firstAttribute="leading" secondItem="ehA-F8-3KF" secondAttribute="leading" constant="10" id="wWS-Pr-Ymk"/>
                             <constraint firstAttribute="trailing" secondItem="xr7-ck-eqF" secondAttribute="trailing" id="yFo-1s-Yqh"/>
                         </constraints>
                     </view>

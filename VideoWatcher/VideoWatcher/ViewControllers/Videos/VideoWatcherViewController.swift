@@ -496,6 +496,10 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
         return videoCell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.moveToFullScreen(videoAsset: self.arrVideoData[indexPath.row], index: indexPath.row)
+    }
+    
     @objc func makeFavourite(sender: UIButton) {
         let index = sender.tag
         let videoAsset = self.arrVideoData[index]
@@ -665,8 +669,8 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             
             self.pauseAllVideoPlayers(selectedIndex: index)
             
-            return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, nextVideo, previousVideo, fullScreen, delete])
-            
+            //return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, nextVideo, previousVideo, fullScreen, delete])
+            return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, delete])
         }
         return context
     }
