@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="VideoClip" representedClassName=".VideoClip" syncable="YES">
+        <attribute name="clipURL" optional="YES" attributeType="String"/>
+        <attribute name="is_Deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="startSeconds" optional="YES" attributeType="String"/>
+        <attribute name="thumbnailURL" optional="YES" attributeType="String"/>
+        <relationship name="video" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoTable" inverseName="clips" inverseEntity="VideoTable"/>
+    </entity>
     <entity name="VideoTable" representedClassName=".VideoTable" syncable="YES">
         <attribute name="is_Deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="thumbnailURL" optional="YES" attributeType="String"/>
         <attribute name="videoURL" optional="YES" attributeType="String"/>
+        <relationship name="clips" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VideoClip" inverseName="video" inverseEntity="VideoClip"/>
     </entity>
 </model>
