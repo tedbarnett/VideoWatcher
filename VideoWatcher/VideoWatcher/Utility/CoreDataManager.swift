@@ -26,6 +26,19 @@ class CoreDataManager {
     }
 
     // MARK: - CRUD Functions for videos
+    func isVideoExists(videoURL: String) -> Bool {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
+
+        do {
+            let count = try context.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print("Error checking video URL existence: \(error)")
+            return false
+        }
+    }
+    
     func saveVideo(videoURL: String) {
         let video = VideoTable(context: context)
         video.videoURL = videoURL

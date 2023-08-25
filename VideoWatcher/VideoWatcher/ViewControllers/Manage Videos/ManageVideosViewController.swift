@@ -117,11 +117,46 @@ class ManageVideosViewController: UIViewController {
     
     func getAllClips() {
         self.arrClips.removeAll()
+        
+        //Getting fav videos
         let wholeFavVideos = CoreDataManager.shared.getAllFavoriteVideos()
+        var finalFavVideos: [VideoTable] = []
+        for video in wholeFavVideos {
+            let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(video.videoURL ?? "")
+
+            if FileManager.default.fileExists(atPath: videoURL.path) {
+                finalFavVideos.append(video)
+            }
+            else {
+                CoreDataManager.shared.deleteVideo(videoURL: video.videoURL ?? "")
+                let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(video.thumbnailURL ?? "")
+                if FileManager.default.fileExists(atPath: thumbURL.path) {
+                    try? FileManager.default.removeItem(at: thumbURL)
+                }
+            }
+        }
+        self.arrClips.append(contentsOf: finalFavVideos)
+        
+        //Getting clips
         let allClipse = CoreDataManager.shared.getAllClips()
-        self.arrClips.append(contentsOf: wholeFavVideos)
-        print(self.arrClips.count)
-        self.arrClips.append(contentsOf: allClipse)
+        var finalClips: [VideoClip] = []
+        for clip in allClipse {
+            let clipURL = Utility.getDirectoryPath(folderName: DirectoryName.SavedClips)!.appendingPathComponent(clip.clipURL ?? "")
+            if FileManager.default.fileExists(atPath: clipURL.path) {
+                finalClips.append(clip)
+            }
+            else {
+                CoreDataManager.shared.deleteClip(clipURL: clip.clipURL ?? "")
+                let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.Thumbnails)!.appendingPathComponent(clip.thumbnailURL ?? "")
+                if FileManager.default.fileExists(atPath: thumbURL.path) {
+                    try? FileManager.default.removeItem(at: thumbURL)
+                }
+            }
+        }
+        print(finalClips.count)
+        self.arrClips.append(contentsOf: finalClips)
+        
+        
         print(self.arrClips.count)
         self.tableViewClips.reloadData()
     }

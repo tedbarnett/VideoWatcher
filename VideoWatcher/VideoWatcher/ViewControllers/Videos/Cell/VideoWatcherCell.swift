@@ -109,66 +109,66 @@ class VideoWatcherCell: UICollectionViewCell {
     func playVideo(videoAsset: VideoTable, startDuration: Double? = 0.0, isMuted: Bool) {
         DispatchQueue.main.async {
             let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
-            let playerItem = AVPlayerItem(url: videoURL)
-            self.player?.replaceCurrentItem(with: playerItem)
-            self.player?.play()
-            //self.player?.isMuted = true
-            self.player?.isMuted = isMuted
             
-            if self.player != nil && self.player?.currentItem != nil {
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
-                    self.delegate?.startNextRandomVideo(index: self.index, isRandom: true)
-                }
-            }
-            
-            if isMuted {
-                self.btnSpeaker.isHidden = true
-            }
-            else {
-                self.btnSpeaker.isHidden = false
-            }
-            
-            if videoAsset.isFavorite {
-                self.btnFavorite.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                self.btnFavorite.tintColor = .red
-            }
-            else {
-                if let clipsSet = videoAsset.clips {
-                    var totalClips: [VideoClip] = []
-                    let clipsArray = clipsSet.allObjects as? [VideoClip] ?? []
-                    for clip in clipsArray {
-                        // Now you have an array of VideoClip objects
-                        print("Clip URL: \(clip.clipURL ?? "")")
-                        if clip.is_Deleted == false {
-                            totalClips.append(clip)
-                        }
+            if FileManager.default.fileExists(atPath: videoURL.path) {
+                let playerItem = AVPlayerItem(url: videoURL)
+                self.player?.replaceCurrentItem(with: playerItem)
+                self.player?.play()
+                //self.player?.isMuted = true
+                self.player?.isMuted = isMuted
+                
+                if self.player != nil && self.player?.currentItem != nil {
+                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
+                        self.delegate?.startNextRandomVideo(index: self.index, isRandom: true)
                     }
-                    
-                    if totalClips.count > 0 {
-                        self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
-                        self.btnFavorite.tintColor = .white
+                }
+                
+                if isMuted {
+                    self.btnSpeaker.isHidden = true
+                }
+                else {
+                    self.btnSpeaker.isHidden = false
+                }
+                
+                if videoAsset.isFavorite {
+                    self.btnFavorite.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                    self.btnFavorite.tintColor = .red
+                }
+                else {
+                    if let clipsSet = videoAsset.clips {
+                        var totalClips: [VideoClip] = []
+                        let clipsArray = clipsSet.allObjects as? [VideoClip] ?? []
+                        for clip in clipsArray {
+                            // Now you have an array of VideoClip objects
+                            //print("Clip URL: \(clip.clipURL ?? "")")
+                            if clip.is_Deleted == false {
+                                totalClips.append(clip)
+                            }
+                        }
+                        
+                        if totalClips.count > 0 {
+                            self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
+                            self.btnFavorite.tintColor = .white
+                        }
+                        else {
+                            self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
+                            self.btnFavorite.tintColor = .white
+                        }
                     }
                     else {
                         self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
                         self.btnFavorite.tintColor = .white
                     }
                 }
-                else {
-                    self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
-                    self.btnFavorite.tintColor = .white
-                }
-                /*if (videoAsset.clips?.count ?? 0) > 0 {
-                    self.btnFavorite.setImage(UIImage(named: "img_heart_bunch"), for: .normal)
-                    self.btnFavorite.tintColor = .white
-                }
-                else {
-                    self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
-                    self.btnFavorite.tintColor = .white
-                }*/
+                
+                //print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
+                self.lblError?.text = "\(videoURL.lastPathComponent)"
             }
-                                    
-            print("Panel \(self.index), Video Name: \(videoURL.lastPathComponent)")
-            self.lblError?.text = "\(videoURL.lastPathComponent)"
+            else {
+                print("File not exist at \(videoURL)")
+                CoreDataManager.shared.deleteVideo(videoURL: videoURL.lastPathComponent)
+                self.delegate?.startNextRandomVideo(index: self.index, isRandom: true)
+            }
         }
     }
     
