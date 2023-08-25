@@ -24,6 +24,9 @@
 		5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D55292A8F663100261490 /* SettingsViewController.swift */; };
 		5F3D552D2A8F670E00261490 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */; };
 		5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */; };
+		5F40AC572A977E2100B1C003 /* DropboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC562A977E2100B1C003 /* DropboxViewController.swift */; };
+		5F40AC5B2A97824C00B1C003 /* DropboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC592A97824C00B1C003 /* DropboxCell.swift */; };
+		5F40AC5C2A97824C00B1C003 /* DropboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */; };
 		5F44B0642A8370BD00381E2D /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44B0632A8370BD00381E2D /* AppData.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
 		5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */; };
@@ -97,6 +100,9 @@
 		5F3D55292A8F663100261490 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		5F40AC562A977E2100B1C003 /* DropboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxViewController.swift; sourceTree = "<group>"; };
+		5F40AC592A97824C00B1C003 /* DropboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCell.swift; sourceTree = "<group>"; };
+		5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropboxCell.xib; sourceTree = "<group>"; };
 		5F44B0632A8370BD00381E2D /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromPhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFilesViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +262,15 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		5F40AC582A97823700B1C003 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5F40AC592A97824C00B1C003 /* DropboxCell.swift */,
+				5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		5F4CF33C2A7D157200FDF5B1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,9 +358,11 @@
 		5F9B81962A825D1500730F1B /* Initial load */ = {
 			isa = PBXGroup;
 			children = (
+				5F40AC582A97823700B1C003 /* Cell */,
 				5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */,
 				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
 				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
+				5F40AC562A977E2100B1C003 /* DropboxViewController.swift */,
 			);
 			path = "Initial load";
 			sourceTree = "<group>";
@@ -506,6 +523,7 @@
 				5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */,
 				5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */,
 				5F0AD6A12A78C81B00046C35 /* Main.storyboard in Resources */,
+				5F40AC5C2A97824C00B1C003 /* DropboxCell.xib in Resources */,
 				5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */,
 				5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */,
 				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
@@ -538,6 +556,7 @@
 				5F3D552D2A8F670E00261490 /* SettingsTableViewCell.swift in Sources */,
 				5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */,
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
+				5F40AC572A977E2100B1C003 /* DropboxViewController.swift in Sources */,
 				5FFE5BC72A865C5F00CF095D /* ToastDelegate.swift in Sources */,
 				5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
@@ -560,6 +579,7 @@
 				5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */,
 				5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
+				5F40AC5B2A97824C00B1C003 /* DropboxCell.swift in Sources */,
 				5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */,
 				5FFE5BD02A865C7E00CF095D /* AppleToastView.swift in Sources */,
 				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
@@ -750,6 +770,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KQ3X2L5SCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VideoWatcher/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to display your videos in app in order to play it.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -785,6 +806,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KQ3X2L5SCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VideoWatcher/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to display your videos in app in order to play it.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import PhotosUI
+import SwiftyDropbox
 
 protocol ImportVideoViewControllerDelegate: AnyObject {
     func startAllPanelFromImport()
@@ -29,7 +30,7 @@ class ImportVideoViewController: UIViewController {
     private var currentAssetIdentifier: String?
     var totalProgress: Float = 0.0
     var isFromVideoPanel = false
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,19 +51,82 @@ class ImportVideoViewController: UIViewController {
         else {
             self.lblCenterText.text = "Welcome to VideoWatcher. To start, add videos from your Apple Photo library, or from Google Drive or Dropbox. Click the \"+\" sign above to start that process."
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(getDropboxVideos), name: Notification.Name("UserLoggedInDropbox"), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-               
+        
         if isFromVideoPanel == false {
             let videos = CoreDataManager.shared.getRandomVideos(count: 1)
             if videos.count > 0 {
-                self.gotoVideoWatcher()
+                self.moveItemsToImportedVideos()
+                self.saveVideosInCoredata()
             }
         }
     }
     
+    func moveItemsToImportedVideos() {
+        let fileManager = FileManager.default
+        
+        do {
+            // Get the URL for the Document Directory
+            guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+            
+            // List all items in the Document Directory
+            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectoryUrl, includingPropertiesForKeys: nil, options: [])
+            
+            // Create the "ImportedVideos" folder if it doesn't exist
+            let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
+            try fileManager.createDirectory(at: importedVideosDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
+            
+            // Move the non-directory items to "ImportedVideos" folder
+            for itemUrl in directoryContents {
+                if itemUrl.hasDirectoryPath == false {
+                    let destinationUrl = importedVideosDirectoryUrl.appendingPathComponent(itemUrl.lastPathComponent)
+                    do {
+                        try fileManager.moveItem(at: itemUrl, to: destinationUrl)
+                        print("Moved \(itemUrl.lastPathComponent) to ImportedVideos")
+                    }
+                    catch {
+                        print("Error: \(error)")
+                    }
+                }
+                else {
+                    print("Its a Folder: \(itemUrl.lastPathComponent)")
+                }
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
+    func saveVideosInCoredata() {
+        // Get the URL for the ImportedVideos dir
+        do {
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                let directoryContents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [])
+                
+                for itemUrl in directoryContents {
+                    if CoreDataManager.shared.isVideoExists(videoURL: itemUrl.lastPathComponent) == false {
+                        print("Saved Item: \(itemUrl.lastPathComponent)")
+                        CoreDataManager.shared.saveVideo(videoURL: itemUrl.lastPathComponent)
+                    }
+                    else {
+                        print("Already saved: \(itemUrl.lastPathComponent)")
+                    }
+                }
+                self.gotoVideoWatcher()
+            }
+        }
+        catch {
+            print("Error: \(error)")
+        }
+    }
+       
     func setupRightMenuButton() {
         if isFromVideoPanel == true {
             let closeButton = UIButton(type: .custom)
@@ -91,12 +155,41 @@ class ImportVideoViewController: UIViewController {
         }
         
         let Dropbox = UIAction(title: "Dropbox", image: nil) { _ in
-            
+            if DropboxClientsManager.authorizedClient != nil {
+                print("Already authorized 1")
+                self.openDropboxVideoList()
+            }
+            else {
+                DropboxClientsManager.authorizeFromControllerV2(
+                    UIApplication.shared,
+                    controller: self,
+                    loadingStatusDelegate: nil,
+                    openURL: {(url: URL) -> Void in UIApplication.shared.open(URL(string: "\(url)")!)},
+                    scopeRequest: ScopeRequest(scopeType: .user,
+                                               scopes: ["files.metadata.read",
+                                                        "files.content.read",
+                                                        "files.content.write",
+                                                        "account_info.read"],
+                                               includeGrantedScopes: false))
+            }
         }
         
         btnPlus.overrideUserInterfaceStyle = .dark
         btnPlus.showsMenuAsPrimaryAction = true
         btnPlus.menu = UIMenu(title: "Import from", children: [PhotoLibrary, GoogleDrive, Dropbox])
+    }
+    
+    @objc private func getDropboxVideos(notification: NSNotification){
+        if DropboxClientsManager.authorizedClient != nil {
+            print("Already authorized 2")
+            self.openDropboxVideoList()
+        }
+    }
+    
+    func openDropboxVideoList() {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DropboxViewController") as! DropboxViewController
+        vc.title = "Dropbox"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func closeButtonTapped() {
@@ -169,6 +262,10 @@ class ImportVideoViewController: UIViewController {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true)
+    }
+    
+    deinit {
+      NotificationCenter.default.removeObserver(self, name: Notification.Name("UserLoggedInDropbox"), object: nil)
     }
 }
 

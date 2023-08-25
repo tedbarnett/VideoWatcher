@@ -21,13 +21,13 @@ class VideoWatcherViewController: UIViewController {
         
         self.setupUI()
         
-        let clips = CoreDataManager.shared.getAllClips()
+        /*let clips = CoreDataManager.shared.getAllClips()
         for clip in clips {
             print("clip name: \(clip.clipURL ?? "")")
             print("clip videos: \(clip.video?.videoURL ?? "")")
             print("Thumb URL: \(clip.thumbnailURL ?? "")")
             print("start seconds: \(clip.startSeconds ?? "")")
-        }
+        }*/
         //print(clips)
     }
     
@@ -102,13 +102,13 @@ class VideoWatcherViewController: UIViewController {
     
     func getRandomVideo() {
         self.arrVideoData = CoreDataManager.shared.getRandomVideos(count: 6)
-        for vdata in self.arrVideoData {
-            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted) | clip: \(vdata.clips?.count ?? 0)")
-        }
+//        for vdata in self.arrVideoData {
+//            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted) | clip: \(vdata.clips?.count ?? 0)")
+//        }
         self.collectionViewVideos.reloadData()
     }
     
-    func startNextRandomVideoFrom(index: Int, isRandom: Bool) {
+    /*func startNextRandomVideoFrom(index: Int, isRandom: Bool) {
         if isRandom == false {
             let currentVideo = self.arrVideoData[index]
             print("currentVideo: ", currentVideo.videoURL ?? "")
@@ -127,6 +127,40 @@ class VideoWatcherViewController: UIViewController {
                 let indexPath = IndexPath(item: index, section: 0)
                 if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
                     videoCell.playVideo(videoAsset: randomAsset, isMuted: self.checkPanelIsMutedOrNot(index: index))
+                }
+            }
+        }
+    }*/
+    
+    func startNextRandomVideoFrom(index: Int, isRandom: Bool) {
+        if isRandom == false {
+            let currentVideo = self.arrVideoData[index]
+            print("currentVideo: ", currentVideo.videoURL ?? "")
+            self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
+        }
+        else {
+            self.assignOriginalPreviousIndexesToCopy(index: index)
+        }
+                
+        let videoData = CoreDataManager.shared.getRandomVideos(count: 1)
+        if videoData.count > 0 {
+            
+            let randomAsset = videoData.first!
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                let destinationURL = directoryURL.appendingPathComponent(randomAsset.videoURL ?? "")
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    self.arrVideoData[index] = randomAsset
+                    DispatchQueue.main.async {
+                        print("Changed RandomVideo at index: ", index)
+                        let indexPath = IndexPath(item: index, section: 0)
+                        if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+                            videoCell.playVideo(videoAsset: randomAsset, isMuted: self.checkPanelIsMutedOrNot(index: index))
+                        }
+                    }
+                }
+                else {
+                    print("Find new RandomVideo at index: ", index)
+                    self.startNextRandomVideoFrom(index: index, isRandom: isRandom)
                 }
             }
         }
@@ -378,7 +412,7 @@ class VideoWatcherViewController: UIViewController {
                         var totalClips: [VideoClip] = []
                         let clipsArray = clipsSet.allObjects as? [VideoClip] ?? []
                         for clip in clipsArray {
-                            print("Clip URL: \(clip.clipURL ?? "")")
+                            //print("Clip URL: \(clip.clipURL ?? "")")
                             if clip.is_Deleted == false {
                                 totalClips.append(clip)
                             }
@@ -446,7 +480,9 @@ class VideoWatcherViewController: UIViewController {
         vc.delegate = self
         self.present(navController, animated: true)
     }
-    
+    /*
+     I've one video based app that import video from Photo Library. Now I want to import videos from Dropbox in swift. There is an SDK provided by Dropbox called SwiftDropbox. They mentioned in their docs that its have capability to download file. But I have different requirements. I want to show all videos avaialble in Dropbox and download them in local document directory. How to do it in swift 5?
+     */
     func moveToManageVideosVC() {
         self.isScreenVisible = false
         self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)

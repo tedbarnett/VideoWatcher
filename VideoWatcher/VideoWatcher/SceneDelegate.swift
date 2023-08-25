@@ -7,7 +7,7 @@
 
 import UIKit
 import SwiftyDropbox
-
+import SwiftyDropbox
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -21,19 +21,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-         let oauthCompletion: DropboxOAuthCompletion = {
-          if let authResult = $0 {
-              switch authResult {
-              case .success:
-                  print("Success! User is logged into DropboxClientsManager.")
-              case .cancel:
-                  print("Authorization flow was manually canceled by user!")
-              case .error(_, let description):
-                  print("Error: \(String(describing: description))")
-              }
-          }
+        let oauthCompletion: DropboxOAuthCompletion = {
+            if let authResult = $0 {
+                switch authResult {
+                case .success:
+                    print("Success! User is logged into DropboxClientsManager.")
+                    NotificationCenter.default.post(name: Notification.Name("UserLoggedInDropbox"), object: nil)
+                case .cancel:
+                    print("Authorization flow was manually canceled by user!")
+                case .error(_, let description):
+                    print("Error: \(String(describing: description))")
+                }
+            }
         }
-
+        
         for context in URLContexts {
             // stop iterating after the first handle-able url
             if DropboxClientsManager.handleRedirectURL(context.url, completion: oauthCompletion) { break }
@@ -68,7 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        //(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 

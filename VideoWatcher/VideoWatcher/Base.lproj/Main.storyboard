@@ -885,6 +885,46 @@ To start, add videos from your Apple Photo library, or from Google Drive or Drop
             </objects>
             <point key="canvasLocation" x="-1254.1984732824426" y="4051.4084507042257"/>
         </scene>
+        <!--Dropbox View Controller-->
+        <scene sceneID="C3n-Sm-ehP">
+            <objects>
+                <viewController storyboardIdentifier="DropboxViewController" id="V4K-3q-xKo" customClass="DropboxViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z8e-Sp-fb1">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tu8-bo-jmB">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no videos in this folder." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O92-ym-FN5">
+                                <rect key="frame" x="70.666666666666686" y="364" width="252" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dcT-Hl-zmy"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dcT-Hl-zmy" firstAttribute="bottom" secondItem="tu8-bo-jmB" secondAttribute="bottom" id="1ec-a8-az2"/>
+                            <constraint firstItem="O92-ym-FN5" firstAttribute="centerY" secondItem="z8e-Sp-fb1" secondAttribute="centerY" id="5UR-J9-xhX"/>
+                            <constraint firstItem="tu8-bo-jmB" firstAttribute="leading" secondItem="dcT-Hl-zmy" secondAttribute="leading" id="6j2-W3-PQ2"/>
+                            <constraint firstItem="tu8-bo-jmB" firstAttribute="top" secondItem="dcT-Hl-zmy" secondAttribute="top" id="Bgo-fg-sdV"/>
+                            <constraint firstItem="dcT-Hl-zmy" firstAttribute="trailing" secondItem="tu8-bo-jmB" secondAttribute="trailing" id="Cxq-lY-G4v"/>
+                            <constraint firstItem="O92-ym-FN5" firstAttribute="centerX" secondItem="z8e-Sp-fb1" secondAttribute="centerX" id="wTC-Cu-VU2"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="lblNoVideos" destination="O92-ym-FN5" id="kFd-RP-FCH"/>
+                        <outlet property="tblFileList" destination="tu8-bo-jmB" id="FpD-JY-Ipa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Yw-pc-d8o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1254.1984732824426" y="4739.4366197183099"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="X08-SR-rmE">
             <objects>
@@ -915,6 +955,9 @@ To start, add videos from your Apple Photo library, or from Google Drive or Drop
         <image name="speaker.wave.2.fill" catalog="system" width="128" height="88"/>
         <image name="timeline.selection" catalog="system" width="128" height="67"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
