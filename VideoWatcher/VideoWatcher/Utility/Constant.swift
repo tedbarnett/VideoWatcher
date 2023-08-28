@@ -16,4 +16,5 @@ struct DirectoryName {
 struct DropBox {
     static let APIKey = "y8mimltyens0frz"
     static let AppSecret = "wddlknspl51enqh"
+    static let kDropboxRootFolder = ""
 }

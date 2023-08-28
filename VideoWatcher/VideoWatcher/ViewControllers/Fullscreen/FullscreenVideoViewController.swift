@@ -10,6 +10,8 @@ import AVFoundation
 
 protocol FullscreenVideoViewControllerDelegate: AnyObject {
     func startAllPanels()
+    func setVolumeFor(index: Int)
+    func deleteVideo(index: Int)
 }
 
 class FullscreenVideoViewController: UIViewController {
@@ -28,6 +30,7 @@ class FullscreenVideoViewController: UIViewController {
     var videoAsset: VideoTable?
     var isClosedTap = false
     let gradientColors = [UIColor.black.withAlphaComponent(0.9), UIColor.clear]
+    var index = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +142,9 @@ class FullscreenVideoViewController: UIViewController {
             
             self.muteButton.isSelected = self.isMuted
             self.playPauseButton.isSelected = true
+            
+            let interaction = UIContextMenuInteraction(delegate: self)
+            self.viewPlayerContainer.addInteraction(interaction)
         }
     }
     
@@ -182,6 +188,7 @@ class FullscreenVideoViewController: UIViewController {
     @IBAction func muteButtonTapped(_ sender: UIButton) {
         player?.isMuted.toggle()
         sender.isSelected = player?.isMuted ?? false
+        self.delegate?.setVolumeFor(index: self.index)
     }
     
     // MARK: Trim Button Action
@@ -207,9 +214,52 @@ class FullscreenVideoViewController: UIViewController {
     }
     
     // MARK: Deinitialization
-    
     deinit {
         player?.removeObserver(self, forKeyPath: "rate")
     }
 
+}
+
+extension FullscreenVideoViewController: UIContextMenuInteractionDelegate {
+      func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                
+                self.showDeleteConfirmation()
+            }
+            return UIMenu(title: "", children: [delete])
+        }
+    }
+    
+    //MARK: - Delete menu actions
+    @objc func showDeleteConfirmation() {
+        let alertController = UIAlertController(
+            title: "Delete video",
+            message: "This video will be removed from this application. Are you sure you want to delete?",
+            preferredStyle: .actionSheet
+        )
+        
+        let deleteAction = UIAlertAction(title: "Delete video", style: .destructive) { _ in
+            // Performing the delete action
+            self.dismiss(animated: true, completion: {
+                self.isClosedTap = true
+                self.delegate?.deleteVideo(index: self.index)
+                self.delegate?.startAllPanels()
+            })
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            // Set the source view for iPad and other devices with popover support
+            popoverController.sourceView = view
+            popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
 }

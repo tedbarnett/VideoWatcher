@@ -13,7 +13,7 @@ class DropboxViewController: UIViewController {
     @IBOutlet weak var tblFileList: UITableView!
     @IBOutlet weak var lblNoVideos: UILabel!
     var currentPath = ""
-    var files: [Files.Metadata] = []
+    var files: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,9 @@ class DropboxViewController: UIViewController {
         self.tblFileList.delegate = self
         self.tblFileList.dataSource = self
         self.tblFileList.register(UINib(nibName: "DropboxCell", bundle: nil), forCellReuseIdentifier: "DropboxCell")
-        self.listFilesInFolder(path: self.currentPath)
+        if self.currentPath == DropBox.kDropboxRootFolder {
+            self.listFilesInFolder(path: DropBox.kDropboxRootFolder)
+        }
     }
     
     func listFilesInFolder(path: String) {
@@ -74,14 +76,48 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DropboxCell") as! DropboxCell
         
         let file = self.files[indexPath.row]
-        
-        cell.lblName.text = file.name
-        cell.lblDetails.text = file.pathDisplay ?? ""
+        if let folder = file as? Files.FolderMetadata {
+            cell.lblName.text = folder.name
+            cell.lblDetails.isHidden = true
+            cell.lblNameTop.constant = 18.0
+            cell.imgView.image = UIImage(named: "folder")
+        }
+        else {
+            let file = file as? Files.FileMetadata
+            cell.lblName.text = file?.name
+            
+            let fileSize = ByteCountFormatter.string(fromByteCount: Int64(file?.size ?? 0), countStyle: .file)
+            cell.lblDetails.text = fileSize
+            cell.lblDetails.isHidden = false
+            cell.lblNameTop.constant = 10.0
+            cell.imgView.image = UIImage(named: "movie")
+            
+        }
         
         return cell
     }
     
+    func encodeFolderPath(_ folder: String, currentPath path: String) -> String {
+        return "\(path)/\(folder)"
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let file = self.files[indexPath.row]
+        if let folder = file as? Files.FolderMetadata {
+            let escapedSubpath = self.encodeFolderPath(folder.name, currentPath: self.currentPath)
+            print("Selected path: \(escapedSubpath)")
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "DropboxViewController") as! DropboxViewController
+            vc.title = folder.name
+            vc.currentPath = escapedSubpath
+            vc.listFilesInFolder(path: escapedSubpath)
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else {
+            print("We can download it")
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

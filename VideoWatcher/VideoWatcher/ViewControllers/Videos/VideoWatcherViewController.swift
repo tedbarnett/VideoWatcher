@@ -506,6 +506,7 @@ class VideoWatcherViewController: UIViewController {
         vc.isMuted = self.checkPanelIsMutedOrNot(index: index)
         vc.videoAsset = videoAsset
         vc.delegate = self
+        vc.index = index
         self.present(navController, animated: true)
     }
 }
@@ -706,7 +707,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             self.pauseAllVideoPlayers(selectedIndex: index)
             
             //return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, nextVideo, previousVideo, fullScreen, delete])
-            return UIMenu(title: "Options", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [muteUnmute, delete])
+            return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [delete])
         }
         return context
     }
@@ -806,10 +807,14 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
                 let isMuted = self.checkPanelIsMutedOrNot(index: index)
                 videoCell.player?.isMuted = isMuted
                 if isMuted {
-                    videoCell.btnSpeaker.isHidden = true
+                    //videoCell.btnSpeaker.isHidden = true
+                    videoCell.btnSpeaker.setImage(UIImage(systemName: "speaker.slash"), for: .normal)
+                    videoCell.btnSpeaker.tintColor = .white
                 }
                 else {
-                    videoCell.btnSpeaker.isHidden = false
+                    //videoCell.btnSpeaker.isHidden = falsespeaker.wave.2.fill
+                    videoCell.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2.fill"), for: .normal)
+                    videoCell.btnSpeaker.tintColor = .white
                 }
                 print("AVPlayer is currently muted: \(videoCell.player?.isMuted ?? false)")
             }
@@ -1089,6 +1094,22 @@ extension VideoWatcherViewController: FullscreenVideoViewControllerDelegate {
     func startAllPanels() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.playAllVideoPlayers(needToReloadCell: true)
+        }
+    }
+    
+    func setVolumeFor(index: Int) {
+        self.menuAudioAction(index: index)
+    }
+    
+    func deleteVideo(index: Int) {
+        CoreDataManager.shared.updateIsDeleted(videoURL: self.arrVideoData[index].videoURL ?? "")
+        self.startNextRandomVideoFrom(index: index, isRandom: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let videoData = CoreDataManager.shared.getAllVideos()
+            for vdata in videoData {
+                print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted)")
+            }
         }
     }
 }

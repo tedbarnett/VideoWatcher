@@ -75,8 +75,8 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnFavorite.layer.masksToBounds = false
                 
                 self.btnSpeaker.translatesAutoresizingMaskIntoConstraints = false
-                self.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2"), for: .normal)
-                self.btnSpeaker.tintColor = .red
+                self.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2.fill"), for: .normal)
+                self.btnSpeaker.tintColor = .white
                 self.addSubview(self.btnSpeaker)
                 self.btnSpeaker.widthAnchor.constraint(equalToConstant: 30).isActive = true
                 self.btnSpeaker.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -87,7 +87,7 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.btnSpeaker.layer.shadowOpacity = 0.9
                 self.btnSpeaker.layer.shadowOffset = CGSize(width: 0, height: 0)
                 self.btnSpeaker.layer.masksToBounds = false
-                self.btnSpeaker.isHidden = true
+                //self.btnSpeaker.isHidden = true
                 
                 // Add swipe gesture recognizers
                 let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipe(_:)))
@@ -124,10 +124,14 @@ class VideoWatcherCell: UICollectionViewCell {
                 }
                 
                 if isMuted {
-                    self.btnSpeaker.isHidden = true
+                    //self.btnSpeaker.isHidden = true
+                    self.btnSpeaker.setImage(UIImage(systemName: "speaker.slash"), for: .normal)
+                    self.btnSpeaker.tintColor = .white
                 }
                 else {
-                    self.btnSpeaker.isHidden = false
+                    //self.btnSpeaker.isHidden = false
+                    self.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2.fill"), for: .normal)
+                    self.btnSpeaker.tintColor = .white
                 }
                 
                 if videoAsset.isFavorite {
