@@ -170,7 +170,7 @@ class ImportVideoViewController: UIViewController {
                                                         "files.content.read",
                                                         "files.content.write",
                                                         "account_info.read"],
-                                               includeGrantedScopes: false))
+                                               includeGrantedScopes: true))
             }
         }
         

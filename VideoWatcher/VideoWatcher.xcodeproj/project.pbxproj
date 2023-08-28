@@ -27,6 +27,7 @@
 		5F40AC572A977E2100B1C003 /* DropboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC562A977E2100B1C003 /* DropboxViewController.swift */; };
 		5F40AC5B2A97824C00B1C003 /* DropboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC592A97824C00B1C003 /* DropboxCell.swift */; };
 		5F40AC5C2A97824C00B1C003 /* DropboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */; };
+		5F418ACB2A9C7A3600B9017D /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F418ACA2A9C7A3600B9017D /* SwiftyDropbox */; };
 		5F44B0642A8370BD00381E2D /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44B0632A8370BD00381E2D /* AppData.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
 		5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */; };
@@ -35,7 +36,6 @@
 		5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */; };
 		5F4CF34C2A7D33D700FDF5B1 /* ImportVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
-		5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 5F516D2B2A80FDE50033E404 /* SwiftyDropbox */; };
 		5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */; };
 		5F51AF722A89F25300C79409 /* ManageVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF702A89F25300C79409 /* ManageVideoCell.swift */; };
 		5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F51AF712A89F25300C79409 /* ManageVideoCell.xib */; };
@@ -141,7 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FFE5BBF2A86432000CF095D /* Kingfisher in Frameworks */,
-				5F516D2C2A80FDE50033E404 /* SwiftyDropbox in Frameworks */,
+				5F418ACB2A9C7A3600B9017D /* SwiftyDropbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,8 +423,8 @@
 			);
 			name = VideoWatcher;
 			packageProductDependencies = (
-				5F516D2B2A80FDE50033E404 /* SwiftyDropbox */,
 				5FFE5BBE2A86432000CF095D /* Kingfisher */,
+				5F418ACA2A9C7A3600B9017D /* SwiftyDropbox */,
 			);
 			productName = VideoWatcher;
 			productReference = 5F0AD6962A78C81B00046C35 /* VideoWatcher.app */;
@@ -499,8 +499,8 @@
 			);
 			mainGroup = 5F0AD68D2A78C81A00046C35;
 			packageReferences = (
-				5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
 				5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
 			);
 			productRefGroup = 5F0AD6972A78C81B00046C35 /* Products */;
 			projectDirPath = "";
@@ -944,7 +944,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
+		5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
 			requirement = {
@@ -963,9 +963,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5F516D2B2A80FDE50033E404 /* SwiftyDropbox */ = {
+		5F418ACA2A9C7A3600B9017D /* SwiftyDropbox */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5F516D2A2A80FDE50033E404 /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
+			package = 5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
 			productName = SwiftyDropbox;
 		};
 		5FFE5BBE2A86432000CF095D /* Kingfisher */ = {

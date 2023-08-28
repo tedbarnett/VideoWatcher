@@ -60,6 +60,7 @@
                 <outlet property="imgView" destination="nRH-JF-0e3" id="wLt-fk-7mn"/>
                 <outlet property="lblDetails" destination="Dyf-6w-aEq" id="kA1-hQ-gOe"/>
                 <outlet property="lblName" destination="P0I-SX-2Dd" id="LIs-VR-iuu"/>
+                <outlet property="lblNameTop" destination="GeD-5l-gyI" id="XOC-Ll-2b9"/>
             </connections>
             <point key="canvasLocation" x="181.67938931297709" y="-76.056338028169023"/>
         </tableViewCell>

@@ -11,6 +11,7 @@ class DropboxCell: UITableViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblNameTop: NSLayoutConstraint!
     @IBOutlet weak var lblDetails: UILabel!
     
     override func awakeFromNib() {
