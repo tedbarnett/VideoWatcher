@@ -36,6 +36,8 @@ class CreateClipViewController: UIViewController {
     var videoAsset: VideoTable?
     var finalTrimmedAsset: AVAsset?
     var isFromHome = false
+    var startTime: CMTime?
+    var totalDuration: CMTime?
 
     // MARK: - UIViewController
     override func viewDidLoad() {
@@ -124,6 +126,11 @@ class CreateClipViewController: UIViewController {
         }
 
         updateLabels()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        trimmer.selectedRange = CMTimeRange(start: self.startTime ?? .zero, duration: asset.duration)
     }
     
     func setupNavigationBar() {
@@ -361,6 +368,7 @@ class CreateClipViewController: UIViewController {
     }
 
     private func updatePlayerAsset() {
+        print("trimmer.trimmingState: \(trimmer.trimmingState)")
         let outputRange = trimmer.trimmingState == .none ? trimmer.selectedRange : asset.fullRange
         let trimmedAsset = asset.trimmedComposition(outputRange)
         if trimmedAsset != player.currentItem?.asset {

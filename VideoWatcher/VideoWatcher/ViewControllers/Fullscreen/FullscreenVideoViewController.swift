@@ -23,6 +23,10 @@ class FullscreenVideoViewController: UIViewController {
     @IBOutlet var muteButton: UIButton!
     @IBOutlet var trimButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var btnGoBackward30: UIButton!
+    @IBOutlet weak var btnGoForward30: UIButton!
+    @IBOutlet weak var playerProgress: UISlider!
+    @IBOutlet weak var lblTime: UILabel!
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -68,6 +72,8 @@ class FullscreenVideoViewController: UIViewController {
         self.applyShadowToButtons(view: playPauseButton)
         self.applyShadowToButtons(view: trimButton)
         self.applyShadowToButtons(view: closeButton)
+        self.applyShadowToButtons(view: btnGoForward30)
+        self.applyShadowToButtons(view: btnGoBackward30)
                 
         var frame = self.viewButtonContainer.frame
         frame.size.width = self.view.frame.size.width
@@ -77,6 +83,12 @@ class FullscreenVideoViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewButtonTapped))
         viewPlayerContainer.addGestureRecognizer(tapGesture)
+        
+        let thumbSize = CGSize(width: 20, height: 20) // Adjust the size as needed
+        if let thumbImage = createThumbImage(size: thumbSize, color: .white) {
+            // Set the custom thumb image
+            self.playerProgress.setThumbImage(thumbImage, for: .normal)
+        }
     }
     
     @objc func viewButtonTapped() {
@@ -87,6 +99,9 @@ class FullscreenVideoViewController: UIViewController {
                 self.closeButton.alpha = 0.0
                 self.muteButton.alpha = 0.0
                 self.trimButton.alpha = 0.0
+                self.btnGoBackward30.alpha = 0.0
+                self.btnGoForward30.alpha = 0.0
+                self.playPauseButton.alpha = 0.0
             }
         } else {
             // Fade in animation
@@ -95,6 +110,9 @@ class FullscreenVideoViewController: UIViewController {
                 self.closeButton.alpha = 1.0
                 self.muteButton.alpha = 1.0
                 self.trimButton.alpha = 1.0
+                self.btnGoBackward30.alpha = 1.0
+                self.btnGoForward30.alpha = 1.0
+                self.playPauseButton.alpha = 1.0
             }
         }
     }
@@ -140,9 +158,17 @@ class FullscreenVideoViewController: UIViewController {
                                                    name: .AVPlayerItemDidPlayToEndTime,
                                                    object: self.player?.currentItem)
             
+            self.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { [weak self] time in
+                self?.updateTimeLabel(currentTime: time)
+            }
+            
             self.muteButton.isSelected = self.isMuted
             self.playPauseButton.isSelected = true
             
+            self.updateTimeLabel(currentTime: .zero)
+            
+            self.playerProgress.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
+
             let interaction = UIContextMenuInteraction(delegate: self)
             self.viewPlayerContainer.addInteraction(interaction)
         }
@@ -184,7 +210,6 @@ class FullscreenVideoViewController: UIViewController {
     }
     
     // MARK: Mute/Unmute Button Action
-    
     @IBAction func muteButtonTapped(_ sender: UIButton) {
         player?.isMuted.toggle()
         sender.isSelected = player?.isMuted ?? false
@@ -192,15 +217,15 @@ class FullscreenVideoViewController: UIViewController {
     }
     
     // MARK: Trim Button Action
-    
     @IBAction func trimButtonTapped(_ sender: UIButton) {
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "CreateClipViewController") as! CreateClipViewController
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .crossDissolve
         //navController.navigationBar.isHidden = true
         vc.videoAsset = videoAsset
+        vc.startTime = player?.currentTime()
+        vc.totalDuration = player?.currentItem?.duration
         self.present(navController, animated: true)
     }
     
@@ -213,11 +238,78 @@ class FullscreenVideoViewController: UIViewController {
         }
     }
     
+    // MARK: Functions to update the time label and progress slider
+    func updateTimeLabel(currentTime: CMTime) {
+        let totalDuration = player?.currentItem?.duration ?? .zero
+        let currentTimeText = formatTime(currentTime)
+        let totalDurationText = formatTime(totalDuration)
+        
+        self.lblTime.text = "\(currentTimeText) / \(totalDurationText)"
+        
+        if totalDuration != .zero {
+            let progress = Float(currentTime.seconds / totalDuration.seconds)
+            self.playerProgress.value = progress
+        }
+    }
+    
+    // Function to format time
+    func formatTime(_ time: CMTime) -> String {
+        guard time.isValid && !time.isIndefinite && !time.isNegativeInfinity && !time.isPositiveInfinity else {
+            return "00:00"
+        }
+        
+        let totalSeconds = Int(time.seconds)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        
+        if hours > 0 {
+            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        } else {
+            return String(format: "%02d:%02d", minutes, seconds)
+        }
+    }
+    
+    // Function to update player time based on slider value
+    @objc func sliderValueChanged(_ sender: UISlider) {
+        let duration = player?.currentItem?.duration ?? .zero
+        let seekTime = CMTime(seconds: Double(sender.value) * duration.seconds, preferredTimescale: 1)
+        player?.seek(to: seekTime)
+    }
+    
+    @IBAction func btnGoBackward30Action(_ sender: Any) {
+        self.skipTime(seconds: -30)
+    }
+    
+    @IBAction func btnGoForward30Action(_ sender: Any) {
+        self.skipTime(seconds: 30)
+    }
+    
+    // Function to skip player time
+    func skipTime(seconds: Double) {
+        let currentTime = player?.currentTime() ?? .zero
+        let newTime = CMTime(seconds: currentTime.seconds + seconds, preferredTimescale: 1)
+        player?.seek(to: newTime)
+    }
+    
+    func createThumbImage(size: CGSize, color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let context = UIGraphicsGetCurrentContext()
+        
+        context?.setFillColor(color.cgColor)
+        context?.addEllipse(in: CGRect(origin: CGPoint.zero, size: size))
+        context?.fillPath()
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image?.withRenderingMode(.alwaysOriginal)
+    }
+    
     // MARK: Deinitialization
     deinit {
         player?.removeObserver(self, forKeyPath: "rate")
     }
-
 }
 
 extension FullscreenVideoViewController: UIContextMenuInteractionDelegate {
