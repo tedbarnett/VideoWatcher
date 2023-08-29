@@ -14,6 +14,7 @@ class DropboxViewController: UIViewController {
     @IBOutlet weak var lblNoVideos: UILabel!
     var currentPath = ""
     var files: [Any] = []
+    let client = DropboxClientsManager.authorizedClient
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +26,28 @@ class DropboxViewController: UIViewController {
         self.tblFileList.delegate = self
         self.tblFileList.dataSource = self
         self.tblFileList.register(UINib(nibName: "DropboxCell", bundle: nil), forCellReuseIdentifier: "DropboxCell")
+        self.lblNoVideos.text = "Loading..."
+        let logoutButton = UIBarButtonItem(
+            title: "Logout",
+            style: .plain,
+            target: self,
+            action: #selector(logoutButtonTapped)
+        )
+        
+        // Assign the logout button to the right bar button item
+        navigationItem.rightBarButtonItem = logoutButton
+        
         if self.currentPath == DropBox.kDropboxRootFolder {
             self.listFilesInFolder(path: DropBox.kDropboxRootFolder)
         }
     }
     
+    @objc func logoutButtonTapped() {
+        DropboxClientsManager.unlinkClients()
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     func listFilesInFolder(path: String) {
-        let client = DropboxClientsManager.authorizedClient
         client?.files.listFolder(path: path).response { response, error in
             if let result = response {
                 self.files = result.entries.filter { entry -> Bool in
@@ -39,7 +55,7 @@ class DropboxViewController: UIViewController {
                         return true
                     } else if let fileMetadata = entry as? Files.FileMetadata {
                         if let lowercasedPath = fileMetadata.pathDisplay?.lowercased() as String? {
-                            if lowercasedPath.hasSuffix(".mp4") || lowercasedPath.hasSuffix(".mov") {
+                            if lowercasedPath.hasSuffix(".mp4") || lowercasedPath.hasSuffix(".mov") || lowercasedPath.hasSuffix(".m4v") {
                                 return true
                             }
                         }
@@ -49,6 +65,7 @@ class DropboxViewController: UIViewController {
                 self.currentPath = path
                 print(self.files)
                 if self.files.isEmpty {
+                    self.lblNoVideos.text = "There are no videos in this folder."
                     self.tblFileList.isHidden = true
                     self.lblNoVideos.isHidden = false
                 } else {
@@ -58,6 +75,7 @@ class DropboxViewController: UIViewController {
                 }
             } else if let error = error {
                 print("Error listing files: \(error)")
+                self.showAlert(title: "Error", message: error.description) { result in}
             }
         }
     }
@@ -117,6 +135,42 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             print("We can download it")
+            // Download to URL
+            /*
+            if let file = file as? Files.FileMetadata {
+                let escapedSubpath = self.encodeFolderPath(file.name, currentPath: self.currentPath)
+                print("Selected path: \(escapedSubpath)")
+                
+                do {
+                    if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                        
+                        let destinationURL = directoryURL.appendingPathComponent(file.name)
+                        if FileManager.default.fileExists(atPath: destinationURL.path) {
+                            tableView.deselectRow(at: indexPath, animated: true)
+                            return
+                        }
+                        
+                        let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+                            return destinationURL
+                        }
+                        client?.files.download(path: escapedSubpath, overwrite: true, destination: destination)
+                            .response { response, error in
+                                if let response = response {
+                                    print(response)
+                                    
+                                    CoreDataManager.shared.saveVideo(videoURL: destinationURL.lastPathComponent)
+                                    print("Video copied to document directory: \(destinationURL)")
+                                    
+                                } else if let error = error {
+                                    print(error)
+                                }
+                            }
+                            .progress { progressData in
+                                print(progressData)
+                            }
+                    }
+                }
+            }*/
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
