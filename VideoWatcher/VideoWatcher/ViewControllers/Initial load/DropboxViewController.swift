@@ -15,6 +15,17 @@ class DropboxViewController: UIViewController {
     var currentPath = ""
     var files: [Any] = []
     let client = DropboxClientsManager.authorizedClient
+    var selectedItems: [IndexPath] = []
+    var selectedFiles: [Any] = []
+    var isEditingMode = false
+    var toolbar: UIToolbar!
+    var downloadButton: UIBarButtonItem!
+    var toolbarHeight: CGFloat = 35
+    var currentFileIndex = 0
+    
+    @IBOutlet var viewLoading: UIView!
+    @IBOutlet weak var activityIndicatorPhotoLib: UIActivityIndicatorView!
+    @IBOutlet weak var lblVideosImported: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,16 +46,151 @@ class DropboxViewController: UIViewController {
         )
         
         // Assign the logout button to the right bar button item
-        navigationItem.rightBarButtonItem = logoutButton
+        //navigationItem.rightBarButtonItem = logoutButton
+        
+        self.tblFileList.allowsMultipleSelectionDuringEditing = true
+        self.setupSelectNavigationBarButtons()
+        self.setupToolbar()
         
         if self.currentPath == DropBox.kDropboxRootFolder {
             self.listFilesInFolder(path: DropBox.kDropboxRootFolder)
         }
     }
     
+    func showLoadingView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                // Add your custom overlay view to the window scene
+                self.viewLoading.frame = windowScene.coordinateSpace.bounds
+                self.viewLoading.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                windowScene.windows.first?.addSubview(self.viewLoading)
+            }
+        }
+        self.activityIndicatorPhotoLib.startAnimating()
+    }
+    
+    func hideLoadingView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+            self.viewLoading.removeFromSuperview()
+            self.activityIndicatorPhotoLib.stopAnimating()
+        })
+    }
+    
     @objc func logoutButtonTapped() {
         DropboxClientsManager.unlinkClients()
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    //MARK: - Setup toolbar
+    func setupToolbar() {
+        let toolbarY = view.bounds.height - toolbarHeight - view.safeAreaInsets.bottom
+        
+        toolbar = UIToolbar(frame: CGRect(x: 0, y: toolbarY, width: view.bounds.width, height: toolbarHeight))
+        toolbar.barTintColor = UIColor(red: 1.0/255.0, green: 1.0/255.0, blue: 1.0/255.0, alpha: 1.0)
+        
+        view.addSubview(toolbar)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        downloadButton = UIBarButtonItem(title: "Import videos", style: .plain, target: self, action: #selector(downloadSelectedItems))
+        
+        toolbar.items = [flexibleSpace, downloadButton]
+    }
+
+    func updateToolbarPosition() {
+        let toolbarHeight = toolbar.frame.size.height
+        
+        UIView.animate(withDuration: 0.3) {
+            if self.selectedItems.count > 0 {
+                let toolbarY = self.view.bounds.height - toolbarHeight - self.view.safeAreaInsets.bottom
+                self.toolbar.frame = CGRect(x: 0, y: toolbarY, width: self.view.bounds.width, height: toolbarHeight)
+            } else {
+                let toolbarY = self.view.bounds.height + toolbarHeight
+                self.toolbar.frame = CGRect(x: 0, y: toolbarY, width: self.view.bounds.width, height: toolbarHeight)
+            }
+        }
+    }
+    
+    func updateDownloadButtonTitle() {
+        let selectedCount = selectedItems.count
+        if selectedCount > 0 {
+            let downloadTitle = "Import \(selectedCount) videos"
+            downloadButton.title = downloadTitle
+        } else {
+            downloadButton.title = "Import videos"
+        }
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        updateToolbarPosition()
+    }
+        
+    @objc func downloadSelectedItems() {
+        print("Downloading selected items: \(selectedFiles)")
+        self.startSequentialDownloads()
+    }
+    
+    //MARK: - Setup multiple selection methods
+    func setupSelectNavigationBarButtons() {
+        let editButton = UIBarButtonItem(title: isEditingMode ? "Done" : "Select", style: .plain, target: self, action: #selector(toggleEditing))
+        navigationItem.rightBarButtonItem = editButton
+    }
+    
+    @objc func toggleEditing() {
+        isEditingMode.toggle()
+        setupSelectNavigationBarButtons()
+        
+        if !isEditingMode {
+            selectedItems.removeAll()
+            selectedFiles.removeAll()
+            updateSelectAllButtonTitle()
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            updateSelectAllButtonTitle()
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Select All", style: .plain, target: self, action: #selector(selectAllItems))
+        }
+        
+        self.updateToolbarPosition()
+        self.tblFileList.setEditing(isEditingMode, animated: true)
+    }
+    
+    @objc func selectAllItems() {
+        if let selectAllButton = navigationItem.leftBarButtonItem, selectAllButton.title == "Select All" {
+            selectedItems.removeAll()
+            selectedFiles.removeAll()
+            for row in 0..<self.files.count {
+                let indexPath = IndexPath(row: row, section: 0)
+                selectedItems.append(indexPath)
+                selectedFiles.append(self.files[row])
+                tblFileList.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            }
+            
+            selectAllButton.title = "Deselect All"
+        } else {
+            for indexPath in selectedItems {
+                tblFileList.deselectRow(at: indexPath, animated: false)
+            }
+            selectedItems.removeAll()
+            selectedFiles.removeAll()
+            navigationItem.leftBarButtonItem?.title = "Select All"
+        }
+        
+        updateToolbarPosition()
+        printSelectedItems()
+        updateDownloadButtonTitle()
+    }
+    
+    func updateSelectAllButtonTitle() {
+        if selectedItems.count == files.count {
+            navigationItem.leftBarButtonItem?.title = "Deselect All"
+        } else {
+            navigationItem.leftBarButtonItem?.title = "Select All"
+        }
+    }
+    
+    func printSelectedItems() {
+        print("Selected Items: \(selectedItems.count)")
+        print("Selected Files: \(selectedFiles.count)")
     }
     
     func listFilesInFolder(path: String) {
@@ -76,6 +222,108 @@ class DropboxViewController: UIViewController {
             } else if let error = error {
                 print("Error listing files: \(error)")
                 self.showAlert(title: "Error", message: error.description) { result in}
+            }
+        }
+    }
+    
+    func startSequentialDownloads() {
+        currentFileIndex = 0
+        updateProgressLabel()
+        downloadNextFile()
+        showLoadingView()
+    }
+    
+    // Recursive function to download files one by one
+    func downloadNextFile() {
+        guard !self.selectedFiles.isEmpty else {
+            print("All files downloaded.")
+//            self.selectedItems.removeAll()
+//            self.selectedFiles.removeAll()
+//            self.updateSelectAllButtonTitle()
+//            navigationItem.leftBarButtonItem = nil
+            
+            self.hideLoadingView()
+            self.showVideosImportedToast()
+            self.toggleEditing()
+            
+            return
+        }
+        
+        let fileToDownload = self.selectedFiles.removeFirst() // Get the first file from the array
+        if let file = fileToDownload as? Files.FileMetadata {
+            print("Downloading \(file.name)")
+            let escapedSubpath = self.encodeFolderPath(file.name, currentPath: self.currentPath)
+            print("Selected path: \(escapedSubpath)")
+            
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                let destinationURL = directoryURL.appendingPathComponent(file.name)
+                
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    self.currentFileIndex += 1
+                    self.updateProgressLabel()
+                    downloadNextFile() // File already exists, move to the next file
+                    return
+                }
+                
+                let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+                    return destinationURL
+                }
+                client?.files.download(path: escapedSubpath, overwrite: true, destination: destination)
+                    .response { response, error in
+                        if let response = response {
+                            print(response)
+                            
+                            CoreDataManager.shared.saveVideo(videoURL: destinationURL.lastPathComponent)
+                            print("Video copied to document directory: \(destinationURL)")
+                        } else if let error = error {
+                            print(error)
+                        }
+                        
+                        self.currentFileIndex += 1
+                        self.updateProgressLabel()
+                        self.downloadNextFile() // Download next file after completion
+                    }
+                    .progress { progressData in
+                        print(progressData)
+                    }
+            }
+        }
+    }
+    
+    func updateProgressLabel() {
+        let totalFiles = self.selectedItems.count
+        let downloadedFiles = currentFileIndex
+        //progressLabel.text = "\(downloadedFiles)/\(totalFiles) files downloaded"
+        print("\(downloadedFiles)/\(totalFiles) videos imported...")
+        self.lblVideosImported.text = "\(downloadedFiles)/\(totalFiles) videos imported"
+    }
+    
+    func showVideosImportedToast() {
+        let config = ToastConfiguration(
+            direction: .top,
+            autoHide: true,
+            enablePanToClose: true,
+            displayTime: 2,
+            animationTime: 0.2
+        )
+        let toast = Toast.text("\(self.selectedItems.count) videos imported", config: config)
+        toast.show(haptic: .success)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate { context in
+            if self.selectedItems.count > 0 {
+                let toolbarY = size.height - self.view.safeAreaInsets.bottom - self.toolbarHeight
+                self.toolbar.frame = CGRect(x: 0, y: toolbarY, width: size.width, height: self.toolbarHeight)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    self.viewLoading.frame = windowScene.coordinateSpace.bounds
+                    self.viewLoading.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                }
             }
         }
     }
@@ -132,47 +380,48 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
             vc.listFilesInFolder(path: escapedSubpath)
             
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         else {
-            print("We can download it")
-            // Download to URL
-            /*
-            if let file = file as? Files.FileMetadata {
-                let escapedSubpath = self.encodeFolderPath(file.name, currentPath: self.currentPath)
-                print("Selected path: \(escapedSubpath)")
-                
-                do {
-                    if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
-                        
-                        let destinationURL = directoryURL.appendingPathComponent(file.name)
-                        if FileManager.default.fileExists(atPath: destinationURL.path) {
-                            tableView.deselectRow(at: indexPath, animated: true)
-                            return
-                        }
-                        
-                        let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
-                            return destinationURL
-                        }
-                        client?.files.download(path: escapedSubpath, overwrite: true, destination: destination)
-                            .response { response, error in
-                                if let response = response {
-                                    print(response)
-                                    
-                                    CoreDataManager.shared.saveVideo(videoURL: destinationURL.lastPathComponent)
-                                    print("Video copied to document directory: \(destinationURL)")
-                                    
-                                } else if let error = error {
-                                    print(error)
-                                }
-                            }
-                            .progress { progressData in
-                                print(progressData)
-                            }
-                    }
-                }
-            }*/
+            //print("We can download it")
+            if isEditingMode {
+                selectedItems.append(indexPath)
+                selectedFiles.append(self.files[indexPath.row])
+            } else {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            updateSelectAllButtonTitle()
+            printSelectedItems()
+            updateToolbarPosition()
+            updateDownloadButtonTitle()
         }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if isEditingMode {
+            if let index = selectedItems.firstIndex(of: indexPath) {
+                selectedItems.remove(at: index)
+               selectedFiles.remove(at: index)
+            }
+        }
+        updateSelectAllButtonTitle()
+        printSelectedItems()
+        updateToolbarPosition()
+        updateDownloadButtonTitle()
+    }
+    
+    // MARK: - Editing and Multiple Selection Interaction
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        // You can perform any additional actions when multiple selection interaction starts
     }
 }
