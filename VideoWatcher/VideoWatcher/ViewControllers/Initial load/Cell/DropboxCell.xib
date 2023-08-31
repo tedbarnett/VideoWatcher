@@ -17,13 +17,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="372" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWathcer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-SX-2Dd">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWathcer" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-SX-2Dd">
                         <rect key="frame" x="60" y="10" width="302" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="8Mg-4w-C2C"/>
                         </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5 MB, modified Thu, Aug 24, 2023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyf-6w-aEq">
@@ -31,8 +31,8 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="79j-t9-3df"/>
                         </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folder" translatesAutoresizingMaskIntoConstraints="NO" id="nRH-JF-0e3">
@@ -43,6 +43,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
                     <constraint firstItem="P0I-SX-2Dd" firstAttribute="leading" secondItem="nRH-JF-0e3" secondAttribute="trailing" constant="10" id="3bE-YQ-dKK"/>
                     <constraint firstItem="nRH-JF-0e3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GR8-vA-Pvs"/>
