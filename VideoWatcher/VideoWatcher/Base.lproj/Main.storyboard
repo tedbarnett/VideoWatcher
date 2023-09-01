@@ -857,7 +857,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-dc-Wmt">
-                                <rect key="frame" x="114" y="473.66666666666663" width="165" height="32"/>
+                                <rect key="frame" x="114" y="478.66666666666663" width="165" height="32"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jxp-8w-0qZ">
                                         <rect key="frame" x="97.333333333333343" y="12" width="20" height="20"/>
@@ -891,9 +891,9 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nr-Y0-cPh">
-                                <rect key="frame" x="31.666666666666657" y="314.66666666666669" width="330" height="120"/>
+                                <rect key="frame" x="31.666666666666657" y="309.66666666666669" width="330" height="130"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="366-TZ-nKd"/>
+                                    <constraint firstAttribute="height" constant="130" id="366-TZ-nKd"/>
                                     <constraint firstAttribute="width" constant="330" id="PYt-fw-z0v"/>
                                 </constraints>
                                 <string key="text">Welcome to VideoWatcher! 
@@ -906,7 +906,7 @@ Click the "+" sign above to begin this process.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMm-W7-wRs">
-                                <rect key="frame" x="106.66666666666669" y="469.66666666666663" width="180" height="40"/>
+                                <rect key="frame" x="106.66666666666669" y="474.66666666666663" width="180" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="F4g-b3-5cf"/>
@@ -958,7 +958,7 @@ Click the "+" sign above to begin this process.</string>
                         <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tu8-bo-jmB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tu8-bo-jmB">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

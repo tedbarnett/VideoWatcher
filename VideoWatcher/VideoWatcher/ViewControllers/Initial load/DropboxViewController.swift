@@ -22,6 +22,9 @@ class DropboxViewController: UIViewController {
     var downloadButton: UIBarButtonItem!
     var toolbarHeight: CGFloat = 35
     var currentFileIndex = 0
+    var hasMore = false
+    var cursor: String?
+    private var activityIndicatorView: UIActivityIndicatorView?
     
     @IBOutlet var viewLoading: UIView!
     @IBOutlet weak var activityIndicatorPhotoLib: UIActivityIndicatorView!
@@ -38,15 +41,6 @@ class DropboxViewController: UIViewController {
         self.tblFileList.dataSource = self
         self.tblFileList.register(UINib(nibName: "DropboxCell", bundle: nil), forCellReuseIdentifier: "DropboxCell")
         self.lblNoVideos.text = "Loading..."
-        let logoutButton = UIBarButtonItem(
-            title: "Logout",
-            style: .plain,
-            target: self,
-            action: #selector(logoutButtonTapped)
-        )
-        
-        // Assign the logout button to the right bar button item
-        //navigationItem.rightBarButtonItem = logoutButton
         
         self.tblFileList.allowsMultipleSelectionDuringEditing = true
         self.setupSelectNavigationBarButtons()
@@ -196,6 +190,16 @@ class DropboxViewController: UIViewController {
     func listFilesInFolder(path: String) {
         client?.files.listFolder(path: path).response { response, error in
             if let result = response {
+                print("response: \(String(describing: response))")
+                
+                self.cursor = response?.cursor
+                if let hasMore = response?.hasMore {
+                    self.hasMore = hasMore
+                }
+                else {
+                    self.hasMore = false
+                }
+                
                 self.files = result.entries.filter { entry -> Bool in
                     if let _ = entry as? Files.FolderMetadata {
                         return true
@@ -209,7 +213,25 @@ class DropboxViewController: UIViewController {
                     return false
                 }
                 self.currentPath = path
-                print(self.files)
+                //print(self.files)
+                self.hasMore = result.hasMore
+                
+                self.files.sort { entry1, entry2 in
+                    var name1: String = ""
+                    if let fileMetadata = entry1 as? Files.FolderMetadata {
+                        name1 = fileMetadata.name
+                    } else if let fileMetadata = entry1 as? Files.FileMetadata {
+                        name1 = fileMetadata.name
+                    }
+                    var name2: String = ""
+                    if let fileMetadata = entry2 as? Files.FolderMetadata {
+                        name2 = fileMetadata.name
+                    } else if let fileMetadata = entry2 as? Files.FileMetadata {
+                        name2 = fileMetadata.name
+                    }
+                    return name1.localizedCaseInsensitiveCompare(name2) == ComparisonResult.orderedAscending
+                }
+                
                 if self.files.isEmpty {
                     self.lblNoVideos.text = "There are no videos in this folder."
                     self.tblFileList.isHidden = true
@@ -217,11 +239,83 @@ class DropboxViewController: UIViewController {
                 } else {
                     self.tblFileList.isHidden = false
                     self.lblNoVideos.isHidden = true
-                    self.tblFileList.reloadData()
                 }
+                self.tblFileList.reloadData()
+                
             } else if let error = error {
                 print("Error listing files: \(error)")
                 self.showAlert(title: "Error", message: error.description) { result in}
+            }
+        }
+    }
+    
+    func listFolderContinue() {
+        if let cursor = cursor {
+            
+            if activityIndicatorView == nil {
+                // Create the activity indicator view when needed
+                activityIndicatorView = UIActivityIndicatorView(style: .medium)
+                activityIndicatorView?.frame = CGRect(x: 0, y: 0, width: tblFileList.bounds.width, height: 44)
+                activityIndicatorView?.hidesWhenStopped = true
+                activityIndicatorView?.color = UIColor.white
+                tblFileList.tableFooterView = activityIndicatorView
+            }
+            
+            // Start the activity indicator animation
+            activityIndicatorView?.startAnimating()
+            
+            client?.files.listFolderContinue(cursor: cursor).response { response, error in
+                if let result = response {
+                    print("listFolderContinue response: \(String(describing: response))")
+                    print(result.entries.count)
+                    
+                    self.cursor = response?.cursor
+                    if let hasMore = response?.hasMore {
+                        self.hasMore = hasMore
+                    }
+                    else {
+                        self.hasMore = false
+                    }
+                    
+                    let nextfiles = result.entries.filter { entry -> Bool in
+                        if let _ = entry as? Files.FolderMetadata {
+                            return true
+                        } else if let fileMetadata = entry as? Files.FileMetadata {
+                            if let lowercasedPath = fileMetadata.pathDisplay?.lowercased() as String? {
+                                if lowercasedPath.hasSuffix(".mp4") || lowercasedPath.hasSuffix(".mov") || lowercasedPath.hasSuffix(".m4v") {
+                                    return true
+                                }
+                            }
+                        }
+                        return false
+                    }
+                    
+                    self.files.append(contentsOf: nextfiles)
+                    self.activityIndicatorView?.stopAnimating()
+                    
+                    self.files.sort { entry1, entry2 in
+                        var name1: String = ""
+                        if let fileMetadata = entry1 as? Files.FolderMetadata {
+                            name1 = fileMetadata.name
+                        } else if let fileMetadata = entry1 as? Files.FileMetadata {
+                            name1 = fileMetadata.name
+                        }
+                        var name2: String = ""
+                        if let fileMetadata = entry2 as? Files.FolderMetadata {
+                            name2 = fileMetadata.name
+                        } else if let fileMetadata = entry2 as? Files.FileMetadata {
+                            name2 = fileMetadata.name
+                        }
+                        return name1.localizedCaseInsensitiveCompare(name2) == ComparisonResult.orderedAscending
+                    }
+                    
+                    print("Total files: \(self.files.count)")
+                    self.tblFileList.reloadData()
+                }
+                else if let error = error {
+                    print("Error listing files: \(error)")
+                    self.showAlert(title: "Error", message: error.description) { result in}
+                }
             }
         }
     }
@@ -335,7 +429,8 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        //return 60.0
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -345,7 +440,7 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
         if let folder = file as? Files.FolderMetadata {
             cell.lblName.text = folder.name
             cell.lblDetails.isHidden = true
-            cell.lblNameTop.constant = 18.0
+            cell.lblNameTop.constant = 20.0
             cell.imgView.image = UIImage(named: "folder")
         }
         else {
@@ -411,8 +506,14 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
         updateDownloadButtonTitle()
     }
     
-    // MARK: - Editing and Multiple Selection Interaction
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == files.count - 1 && self.hasMore {
+            self.hasMore = false
+            self.listFolderContinue()
+        }
+    }
     
+    // MARK: - Editing and Multiple Selection Interaction
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
