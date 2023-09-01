@@ -480,9 +480,7 @@ class VideoWatcherViewController: UIViewController {
         vc.delegate = self
         self.present(navController, animated: true)
     }
-    /*
-     I've one video based app that import video from Photo Library. Now I want to import videos from Dropbox in swift. There is an SDK provided by Dropbox called SwiftDropbox. They mentioned in their docs that its have capability to download file. But I have different requirements. I want to show all videos avaialble in Dropbox and download them in local document directory. How to do it in swift 5?
-     */
+    
     func moveToManageVideosVC() {
         self.isScreenVisible = false
         self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
@@ -1091,7 +1089,11 @@ extension VideoWatcherViewController: FavoriteViewControllerDelegate {
 }
 
 extension VideoWatcherViewController: FullscreenVideoViewControllerDelegate {
-    func startAllPanels() {
+    func startAllPanels(index: Int, currentTime: CMTime) {
+        let indexPath = IndexPath(item: index, section: 0)
+        if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+            videoCell.player?.seek(to: currentTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.playAllVideoPlayers(needToReloadCell: true)
         }

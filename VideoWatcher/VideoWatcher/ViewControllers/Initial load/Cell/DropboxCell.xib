@@ -17,11 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="372" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWathcer" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-SX-2Dd">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoWatcher" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0I-SX-2Dd">
                         <rect key="frame" x="60" y="10" width="302" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="8Mg-4w-C2C"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -46,16 +43,18 @@
                 <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
                     <constraint firstItem="P0I-SX-2Dd" firstAttribute="leading" secondItem="nRH-JF-0e3" secondAttribute="trailing" constant="10" id="3bE-YQ-dKK"/>
-                    <constraint firstItem="nRH-JF-0e3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GR8-vA-Pvs"/>
+                    <constraint firstItem="nRH-JF-0e3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="3uR-6X-r7I"/>
                     <constraint firstItem="P0I-SX-2Dd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="GeD-5l-gyI"/>
                     <constraint firstAttribute="trailing" secondItem="P0I-SX-2Dd" secondAttribute="trailing" constant="10" id="GrR-da-jBN"/>
                     <constraint firstItem="nRH-JF-0e3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="HYb-AH-qXv"/>
                     <constraint firstAttribute="trailing" secondItem="Dyf-6w-aEq" secondAttribute="trailing" constant="10" id="TWm-iS-2BD"/>
                     <constraint firstItem="Dyf-6w-aEq" firstAttribute="leading" secondItem="nRH-JF-0e3" secondAttribute="trailing" constant="10" id="fff-Qw-Gdj"/>
+                    <constraint firstAttribute="bottom" secondItem="Dyf-6w-aEq" secondAttribute="bottom" constant="10" id="iLo-Xf-3Sk"/>
                     <constraint firstItem="Dyf-6w-aEq" firstAttribute="top" secondItem="P0I-SX-2Dd" secondAttribute="bottom" id="pNN-l1-TTu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="imgView" destination="nRH-JF-0e3" id="wLt-fk-7mn"/>

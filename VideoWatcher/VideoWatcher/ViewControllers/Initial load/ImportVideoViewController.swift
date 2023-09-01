@@ -49,13 +49,13 @@ class ImportVideoViewController: UIViewController {
             self.lblCenterText.text = "To add new videos for you to review, add videos from your Apple Photo library, or from Google Drive, or Dropbox. Click the \"+\" sign above to start that process."
         }
         else {
-            self.lblCenterText.text = "Welcome to VideoWatcher!\n\nTo start, add videos from any of these sources:\nApple Photos, Google Drive, or Dropbox.\n\nClick the \"+\" sign above to begin this process."
-            /*Welcome to VideoWatcher!
-            
-            To start, add videos from any of these sources:
-            Apple Photos, Google Drive, or Dropbox.
-
-            Click the "+" sign above to begin this process.*/
+            //self.lblCenterText.text = "Welcome to VideoWatcher!\n\nTo start, add videos from any of these sources:\nApple Photos, Google Drive, or Dropbox.\n\nClick the \"+\" sign above to begin this process."
+            let attributedString = NSMutableAttributedString(string: "Welcome to VideoWatcher!\n\nTo start, add videos from any of these sources:\nApple Photos, Google Drive, or Dropbox.\n\nClick the \"+\" sign above to begin this process.")
+            let fontSize: CGFloat = 26 // Adjust the font size as needed
+            let font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+            let range = (attributedString.string as NSString).range(of: "Welcome to VideoWatcher!")
+            attributedString.addAttribute(.font, value: font, range: range)
+            self.lblCenterText.attributedText = attributedString
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(getDropboxVideos), name: Notification.Name("UserLoggedInDropbox"), object: nil)

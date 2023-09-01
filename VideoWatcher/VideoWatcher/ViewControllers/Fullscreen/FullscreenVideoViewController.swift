@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 protocol FullscreenVideoViewControllerDelegate: AnyObject {
-    func startAllPanels()
+    func startAllPanels(index: Int, currentTime: CMTime)
     func setVolumeFor(index: Int)
     func deleteVideo(index: Int)
 }
@@ -123,7 +123,7 @@ class FullscreenVideoViewController: UIViewController {
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
-        self.delegate?.startAllPanels()
+        self.delegate?.startAllPanels(index: self.index, currentTime: self.player?.currentTime() ?? .zero)
         self.isClosedTap = true
         self.dismiss(animated: true)
     }
@@ -336,7 +336,7 @@ extension FullscreenVideoViewController: UIContextMenuInteractionDelegate {
             self.dismiss(animated: true, completion: {
                 self.isClosedTap = true
                 self.delegate?.deleteVideo(index: self.index)
-                self.delegate?.startAllPanels()
+                self.delegate?.startAllPanels(index: self.index, currentTime: .zero)
             })
         }
         
