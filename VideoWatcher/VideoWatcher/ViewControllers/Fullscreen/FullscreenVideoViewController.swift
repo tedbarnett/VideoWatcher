@@ -27,6 +27,8 @@ class FullscreenVideoViewController: UIViewController {
     @IBOutlet weak var btnGoForward30: UIButton!
     @IBOutlet weak var playerProgress: UISlider!
     @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var lblVideoName: UILabel!
+    var currentTime: CMTime = .zero
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -52,6 +54,12 @@ class FullscreenVideoViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.setupNotificationObserversForAppState()
+    }
+    
     func deallocatePlayer() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         if self.player != nil {
@@ -74,7 +82,8 @@ class FullscreenVideoViewController: UIViewController {
         self.applyShadowToButtons(view: closeButton)
         self.applyShadowToButtons(view: btnGoForward30)
         self.applyShadowToButtons(view: btnGoBackward30)
-                
+        self.applyShadowToButtons(view: lblVideoName)
+                        
         var frame = self.viewButtonContainer.frame
         frame.size.width = self.view.frame.size.width
         self.viewButtonContainer.frame = frame
@@ -102,6 +111,7 @@ class FullscreenVideoViewController: UIViewController {
                 self.btnGoBackward30.alpha = 0.0
                 self.btnGoForward30.alpha = 0.0
                 self.playPauseButton.alpha = 0.0
+                self.lblVideoName.alpha = 0.0
             }
         } else {
             // Fade in animation
@@ -113,6 +123,7 @@ class FullscreenVideoViewController: UIViewController {
                 self.btnGoBackward30.alpha = 1.0
                 self.btnGoForward30.alpha = 1.0
                 self.playPauseButton.alpha = 1.0
+                self.lblVideoName.alpha = 1.0
             }
         }
     }
@@ -128,7 +139,7 @@ class FullscreenVideoViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
-    func applyShadowToButtons(view: UIButton) {
+    func applyShadowToButtons(view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 1.0
         view.layer.shadowOpacity = 0.5
@@ -144,8 +155,10 @@ class FullscreenVideoViewController: UIViewController {
             self.player = AVPlayer(url: videoURL)
             self.playerLayer = AVPlayerLayer(player: self.player)
             self.playerLayer?.videoGravity = .resizeAspect
-            self.playerLayer?.frame = self.viewPlayerContainer.bounds
+            self.playerLayer?.frame = UIScreen.main.bounds//self.viewPlayerContainer.bounds
             self.viewPlayerContainer.layer.addSublayer(self.playerLayer!)
+            
+            self.player?.seek(to: self.currentTime, toleranceBefore: .zero, toleranceAfter: .zero)
             
             // Observe playback status to update play/pause button
             self.player?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
@@ -171,6 +184,13 @@ class FullscreenVideoViewController: UIViewController {
 
             let interaction = UIContextMenuInteraction(delegate: self)
             self.viewPlayerContainer.addInteraction(interaction)
+            
+            if let currentItem = self.player?.currentItem,
+               let asset = currentItem.asset as? AVURLAsset {
+                let itemName = asset.url.lastPathComponent
+                print("Currently playing item name: \(itemName)")
+                self.lblVideoName.text = "Panel: \(self.index + 1), \(itemName)"
+            }
         }
     }
     
@@ -306,9 +326,63 @@ class FullscreenVideoViewController: UIViewController {
         return image?.withRenderingMode(.alwaysOriginal)
     }
     
+    //MARK: - Setup Notification Center
+    private func setupNotificationObserversForAppState() {
+        self.deinitNotificationObserversForAppState()
+        
+        // background event
+        NotificationCenter.default.addObserver(self, selector: #selector(stopVideo), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        // foreground event
+        NotificationCenter.default.addObserver(self, selector: #selector(startVideo), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    private func deinitNotificationObserversForAppState() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    @objc fileprivate func stopVideo() {
+        self.player?.pause()
+    }
+    
+    @objc fileprivate func startVideo() {
+        DispatchQueue.main.async {
+            self.player?.play()
+        }
+    }
+    
+    @objc func handleInterruption(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let interruptionTypeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeValue) else {
+            return
+        }
+        
+        switch interruptionType {
+        case .began:
+            // Interruption began, pause AVPlayer playback
+            self.stopVideo()
+        case .ended:
+            // Interruption ended, check if we should resume playback
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let interruptionOptions = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if interruptionOptions.contains(.shouldResume) {
+                    self.startVideo()
+                }
+            }
+        default:
+            break
+        }
+    }
+    
     // MARK: Deinitialization
     deinit {
         player?.removeObserver(self, forKeyPath: "rate")
+        self.deinitNotificationObserversForAppState()
     }
 }
 

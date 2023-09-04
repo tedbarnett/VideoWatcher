@@ -150,13 +150,17 @@ class DropboxViewController: UIViewController {
     
     @objc func selectAllItems() {
         if let selectAllButton = navigationItem.leftBarButtonItem, selectAllButton.title == "Select All" {
-            selectedItems.removeAll()
-            selectedFiles.removeAll()
+            //selectedItems.removeAll()
+            //selectedFiles.removeAll()
+            
             for row in 0..<self.files.count {
                 let indexPath = IndexPath(row: row, section: 0)
-                selectedItems.append(indexPath)
-                selectedFiles.append(self.files[row])
-                tblFileList.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                
+                if let file = self.files[row] as? Files.FileMetadata {
+                    selectedItems.append(indexPath)
+                    selectedFiles.append(file)
+                    tblFileList.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                }
             }
             
             selectAllButton.title = "Deselect All"
@@ -466,6 +470,12 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
         
         let file = self.files[indexPath.row]
         if let folder = file as? Files.FolderMetadata {
+            
+            if self.isEditingMode {
+                tableView.deselectRow(at: indexPath, animated: true)
+                return
+            }
+            
             let escapedSubpath = self.encodeFolderPath(folder.name, currentPath: self.currentPath)
             print("Selected path: \(escapedSubpath)")
             
@@ -479,18 +489,25 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         else {
-            //print("We can download it")
             if isEditingMode {
                 selectedItems.append(indexPath)
                 selectedFiles.append(self.files[indexPath.row])
+                updateButtonAndTitle()
             } else {
-                tableView.deselectRow(at: indexPath, animated: true)
+                self.toggleEditing()
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                self.selectedItems.append(indexPath)
+                self.selectedFiles.append(self.files[indexPath.row])
+                self.updateButtonAndTitle()
             }
-            updateSelectAllButtonTitle()
-            printSelectedItems()
-            updateToolbarPosition()
-            updateDownloadButtonTitle()
         }
+    }
+    
+    func updateButtonAndTitle() {
+        updateSelectAllButtonTitle()
+        printSelectedItems()
+        updateToolbarPosition()
+        updateDownloadButtonTitle()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -500,10 +517,7 @@ extension DropboxViewController: UITableViewDelegate, UITableViewDataSource {
                selectedFiles.remove(at: index)
             }
         }
-        updateSelectAllButtonTitle()
-        printSelectedItems()
-        updateToolbarPosition()
-        updateDownloadButtonTitle()
+        updateButtonAndTitle()
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

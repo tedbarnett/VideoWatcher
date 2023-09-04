@@ -501,10 +501,16 @@ class VideoWatcherViewController: UIViewController {
         navController.modalTransitionStyle = .crossDissolve
         navController.navigationBar.isHidden = true
         
+        let indexPath = IndexPath(item: index, section: 0)
+        if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+            vc.currentTime = videoCell.player?.currentTime() ?? .zero
+        }
+        
         vc.isMuted = self.checkPanelIsMutedOrNot(index: index)
         vc.videoAsset = videoAsset
         vc.delegate = self
         vc.index = index
+        
         self.present(navController, animated: true)
     }
 }
@@ -984,12 +990,16 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     }
     
     @objc fileprivate func stopAllPanelsVideos() {
-        self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        if self.isScreenVisible {
+            self.pauseAllVideoPlayers(selectedIndex: 0, isPauseAll: true)
+        }
     }
     
     @objc fileprivate func startAllPanelsVideos() {
-        DispatchQueue.main.async {
-            self.playAllVideoPlayers(needToReloadCell: true)
+        if self.isScreenVisible {
+            DispatchQueue.main.async {
+                self.playAllVideoPlayers(needToReloadCell: true)
+            }
         }
     }
     

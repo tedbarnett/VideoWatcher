@@ -25,6 +25,7 @@ class DropboxCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
         if selected {
             contentView.backgroundColor = selectedBgColor
         } else {
