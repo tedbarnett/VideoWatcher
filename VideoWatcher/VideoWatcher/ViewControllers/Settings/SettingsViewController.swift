@@ -84,6 +84,13 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
                 activityItems: [url],
                 applicationActivities: nil
             )
+            
+            // Check if the device is iPad
+            if let popoverPresentationController = activityViewController.popoverPresentationController {
+                popoverPresentationController.sourceView = tableView
+                popoverPresentationController.sourceRect = tableView.rectForRow(at: indexPath)
+            }
+            
             present(activityViewController, animated: true, completion: nil)
         }
     }

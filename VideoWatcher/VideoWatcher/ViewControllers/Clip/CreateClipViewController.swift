@@ -114,6 +114,9 @@ class CreateClipViewController: UIViewController {
         ])
 
         trimmer.asset = asset
+        
+        trimmer.selectedRange = CMTimeRange(start: startTime ?? .zero, end: self.asset.duration)
+        
         updatePlayerAsset()
 
         player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: .main) { [weak self] time in
@@ -126,13 +129,9 @@ class CreateClipViewController: UIViewController {
         }
 
         updateLabels()
+        currentTimeLabel.text = leadingTrimLabel.text
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        trimmer.selectedRange = CMTimeRange(start: self.startTime ?? .zero, duration: asset.duration)
-    }
-    
+        
     func setupNavigationBar() {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.isHidden = false
