@@ -951,6 +951,8 @@ Click the "+" sign above to begin this process.</string>
                         <outlet property="activityIndicator" destination="jxp-8w-0qZ" id="h0C-1W-xZX"/>
                         <outlet property="btnPlayVideos" destination="UMm-W7-wRs" id="N7C-Li-GYa"/>
                         <outlet property="lblCenterText" destination="9Nr-Y0-cPh" id="nUH-DF-jIY"/>
+                        <outlet property="lblCenterTextHeight" destination="366-TZ-nKd" id="QYb-ub-axw"/>
+                        <outlet property="lblCenterTextWidth" destination="PYt-fw-z0v" id="6AH-eE-g6e"/>
                         <outlet property="lblLoading" destination="aaL-a1-eTW" id="UgY-VM-xOi"/>
                         <outlet property="progress" destination="dVb-Np-QbE" id="VVb-DA-LEy"/>
                         <outlet property="viewLoading" destination="L8e-dc-Wmt" id="xae-GZ-4Ds"/>

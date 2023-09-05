@@ -132,8 +132,8 @@ class VideoWatcherViewController: UIViewController {
         }
     }*/
     
-    func startNextRandomVideoFrom(index: Int, isRandom: Bool) {
-        if isRandom == false {
+    func startNextRandomVideoFrom(index: Int, isDelete: Bool? = false) {
+        if isDelete == false {
             let currentVideo = self.arrVideoData[index]
             print("currentVideo: ", currentVideo.videoURL ?? "")
             self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
@@ -141,7 +141,7 @@ class VideoWatcherViewController: UIViewController {
         else {
             self.assignOriginalPreviousIndexesToCopy(index: index)
         }
-                
+        
         let videoData = CoreDataManager.shared.getRandomVideos(count: 1)
         if videoData.count > 0 {
             
@@ -160,7 +160,7 @@ class VideoWatcherViewController: UIViewController {
                 }
                 else {
                     print("Find new RandomVideo at index: ", index)
-                    self.startNextRandomVideoFrom(index: index, isRandom: isRandom)
+                    self.startNextRandomVideoFrom(index: index)
                 }
             }
         }
@@ -290,9 +290,9 @@ class VideoWatcherViewController: UIViewController {
         
         if panel == 0 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel1PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel1PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel1PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel1PreviousVideos.append(videoURL)
             AppData.shared.panel1PreviousVideosIndex = AppData.shared.panel1PreviousVideos.count - 1
             AppData.shared.panel1PreviousVideosIndexCopy = AppData.shared.panel1PreviousVideos.count - 1
@@ -300,9 +300,9 @@ class VideoWatcherViewController: UIViewController {
         }
         else if panel == 1 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel2PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel2PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel2PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel2PreviousVideos.append(videoURL)
             AppData.shared.panel2PreviousVideosIndex = AppData.shared.panel2PreviousVideos.count - 1
             AppData.shared.panel2PreviousVideosIndexCopy = AppData.shared.panel2PreviousVideos.count - 1
@@ -310,9 +310,9 @@ class VideoWatcherViewController: UIViewController {
         }
         else if panel == 2 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel3PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel3PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel3PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel3PreviousVideos.append(videoURL)
             AppData.shared.panel3PreviousVideosIndex = AppData.shared.panel3PreviousVideos.count - 1
             AppData.shared.panel3PreviousVideosIndexCopy = AppData.shared.panel3PreviousVideos.count - 1
@@ -320,9 +320,9 @@ class VideoWatcherViewController: UIViewController {
         }
         else if panel == 3 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel4PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel4PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel4PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel4PreviousVideos.append(videoURL)
             AppData.shared.panel4PreviousVideosIndex = AppData.shared.panel4PreviousVideos.count - 1
             AppData.shared.panel4PreviousVideosIndexCopy = AppData.shared.panel4PreviousVideos.count - 1
@@ -330,9 +330,9 @@ class VideoWatcherViewController: UIViewController {
         }
         else if panel == 4 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel5PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel5PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel5PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel5PreviousVideos.append(videoURL)
             AppData.shared.panel5PreviousVideosIndex = AppData.shared.panel5PreviousVideos.count - 1
             AppData.shared.panel5PreviousVideosIndexCopy = AppData.shared.panel5PreviousVideos.count - 1
@@ -340,9 +340,9 @@ class VideoWatcherViewController: UIViewController {
         }
         else if panel == 5 {
             let videoURL = currentVideo.videoURL ?? ""
-            if let existingIndex = AppData.shared.panel6PreviousVideos.firstIndex(of: videoURL) {
+            /*if let existingIndex = AppData.shared.panel6PreviousVideos.firstIndex(of: videoURL) {
                 AppData.shared.panel6PreviousVideos.remove(at: existingIndex)
-            }
+            }*/
             AppData.shared.panel6PreviousVideos.append(videoURL)
             AppData.shared.panel6PreviousVideosIndex = AppData.shared.panel6PreviousVideos.count - 1
             AppData.shared.panel6PreviousVideosIndexCopy = AppData.shared.panel6PreviousVideos.count - 1
@@ -688,7 +688,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             }
             
             let nextVideo = UIAction(title: "Next video", image: UIImage(systemName: "forward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                self.startNextRandomVideoFrom(index: index, isRandom: false)
+                self.startNextRandomVideoFrom(index: index)
             }
             
             let previousVideo = UIAction(title: "Previous video", image: UIImage(systemName: "backward"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
@@ -891,7 +891,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
             // Performing the delete action
             print("deleted video: \(self.arrVideoData[index].videoURL ?? "")")
             CoreDataManager.shared.updateIsDeleted(videoURL: self.arrVideoData[index].videoURL ?? "")
-            self.startNextRandomVideoFrom(index: index, isRandom: true)
+            self.startNextRandomVideoFrom(index: index, isDelete: true)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 let videoData = CoreDataManager.shared.getAllVideos()
@@ -1082,7 +1082,7 @@ extension VideoWatcherViewController: UICollectionViewDelegateFlowLayout {
 
 extension VideoWatcherViewController: VideoWatcherCellDelegate {
     func startNextRandomVideo(index: Int, isRandom: Bool) {
-        self.startNextRandomVideoFrom(index: index, isRandom: isRandom)
+        self.startNextRandomVideoFrom(index: index)
     }
     
     func startPreviousVideo(index: Int) {
@@ -1115,7 +1115,7 @@ extension VideoWatcherViewController: FullscreenVideoViewControllerDelegate {
     
     func deleteVideo(index: Int) {
         CoreDataManager.shared.updateIsDeleted(videoURL: self.arrVideoData[index].videoURL ?? "")
-        self.startNextRandomVideoFrom(index: index, isRandom: true)
+        self.startNextRandomVideoFrom(index: index, isDelete: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let videoData = CoreDataManager.shared.getAllVideos()

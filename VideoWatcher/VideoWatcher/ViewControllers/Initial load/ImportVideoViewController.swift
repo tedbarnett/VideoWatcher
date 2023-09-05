@@ -24,6 +24,8 @@ class ImportVideoViewController: UIViewController {
     @IBOutlet var viewLoading: UIView!
     @IBOutlet weak var btnPlayVideos: UIButton!
     @IBOutlet weak var lblCenterText: UILabel!
+    @IBOutlet weak var lblCenterTextWidth: NSLayoutConstraint!
+    @IBOutlet weak var lblCenterTextHeight: NSLayoutConstraint!
     private var selection = [String: PHPickerResult]()
     private var selectedAssetIdentifiers = [String]()
     private var selectedAssetIdentifierIterator: IndexingIterator<[String]>?
@@ -59,6 +61,11 @@ class ImportVideoViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(getDropboxVideos), name: Notification.Name("UserLoggedInDropbox"), object: nil)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.lblCenterTextHeight.constant = 150
+            self.lblCenterTextWidth.constant = 350
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
