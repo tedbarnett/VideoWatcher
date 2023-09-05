@@ -275,10 +275,19 @@ extension ManageVideosViewController: UITableViewDelegate, UITableViewDataSource
             let vClip = clip as! VideoTable
             clipURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(vClip.videoURL ?? "")
         }
-        if clipURL != nil {
-            // Create an instance of UIActivityViewController
-            let activityViewController = UIActivityViewController(activityItems: [clipURL!], applicationActivities: nil)
-            // Present the UIActivityViewController
+        
+        if let url = clipURL {
+            let activityViewController = UIActivityViewController(
+                activityItems: [url],
+                applicationActivities: nil
+            )
+            
+            // Check if the device is iPad
+            if let popoverPresentationController = activityViewController.popoverPresentationController {
+                popoverPresentationController.sourceView = sender
+                popoverPresentationController.sourceRect = sender.bounds
+            }
+            
             present(activityViewController, animated: true, completion: nil)
         }
     }

@@ -97,7 +97,7 @@ class FullscreenVideoViewController: UIViewController {
         if let thumbImage = createThumbImage(size: thumbSize, color: .white) {
             // Set the custom thumb image
             self.playerProgress.setThumbImage(thumbImage, for: .normal)
-        }
+        }        
     }
     
     @objc func viewButtonTapped() {

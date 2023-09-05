@@ -126,7 +126,7 @@ class DropboxViewController: UIViewController {
     
     //MARK: - Setup multiple selection methods
     func setupSelectNavigationBarButtons() {
-        let editButton = UIBarButtonItem(title: isEditingMode ? "Done" : "Select", style: .plain, target: self, action: #selector(toggleEditing))
+        let editButton = UIBarButtonItem(title: isEditingMode ? "Cancel" : "Select", style: .plain, target: self, action: #selector(toggleEditing))
         navigationItem.rightBarButtonItem = editButton
     }
     
