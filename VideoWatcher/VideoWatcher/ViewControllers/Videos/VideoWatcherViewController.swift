@@ -255,6 +255,10 @@ class VideoWatcherViewController: UIViewController {
             }
         }
         
+        if let videoAssetToReplace = videoAsset {
+            self.arrVideoData[panel] = videoAssetToReplace
+        }
+        
         DispatchQueue.main.async {
             if videoAsset != nil {
                 let indexPath = IndexPath(item: panel, section: 0)
@@ -264,7 +268,7 @@ class VideoWatcherViewController: UIViewController {
             }
         }
     }
-        
+    
     func assignOriginalPreviousIndexesToCopy(index: Int) {
         if index == 0 {
             AppData.shared.panel1PreviousVideosIndexCopy = AppData.shared.panel1PreviousVideosIndex
@@ -538,6 +542,7 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(self.arrVideoData)
         self.moveToFullScreen(videoAsset: self.arrVideoData[indexPath.row], index: indexPath.row)
     }
     

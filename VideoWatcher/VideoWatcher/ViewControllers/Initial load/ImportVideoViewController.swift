@@ -21,6 +21,7 @@ class ImportVideoViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var lblLoading: UILabel!
     @IBOutlet weak var progress: UIProgressView!
+    @IBOutlet weak var viewLoadingContainer: UIView!
     @IBOutlet var viewLoading: UIView!
     @IBOutlet weak var btnPlayVideos: UIButton!
     @IBOutlet weak var lblCenterText: UILabel!
@@ -32,7 +33,11 @@ class ImportVideoViewController: UIViewController {
     private var currentAssetIdentifier: String?
     var totalProgress: Float = 0.0
     var isFromVideoPanel = false
-        
+    @IBOutlet weak var tblVideoList: UITableView!
+    var arrVideos: [VideoTable] = []
+    var player: AVPlayer?
+    var playerViewController: AVPlayerViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +51,10 @@ class ImportVideoViewController: UIViewController {
         self.btnPlayVideos.layer.masksToBounds = true
         self.btnPlayVideos.isHidden = true
         self.setupRightMenuButton()
+        
+        self.tblVideoList.delegate = self
+        self.tblVideoList.dataSource = self
+        self.tblVideoList.register(UINib(nibName: "VideoListCell", bundle: nil), forCellReuseIdentifier: "VideoListCell")
         
         if isFromVideoPanel {
             self.lblCenterText.text = "To add new videos for you to review, add videos from your Apple Photo library, or from Google Drive, or Dropbox. Click the \"+\" sign above to start that process."
@@ -66,6 +75,15 @@ class ImportVideoViewController: UIViewController {
             self.lblCenterTextHeight.constant = 150
             self.lblCenterTextWidth.constant = 350
         }
+        
+        if isFromVideoPanel == true {
+            self.tblVideoList.isHidden = true
+            self.viewLoadingContainer.isHidden = true
+            self.lblCenterText.isHidden = true
+            self.btnPlayVideos.isHidden = true
+            
+            self.getAllVideos()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,6 +96,36 @@ class ImportVideoViewController: UIViewController {
                 self.saveVideosInCoredata()
             }
         }
+    }
+    
+    func getAllVideos() {
+        self.arrVideos.removeAll()
+        self.arrVideos = CoreDataManager.shared.getAllVideos()
+        self.arrVideos.sort { ($0.videoURL ?? "") < ($1.videoURL ?? "") }
+                
+        if self.arrVideos.count > 0 {
+            self.showVideoList()
+            DispatchQueue.main.async {
+                self.tblVideoList.reloadData()
+            }
+        }
+        else {
+            self.hideVideoList()
+        }
+    }
+    
+    func showVideoList() {
+        self.tblVideoList.isHidden = false
+        self.viewLoadingContainer.isHidden = true
+        self.lblCenterText.isHidden = true
+        self.btnPlayVideos.isHidden = true
+    }
+    
+    func hideVideoList() {
+        self.tblVideoList.isHidden = true
+        self.viewLoadingContainer.isHidden = false
+        self.lblCenterText.isHidden = false
+        self.btnPlayVideos.isHidden = false
     }
     
     func moveItemsToImportedVideos() {
@@ -150,7 +198,7 @@ class ImportVideoViewController: UIViewController {
             navigationItem.leftBarButtonItem = closeBarButtonItem
         }
 
-        self.viewLoading.isHidden = true
+        self.viewLoadingContainer.isHidden = true
         
         let btnPlus = UIButton(type: .system)
         btnPlus.tintColor = .white
@@ -231,14 +279,14 @@ class ImportVideoViewController: UIViewController {
     }
     
     func showLoadingView() {
-        self.viewLoading.isHidden = false
+        self.viewLoadingContainer.isHidden = false
     }
     
     func hideLoadingView() {
         self.totalProgress = 0.0
         self.progress.progress = 0.0
         self.activityIndicator.stopAnimating()
-        self.viewLoading.isHidden = true
+        self.viewLoadingContainer.isHidden = true
         if isFromVideoPanel == false {
             self.btnPlayVideos.isHidden = false
         }
@@ -349,6 +397,9 @@ extension ImportVideoViewController: PHPickerViewControllerDelegate {
             self.activityIndicator.stopAnimating()
             //self.btnNext.isEnabled = true
             self.hideLoadingView()
+            if self.isFromVideoPanel == true {
+                self.getAllVideos()
+            }
             //self.gotoImportFromFileVC()
         })
     }
@@ -386,5 +437,109 @@ extension ImportVideoViewController: PHPickerViewControllerDelegate {
         let progress = self.totalProgress / Float(self.selectedAssetIdentifiers.count)
         print("Progress: \(progress)")
         self.progress.progress = progress
+    }
+}
+
+extension ImportVideoViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 57
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.arrVideos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoListCell") as! VideoListCell
+        
+        let video = self.arrVideos[indexPath.row]
+        let thumbURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(video.videoURL ?? "")
+        
+        //cell.imgThumb.kf.setImage(with: thumbURL)
+        let videoName = "\(video.videoURL ?? "")"
+        cell.lblClipName.text = (videoName as NSString).deletingPathExtension
+        
+        cell.imgThumb.image = cell.getVideoThumbnail(url: thumbURL)
+        
+        let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(video.videoURL ?? "")
+        let asset = AVAsset(url: videoURL)
+        let duration = asset.duration
+        let durationTime = CMTimeGetSeconds(duration)
+        let formattedDuration = cell.formatTime(duration: durationTime)
+        cell.lblDuration.text = formattedDuration
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // Swipe-to-delete action
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            self.showDeleteConfirmation(indexPath: indexPath)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    //Delete clip
+    @objc func showDeleteConfirmation(indexPath: IndexPath) {
+        let alertController = UIAlertController(
+            title: "Delete video",
+            message: "Are you sure you want to delete this video?",
+            preferredStyle: .actionSheet
+        )
+        
+        let video = self.arrVideos[indexPath.row]
+        let deleteAction = UIAlertAction(title: "Delete clip", style: .destructive) { _ in
+            // Performing the delete action
+            print("deleted video: \(video.videoURL ?? "")")
+            
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                let destinationURL = directoryURL.appendingPathComponent(video.videoURL ?? "")
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    try? FileManager.default.removeItem(at: destinationURL)
+                    CoreDataManager.shared.deleteVideo(videoURL: video.videoURL ?? "")
+                    self.arrVideos.remove(at: indexPath.row)
+                }
+            }
+            self.tblVideoList.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            // Set the source view for iPad and other devices with popover support
+            popoverController.sourceView = view
+            popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let video = self.arrVideos[indexPath.row]
+        self.moveToFullScreen(videoAsset: video)
+    }
+    
+    func moveToFullScreen(videoAsset: VideoTable) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FullscreenVideoViewController") as! FullscreenVideoViewController
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        navController.navigationBar.isHidden = true
+        
+        vc.currentTime = .zero
+        vc.isMuted = false
+        vc.videoAsset = videoAsset
+        
+        self.present(navController, animated: true)
     }
 }

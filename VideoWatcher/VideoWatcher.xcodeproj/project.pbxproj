@@ -39,6 +39,8 @@
 		5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */; };
 		5F51AF722A89F25300C79409 /* ManageVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51AF702A89F25300C79409 /* ManageVideoCell.swift */; };
 		5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F51AF712A89F25300C79409 /* ManageVideoCell.xib */; };
+		5F63D94C2AF37BCE003212FE /* VideoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F63D94A2AF37BCE003212FE /* VideoListCell.swift */; };
+		5F63D94D2AF37BCE003212FE /* VideoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F63D94B2AF37BCE003212FE /* VideoListCell.xib */; };
 		5F6D477F2A84B86300CC1F82 /* FullscreenVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */; };
 		5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */; };
 		5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */; };
@@ -114,6 +116,8 @@
 		5F51AF6D2A89EBDB00C79409 /* ManageVideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideosViewController.swift; sourceTree = "<group>"; };
 		5F51AF702A89F25300C79409 /* ManageVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVideoCell.swift; sourceTree = "<group>"; };
 		5F51AF712A89F25300C79409 /* ManageVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManageVideoCell.xib; sourceTree = "<group>"; };
+		5F63D94A2AF37BCE003212FE /* VideoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCell.swift; sourceTree = "<group>"; };
+		5F63D94B2AF37BCE003212FE /* VideoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCell.xib; sourceTree = "<group>"; };
 		5F6D477E2A84B86300CC1F82 /* FullscreenVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenVideoViewController.swift; sourceTree = "<group>"; };
 		5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClipViewController.swift; sourceTree = "<group>"; };
 		5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
@@ -267,6 +271,8 @@
 			children = (
 				5F40AC592A97824C00B1C003 /* DropboxCell.swift */,
 				5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */,
+				5F63D94A2AF37BCE003212FE /* VideoListCell.swift */,
+				5F63D94B2AF37BCE003212FE /* VideoListCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -519,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F0AD6A92A78C81B00046C35 /* LaunchScreen.storyboard in Resources */,
+				5F63D94D2AF37BCE003212FE /* VideoListCell.xib in Resources */,
 				5F0AD6A62A78C81B00046C35 /* Assets.xcassets in Resources */,
 				5F0AD6D62A78CAA600046C35 /* VideoWatcherCell.xib in Resources */,
 				5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */,
@@ -586,6 +593,7 @@
 				5FFE5BBB2A8607A400CF095D /* VideoClip+CoreDataClass.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
+				5F63D94C2AF37BCE003212FE /* VideoListCell.swift in Sources */,
 				5FFE5BCF2A865C7E00CF095D /* TextAppleToastView.swift in Sources */,
 				5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */,
 				5F51AF6E2A89EBDB00C79409 /* ManageVideosViewController.swift in Sources */,

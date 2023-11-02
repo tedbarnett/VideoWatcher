@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nnc-ze-vOg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nnc-ze-vOg">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -866,40 +866,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-dc-Wmt">
-                                <rect key="frame" x="114" y="478.66666666666663" width="165" height="32"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jxp-8w-0qZ">
-                                        <rect key="frame" x="97.333333333333343" y="12" width="20" height="20"/>
-                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaL-a1-eTW">
-                                        <rect key="frame" x="0.0" y="13" width="89" height="18"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="18" id="jrH-76-YNO"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                        <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVb-Np-QbE">
-                                        <rect key="frame" x="0.0" y="0.0" width="165" height="4"/>
-                                        <color key="trackTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </progressView>
-                                </subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YLy-ov-ZXH">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="jxp-8w-0qZ" firstAttribute="centerY" secondItem="aaL-a1-eTW" secondAttribute="centerY" id="7e3-JW-j7i"/>
-                                    <constraint firstItem="dVb-Np-QbE" firstAttribute="leading" secondItem="L8e-dc-Wmt" secondAttribute="leading" id="P4M-Ik-C4B"/>
-                                    <constraint firstAttribute="height" constant="32" id="QmT-zL-gbY"/>
-                                    <constraint firstItem="aaL-a1-eTW" firstAttribute="top" secondItem="dVb-Np-QbE" secondAttribute="bottom" constant="9" id="SSu-lB-rmO"/>
-                                    <constraint firstItem="jxp-8w-0qZ" firstAttribute="leading" secondItem="aaL-a1-eTW" secondAttribute="trailing" constant="8.3333333333333144" id="ZhZ-d5-MsR"/>
-                                    <constraint firstItem="aaL-a1-eTW" firstAttribute="leading" secondItem="dVb-Np-QbE" secondAttribute="leading" id="irA-Ml-m7M"/>
-                                    <constraint firstAttribute="trailing" secondItem="dVb-Np-QbE" secondAttribute="trailing" id="kci-eP-7VG"/>
-                                    <constraint firstAttribute="width" constant="165" id="t17-Ce-osS"/>
-                                    <constraint firstItem="dVb-Np-QbE" firstAttribute="top" secondItem="L8e-dc-Wmt" secondAttribute="top" id="vRD-pH-2n4"/>
-                                </constraints>
-                            </view>
+                                <color key="separatorColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nr-Y0-cPh">
                                 <rect key="frame" x="31.666666666666657" y="309.66666666666669" width="330" height="130"/>
                                 <constraints>
@@ -933,6 +905,60 @@ Click the "+" sign above to begin this process.</string>
                                     <action selector="btnPlayVideoAction:" destination="sl9-3m-i4V" eventType="touchUpInside" id="DQX-Fv-SKv"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plG-jI-zTo">
+                                <rect key="frame" x="104" y="458.66666666666663" width="185" height="52"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-dc-Wmt">
+                                        <rect key="frame" x="10" y="10" width="165" height="32"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jxp-8w-0qZ">
+                                                <rect key="frame" x="97.666666666666657" y="12" width="20" height="20"/>
+                                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaL-a1-eTW">
+                                                <rect key="frame" x="0.0" y="13" width="89.333333333333329" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="jrH-76-YNO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVb-Np-QbE">
+                                                <rect key="frame" x="0.0" y="0.0" width="165" height="4"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="165" id="13D-n7-hLM"/>
+                                                </constraints>
+                                                <color key="trackTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </progressView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="jxp-8w-0qZ" firstAttribute="centerY" secondItem="aaL-a1-eTW" secondAttribute="centerY" id="7e3-JW-j7i"/>
+                                            <constraint firstAttribute="height" constant="32" id="QmT-zL-gbY"/>
+                                            <constraint firstItem="aaL-a1-eTW" firstAttribute="top" secondItem="dVb-Np-QbE" secondAttribute="bottom" constant="9" id="SSu-lB-rmO"/>
+                                            <constraint firstItem="jxp-8w-0qZ" firstAttribute="leading" secondItem="aaL-a1-eTW" secondAttribute="trailing" constant="8.3333333333333144" id="ZhZ-d5-MsR"/>
+                                            <constraint firstItem="aaL-a1-eTW" firstAttribute="leading" secondItem="dVb-Np-QbE" secondAttribute="leading" id="irA-Ml-m7M"/>
+                                            <constraint firstItem="dVb-Np-QbE" firstAttribute="centerX" secondItem="L8e-dc-Wmt" secondAttribute="centerX" id="kmz-vA-Ivy"/>
+                                            <constraint firstAttribute="width" constant="165" id="t17-Ce-osS"/>
+                                            <constraint firstItem="dVb-Np-QbE" firstAttribute="top" secondItem="L8e-dc-Wmt" secondAttribute="top" id="vRD-pH-2n4"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="L8e-dc-Wmt" firstAttribute="centerY" secondItem="plG-jI-zTo" secondAttribute="centerY" id="O94-j1-swz"/>
+                                    <constraint firstAttribute="height" constant="52" id="TUu-yq-0ud"/>
+                                    <constraint firstItem="L8e-dc-Wmt" firstAttribute="centerX" secondItem="plG-jI-zTo" secondAttribute="centerX" id="bJ3-Jj-N2L"/>
+                                    <constraint firstAttribute="width" constant="185" id="jOY-lh-Yfs"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I56-SQ-ETO"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -940,9 +966,13 @@ Click the "+" sign above to begin this process.</string>
                             <constraint firstItem="9Nr-Y0-cPh" firstAttribute="centerY" secondItem="R8o-um-bgb" secondAttribute="centerY" id="6TI-Kq-e7j"/>
                             <constraint firstItem="UMm-W7-wRs" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="Dee-Wz-RYO"/>
                             <constraint firstItem="9Nr-Y0-cPh" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="FoX-tu-jCl"/>
-                            <constraint firstItem="L8e-dc-Wmt" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="Jlr-Ux-aFy"/>
+                            <constraint firstItem="YLy-ov-ZXH" firstAttribute="leading" secondItem="I56-SQ-ETO" secondAttribute="leading" id="Gcn-ai-3lq"/>
+                            <constraint firstItem="YLy-ov-ZXH" firstAttribute="top" secondItem="I56-SQ-ETO" secondAttribute="top" id="Knx-Wa-Ffv"/>
+                            <constraint firstAttribute="bottom" secondItem="YLy-ov-ZXH" secondAttribute="bottom" id="NFJ-y2-GdP"/>
                             <constraint firstItem="UMm-W7-wRs" firstAttribute="top" secondItem="9Nr-Y0-cPh" secondAttribute="bottom" constant="35" id="P0U-1i-F4o"/>
-                            <constraint firstItem="L8e-dc-Wmt" firstAttribute="top" secondItem="9Nr-Y0-cPh" secondAttribute="bottom" constant="39" id="Wr6-sm-mLQ"/>
+                            <constraint firstItem="YLy-ov-ZXH" firstAttribute="trailing" secondItem="I56-SQ-ETO" secondAttribute="trailing" id="SAD-3M-49D"/>
+                            <constraint firstItem="plG-jI-zTo" firstAttribute="top" secondItem="9Nr-Y0-cPh" secondAttribute="bottom" constant="19" id="Vx0-8K-BXb"/>
+                            <constraint firstItem="plG-jI-zTo" firstAttribute="centerX" secondItem="R8o-um-bgb" secondAttribute="centerX" id="wga-CG-Lf9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qF6-Ng-G2W"/>
@@ -955,7 +985,9 @@ Click the "+" sign above to begin this process.</string>
                         <outlet property="lblCenterTextWidth" destination="PYt-fw-z0v" id="6AH-eE-g6e"/>
                         <outlet property="lblLoading" destination="aaL-a1-eTW" id="UgY-VM-xOi"/>
                         <outlet property="progress" destination="dVb-Np-QbE" id="VVb-DA-LEy"/>
+                        <outlet property="tblVideoList" destination="YLy-ov-ZXH" id="1q6-62-MVy"/>
                         <outlet property="viewLoading" destination="L8e-dc-Wmt" id="xae-GZ-4Ds"/>
+                        <outlet property="viewLoadingContainer" destination="plG-jI-zTo" id="2sH-by-cto"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Prp-rM-3XY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1077,7 +1109,7 @@ Click the "+" sign above to begin this process.</string>
         <image name="pause.fill" catalog="system" width="117" height="128"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="speaker.slash.fill" catalog="system" width="118" height="128"/>
+        <image name="speaker.slash.fill" catalog="system" width="115" height="128"/>
         <image name="speaker.wave.2.fill" catalog="system" width="128" height="88"/>
         <image name="timeline.selection" catalog="system" width="128" height="67"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
