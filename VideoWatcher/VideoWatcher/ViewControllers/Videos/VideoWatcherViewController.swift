@@ -20,21 +20,11 @@ class VideoWatcherViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupUI()
-        
-        /*let clips = CoreDataManager.shared.getAllClips()
-        for clip in clips {
-            print("clip name: \(clip.clipURL ?? "")")
-            print("clip videos: \(clip.video?.videoURL ?? "")")
-            print("Thumb URL: \(clip.thumbnailURL ?? "")")
-            print("start seconds: \(clip.startSeconds ?? "")")
-        }*/
-        //print(clips)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //self.title = "VideoWatcher"
         self.isScreenVisible = true
     }
     
@@ -47,11 +37,6 @@ class VideoWatcherViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.isScreenVisible = false
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
     }
     
     func setupUI() {
@@ -102,9 +87,6 @@ class VideoWatcherViewController: UIViewController {
     
     func getRandomVideo() {
         self.arrVideoData = CoreDataManager.shared.getRandomVideos(count: 6)
-//        for vdata in self.arrVideoData {
-//            print("V Name: \(vdata.videoURL ?? "") | isFav: \(vdata.isFavorite) | isDeleted: \(vdata.is_Deleted) | clip: \(vdata.clips?.count ?? 0)")
-//        }
         self.collectionViewVideos.reloadData()
     }
     

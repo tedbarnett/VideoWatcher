@@ -112,11 +112,19 @@ class VideoWatcherCell: UICollectionViewCell {
             
             if FileManager.default.fileExists(atPath: videoURL.path) {
                 let playerItem = AVPlayerItem(url: videoURL)
-                self.player?.replaceCurrentItem(with: playerItem)
-                self.player?.play()
-                //self.player?.isMuted = true
                 self.player?.isMuted = isMuted
+                self.player?.replaceCurrentItem(with: playerItem)
                 
+                // Get the duration of the video
+                let videoDuration = CMTimeGetSeconds(playerItem.asset.duration)
+                
+                // Generate a random starting time within the valid range
+                let randomStartTime = videoDuration > 180 ? Double.random(in: 0...videoDuration) : 0
+                
+                // Set the initial time of the AVPlayer
+                self.player?.seek(to: CMTime(seconds: randomStartTime, preferredTimescale: 1))
+                self.player?.play()
+                                
                 if self.player != nil && self.player?.currentItem != nil {
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil) { (_) in
                         self.delegate?.startNextRandomVideo(index: self.index, isRandom: true)
