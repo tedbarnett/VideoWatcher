@@ -2,7 +2,7 @@
 //  VideoTable+CoreDataProperties.swift
 //  VideoWatcher
 //
-//  Created by MyMac on 11/08/23.
+//  Created by MyMac on 07/11/23.
 //
 //
 
@@ -18,9 +18,11 @@ extension VideoTable {
 
     @NSManaged public var is_Deleted: Bool
     @NSManaged public var isFavorite: Bool
-    @NSManaged public var videoURL: String?
     @NSManaged public var thumbnailURL: String?
+    @NSManaged public var videoURL: String?
+    @NSManaged public var isBlank: Bool
     @NSManaged public var clips: NSSet?
+
 }
 
 // MARK: Generated accessors for clips

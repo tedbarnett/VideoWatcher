@@ -44,7 +44,22 @@ class CoreDataManager {
         video.videoURL = videoURL
         video.isFavorite = false
         video.is_Deleted = false
-
+        video.isBlank = false
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving video: \(error)")
+        }
+    }
+    
+    func saveBlankVideo(videoURL: String) {
+        let video = VideoTable(context: context)
+        video.videoURL = videoURL
+        video.isFavorite = false
+        video.is_Deleted = false
+        video.isBlank = true
+        
         do {
             try context.save()
         } catch {
@@ -54,7 +69,7 @@ class CoreDataManager {
     
     func getRandomVideos(count: Int) -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false AND isBlank == false")
         
         do {
             let videos = try context.fetch(fetchRequest)
@@ -75,6 +90,21 @@ class CoreDataManager {
         }
     }
 
+    func getUniqueVideo(existingVideos: [VideoTable]) -> VideoTable? {
+        // Fetch a random video that is not in existingVideos
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false AND isBlank == false AND NOT (self IN %@)", existingVideos)
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let uniqueVideo = try context.fetch(fetchRequest).first
+            return uniqueVideo
+        } catch {
+            print("Error fetching random unique video: \(error)")
+            return nil
+        }
+    }
+    
     func updateIsFavorite(videoURL: String, isFavorite: Bool) {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "videoURL == %@", videoURL)
@@ -133,7 +163,7 @@ class CoreDataManager {
     
     func getAllVideos() -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        //fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        fetchRequest.predicate = NSPredicate(format: "isBlank == false")
         
         do {
             let videos = try context.fetch(fetchRequest)
@@ -144,9 +174,22 @@ class CoreDataManager {
         }
     }
     
+    func getBlankVideo() -> VideoTable? {
+        let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isBlank == true")
+        fetchRequest.fetchLimit = 1
+        do {
+            let videos = try context.fetch(fetchRequest).first
+            return videos
+        } catch {
+            print("Error fetching videos: \(error)")
+            return nil
+        }
+    }
+    
     func getAllVideosExceptDeleted() -> [VideoTable] {
         let fetchRequest: NSFetchRequest<VideoTable> = VideoTable.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false")
+        fetchRequest.predicate = NSPredicate(format: "is_Deleted == false AND isBlank == false")
         
         do {
             let videos = try context.fetch(fetchRequest)

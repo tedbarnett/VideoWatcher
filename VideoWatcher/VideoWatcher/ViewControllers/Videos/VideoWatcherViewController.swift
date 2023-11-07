@@ -87,6 +87,11 @@ class VideoWatcherViewController: UIViewController {
     
     func getRandomVideo() {
         self.arrVideoData = CoreDataManager.shared.getRandomVideos(count: 6)
+        while self.arrVideoData.count < 6 {
+            if let blankVideo = CoreDataManager.shared.getBlankVideo() {
+                self.arrVideoData.append(blankVideo) // Fill remaining spots
+            }
+        }
         self.collectionViewVideos.reloadData()
     }
     
@@ -121,29 +126,53 @@ class VideoWatcherViewController: UIViewController {
             self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
         }
         else {
+            //If video delete then no need to store it to previous list
             self.assignOriginalPreviousIndexesToCopy(index: index)
         }
         
-        let videoData = CoreDataManager.shared.getRandomVideos(count: 1)
-        if videoData.count > 0 {
+        self.findUniqueVideoFor(index: index)
+    }
+    
+    func findUniqueVideoFor(index: Int) {
+        if let uniqueVideo = CoreDataManager.shared.getUniqueVideo(existingVideos: self.arrVideoData) {
             
-            let randomAsset = videoData.first!
+            // Replace the video at index 0 of self.arrVideoData with the unique video
             if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
-                let destinationURL = directoryURL.appendingPathComponent(randomAsset.videoURL ?? "")
+                let destinationURL = directoryURL.appendingPathComponent(uniqueVideo.videoURL ?? "")
                 if FileManager.default.fileExists(atPath: destinationURL.path) {
-                    self.arrVideoData[index] = randomAsset
+                    self.arrVideoData[index] = uniqueVideo
                     DispatchQueue.main.async {
-                        print("Changed RandomVideo at index: ", index)
+                        print("### Changed RandomVideo at index: ", index)
                         let indexPath = IndexPath(item: index, section: 0)
                         if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
-                            videoCell.playVideo(videoAsset: randomAsset, isMuted: self.checkPanelIsMutedOrNot(index: index))
+                            videoCell.playVideo(videoAsset: uniqueVideo, isMuted: self.checkPanelIsMutedOrNot(index: index))
                         }
                     }
                 }
                 else {
-                    print("Find new RandomVideo at index: ", index)
+                    print("### Find new RandomVideo at index: ", index)
                     self.startNextRandomVideoFrom(index: index)
                 }
+            }
+        } else {
+            print("### No Unique video found at index: ", index)
+            let indexPath = IndexPath(item: index, section: 0)
+            if let videoCell = self.collectionViewVideos.cellForItem(at: indexPath) as? VideoWatcherCell {
+                
+                if let blankVideo = CoreDataManager.shared.getBlankVideo() {
+                    self.arrVideoData[index] = blankVideo
+                    videoCell.playVideo(videoAsset: blankVideo, isMuted: self.checkPanelIsMutedOrNot(index: index))
+                }
+            }
+        }
+    }
+    
+    func addVideosToBlankPanelIfAvailable() {
+        // Filter the matched entries
+        let arrayBlankVideo = self.arrVideoData.filter({$0.isBlank == true})
+        for video in arrayBlankVideo {
+            if let index = self.arrVideoData.firstIndex(where: {$0.videoURL == video.videoURL}) {
+                self.findUniqueVideoFor(index: index)
             }
         }
     }
@@ -525,13 +554,19 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(self.arrVideoData)
-        self.moveToFullScreen(videoAsset: self.arrVideoData[indexPath.row], index: indexPath.row)
+        let videoAsset = self.arrVideoData[indexPath.row]
+        if videoAsset.isBlank == false {
+            self.moveToFullScreen(videoAsset: videoAsset, index: indexPath.row)
+        }
+        else {
+            self.moveToAddNewVideoScreen()
+        }
     }
     
     @objc func makeFavourite(sender: UIButton) {
         let index = sender.tag
         let videoAsset = self.arrVideoData[index]
-        if videoAsset.isFavorite == true {
+        if videoAsset.isFavorite == true || videoAsset.isBlank == true {
             return
         }
         
@@ -650,7 +685,10 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     
     @objc func btnSpeakerAction(sender: UIButton) {
         let index = sender.tag
-        self.menuAudioAction(index: index)
+        let videoAsset = self.arrVideoData[index]
+        if videoAsset.isBlank == false {
+            self.menuAudioAction(index: index)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
@@ -662,7 +700,11 @@ extension VideoWatcherViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        self.configureContextMenu(index: indexPath.row)
+        let videoAsset = self.arrVideoData[indexPath.row]
+        if videoAsset.isBlank == false {
+            return self.configureContextMenu(index: indexPath.row)
+        }
+        return nil
     }
     
     //Menu options for panels
@@ -1152,6 +1194,7 @@ extension VideoWatcherViewController: ImportVideoViewControllerDelegate {
     func startAllPanelFromImport() {
         self.isScreenVisible = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.addVideosToBlankPanelIfAvailable()
             self.playAllVideoPlayers(needToReloadCell: true)
         }
     }

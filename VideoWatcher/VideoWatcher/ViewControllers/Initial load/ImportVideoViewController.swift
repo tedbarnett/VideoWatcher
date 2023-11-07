@@ -37,6 +37,7 @@ class ImportVideoViewController: UIViewController {
     var arrVideos: [VideoTable] = []
     var player: AVPlayer?
     var playerViewController: AVPlayerViewController?
+    let fileManager = FileManager.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +94,12 @@ class ImportVideoViewController: UIViewController {
             let videos = CoreDataManager.shared.getRandomVideos(count: 1)
             if videos.count > 0 {
                 self.moveItemsToImportedVideos()
+                self.copyBlankVideoFromBundleToImportedVideos()
+                self.saveVideosInCoredata()
+            }
+            else {
+                self.moveItemsToImportedVideos()
+                self.copyBlankVideoFromBundleToImportedVideos()
                 self.saveVideosInCoredata()
             }
         }
@@ -129,39 +136,102 @@ class ImportVideoViewController: UIViewController {
     }
     
     func moveItemsToImportedVideos() {
-        let fileManager = FileManager.default
-        
+//        do {
+//            // Get the URL for the Document Directory
+//            guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+//                return
+//            }
+//            
+//            // List all items in the Document Directory
+//            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectoryUrl, includingPropertiesForKeys: nil, options: [])
+//            
+//            // Create the "ImportedVideos" folder if it doesn't exist
+//            let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
+//            try fileManager.createDirectory(at: importedVideosDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
+//            
+//            // Move the non-directory items to "ImportedVideos" folder
+//            for itemUrl in directoryContents {
+//                if itemUrl.hasDirectoryPath == false {
+//                    let destinationUrl = importedVideosDirectoryUrl.appendingPathComponent(itemUrl.lastPathComponent)
+//                    do {
+//                        try fileManager.moveItem(at: itemUrl, to: destinationUrl)
+//                        print("Moved \(itemUrl.lastPathComponent) to ImportedVideos")
+//                    }
+//                    catch {
+//                        print("Error: \(error)")
+//                    }
+//                }
+//                else {
+//                    print("Its a Folder: \(itemUrl.lastPathComponent)")
+//                }
+//            }
+//        } catch {
+//            print("Error: \(error)")
+//        }
         do {
-            // Get the URL for the Document Directory
-            guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-            
-            // List all items in the Document Directory
-            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectoryUrl, includingPropertiesForKeys: nil, options: [])
-            
-            // Create the "ImportedVideos" folder if it doesn't exist
-            let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
-            try fileManager.createDirectory(at: importedVideosDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
-            
-            // Move the non-directory items to "ImportedVideos" folder
-            for itemUrl in directoryContents {
-                if itemUrl.hasDirectoryPath == false {
-                    let destinationUrl = importedVideosDirectoryUrl.appendingPathComponent(itemUrl.lastPathComponent)
-                    do {
-                        try fileManager.moveItem(at: itemUrl, to: destinationUrl)
-                        print("Moved \(itemUrl.lastPathComponent) to ImportedVideos")
-                    }
-                    catch {
-                        print("Error: \(error)")
+            if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
+                let directoryContents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [])
+                
+                for itemUrl in directoryContents {
+                    // Get the lowercase path extension
+                    let itemPathExtension = itemUrl.pathExtension.lowercased()
+                    
+                    // Check if the item is a video file based on its file extension
+                    let videoExtensions = ["mp4", "mov", "avi", "flv", "wmv", "mkv"]
+                    if videoExtensions.contains(itemPathExtension) {
+                        if CoreDataManager.shared.isVideoExists(videoURL: itemUrl.lastPathComponent) == false {
+                            print("Saved Item: \(itemUrl.lastPathComponent)")
+                            if itemUrl.lastPathComponent == "Blank.mp4" {
+                                CoreDataManager.shared.saveBlankVideo(videoURL: itemUrl.lastPathComponent)
+                            } else {
+                                CoreDataManager.shared.saveVideo(videoURL: itemUrl.lastPathComponent)
+                            }
+                        } else {
+                            print("Already saved: \(itemUrl.lastPathComponent)")
+                        }
+                    } else {
+                        // This is not a video file
+                        print("Not a video file: \(itemUrl.lastPathComponent)")
                     }
                 }
-                else {
-                    print("Its a Folder: \(itemUrl.lastPathComponent)")
+                let videos = CoreDataManager.shared.getRandomVideos(count: 1)
+                if videos.count > 0 {
+                    self.gotoVideoWatcher()
                 }
             }
         } catch {
             print("Error: \(error)")
+        }
+    }
+    
+    func copyBlankVideoFromBundleToImportedVideos() {
+        // Step 1: Locate the video file in the app's bundle
+        guard let videoURLInBundle = Bundle.main.url(forResource: "Blank", withExtension: "mp4") else {
+            print("Video file not found in the bundle.")
+            return
+        }
+        
+        // Step 2: Get the path to the document directory
+        guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return
+        }
+        let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
+        
+        // Set the destination URL in the document directory
+        let destinationURL = importedVideosDirectoryUrl.appendingPathComponent("Blank.mp4")
+        
+        // Check if the video file already exists at the destination path
+        if !FileManager.default.fileExists(atPath: destinationURL.path) {
+            do {
+                // Step 3: Copy the video file to the document directory
+                try FileManager.default.copyItem(at: videoURLInBundle, to: destinationURL)
+                self.saveVideosInCoredata()
+                print("Video file copied to the document directory.")
+            } catch {
+                print("Error copying video file: \(error)")
+            }
+        } else {
+            print("Video file already exists in the document directory. No need to copy.")
         }
     }
     
@@ -174,20 +244,28 @@ class ImportVideoViewController: UIViewController {
                 for itemUrl in directoryContents {
                     if CoreDataManager.shared.isVideoExists(videoURL: itemUrl.lastPathComponent) == false {
                         print("Saved Item: \(itemUrl.lastPathComponent)")
-                        CoreDataManager.shared.saveVideo(videoURL: itemUrl.lastPathComponent)
+                        if itemUrl.lastPathComponent == "Blank.mp4" {
+                            CoreDataManager.shared.saveBlankVideo(videoURL: itemUrl.lastPathComponent)
+                        }
+                        else {
+                            CoreDataManager.shared.saveVideo(videoURL: itemUrl.lastPathComponent)
+                        }
                     }
                     else {
                         print("Already saved: \(itemUrl.lastPathComponent)")
                     }
                 }
-                self.gotoVideoWatcher()
+                let videos = CoreDataManager.shared.getRandomVideos(count: 1)
+                if videos.count > 0 {
+                    self.gotoVideoWatcher()
+                }
             }
         }
         catch {
             print("Error: \(error)")
         }
     }
-       
+    
     func setupRightMenuButton() {
         if isFromVideoPanel == true {
             let closeButton = UIButton(type: .custom)

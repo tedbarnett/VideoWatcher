@@ -31,8 +31,6 @@
 		5F44B0642A8370BD00381E2D /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44B0632A8370BD00381E2D /* AppData.swift */; };
 		5F4CF3392A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */; };
 		5F4CF33B2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */; };
-		5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */; };
-		5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */; };
 		5F4CF34A2A7D1AE300FDF5B1 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */; };
 		5F4CF34C2A7D33D700FDF5B1 /* ImportVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */; };
 		5F516D292A80B6740033E404 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F516D282A80B6740033E404 /* Extensions.swift */; };
@@ -48,6 +46,9 @@
 		5F8075122A8E1C3200E646A4 /* MyStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */; };
 		5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */; };
 		5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */; };
+		5F955D742AFA125F0011560A /* VideoTable+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F955D722AFA125F0011560A /* VideoTable+CoreDataClass.swift */; };
+		5F955D752AFA125F0011560A /* VideoTable+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F955D732AFA125F0011560A /* VideoTable+CoreDataProperties.swift */; };
+		5F955D7B2AFA66830011560A /* Blank.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5F955D7A2AFA66830011560A /* Blank.mp4 */; };
 		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
 		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
 		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
@@ -108,8 +109,6 @@
 		5F44B0632A8370BD00381E2D /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromPhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFilesViewController.swift; sourceTree = "<group>"; };
-		5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5F4CF34B2A7D33D700FDF5B1 /* ImportVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportVideoViewController.swift; sourceTree = "<group>"; };
 		5F516D282A80B6740033E404 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -125,6 +124,9 @@
 		5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatsViewController.swift; sourceTree = "<group>"; };
 		5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatTableViewCell.swift; sourceTree = "<group>"; };
 		5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyStatTableViewCell.xib; sourceTree = "<group>"; };
+		5F955D722AFA125F0011560A /* VideoTable+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		5F955D732AFA125F0011560A /* VideoTable+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoTable+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		5F955D7A2AFA66830011560A /* Blank.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Blank.mp4; sourceTree = "<group>"; };
 		5F9B81972A825D3900730F1B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteCell.xib; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				5F0AD6A52A78C81B00046C35 /* Assets.xcassets */,
 				5F0AD6A72A78C81B00046C35 /* LaunchScreen.storyboard */,
 				5F0AD6AA2A78C81B00046C35 /* Info.plist */,
+				5F955D7A2AFA66830011560A /* Blank.mp4 */,
 				5F0AD6A22A78C81B00046C35 /* VideoWatcher.xcdatamodeld */,
 			);
 			path = VideoWatcher;
@@ -280,10 +283,10 @@
 		5F4CF33C2A7D157200FDF5B1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				5F955D722AFA125F0011560A /* VideoTable+CoreDataClass.swift */,
+				5F955D732AFA125F0011560A /* VideoTable+CoreDataProperties.swift */,
 				5FFE5BB92A8607A400CF095D /* VideoClip+CoreDataClass.swift */,
 				5FFE5BBA2A8607A400CF095D /* VideoClip+CoreDataProperties.swift */,
-				5F4CF3452A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift */,
-				5F4CF3462A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F955D7B2AFA66830011560A /* Blank.mp4 in Resources */,
 				5F0AD6A92A78C81B00046C35 /* LaunchScreen.storyboard in Resources */,
 				5F63D94D2AF37BCE003212FE /* VideoListCell.xib in Resources */,
 				5F0AD6A62A78C81B00046C35 /* Assets.xcassets in Resources */,
@@ -579,8 +583,6 @@
 				5F516D292A80B6740033E404 /* Extensions.swift in Sources */,
 				5F51AF722A89F25300C79409 /* ManageVideoCell.swift in Sources */,
 				5FFE5BC92A865C6D00CF095D /* ToastView.swift in Sources */,
-				5F4CF3482A7D16C900FDF5B1 /* VideoTable+CoreDataProperties.swift in Sources */,
-				5F4CF3472A7D16C900FDF5B1 /* VideoTable+CoreDataClass.swift in Sources */,
 				5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
 				5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */,
@@ -590,7 +592,9 @@
 				5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */,
 				5FFE5BD02A865C7E00CF095D /* AppleToastView.swift in Sources */,
 				5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */,
+				5F955D742AFA125F0011560A /* VideoTable+CoreDataClass.swift in Sources */,
 				5FFE5BBB2A8607A400CF095D /* VideoClip+CoreDataClass.swift in Sources */,
+				5F955D752AFA125F0011560A /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
 				5F63D94C2AF37BCE003212FE /* VideoListCell.swift in Sources */,

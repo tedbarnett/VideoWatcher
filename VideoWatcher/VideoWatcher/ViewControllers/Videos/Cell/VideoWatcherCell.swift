@@ -21,6 +21,7 @@ class VideoWatcherCell: UICollectionViewCell {
     var playerLayer: AVPlayerLayer?
     var index = Int()
     var lblError: UILabel?
+    var lblAddMore: UILabel?
     var btnFavorite = UIButton()
     var btnSpeaker = UIButton()
     
@@ -59,6 +60,21 @@ class VideoWatcherCell: UICollectionViewCell {
                 self.lblError?.font = .boldSystemFont(ofSize: 12.0)
                 self.lblError?.lineBreakMode = .byTruncatingMiddle
                 self.addSubview(self.lblError!)
+                
+                self.lblAddMore = UILabel(frame: CGRect(x: 10, y: (self.bounds.height / 2) - (20 / 2), width: self.bounds.width - 20, height: 20))
+                self.lblAddMore?.textColor = .darkGray
+                self.lblAddMore?.backgroundColor = .green
+                self.lblAddMore?.text = "Add more videos to review"
+                self.lblAddMore?.layer.shadowColor = UIColor.black.cgColor
+                self.lblAddMore?.layer.shadowRadius = 1.0
+                self.lblAddMore?.layer.shadowOpacity = 0.8
+                self.lblAddMore?.layer.shadowOffset = CGSize(width: 0, height: 0)
+                self.lblAddMore?.layer.masksToBounds = false
+                
+                self.lblAddMore?.textAlignment = .center
+                self.lblAddMore?.font = .boldSystemFont(ofSize: 12.0)
+                self.lblAddMore?.lineBreakMode = .byTruncatingTail
+                self.addSubview(self.lblAddMore!)
                 
                 self.btnFavorite.translatesAutoresizingMaskIntoConstraints = false
                 self.btnFavorite.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -100,6 +116,7 @@ class VideoWatcherCell: UICollectionViewCell {
             }
             else {
                 self.lblError?.frame = CGRect(x: 10, y: self.bounds.height - 23, width: self.bounds.width - 20, height: 13)
+                self.lblAddMore?.frame = CGRect(x: 10, y: (self.bounds.height / 2) - (20 / 2), width: self.bounds.width - 20, height: 20)
             }
             
             self.playerLayer?.frame = self.bounds
@@ -109,6 +126,17 @@ class VideoWatcherCell: UICollectionViewCell {
     func playVideo(videoAsset: VideoTable, startDuration: Double? = 0.0, isMuted: Bool) {
         DispatchQueue.main.async {
             let videoURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos)!.appendingPathComponent(videoAsset.videoURL ?? "")
+            
+            if videoAsset.isBlank == true {
+                self.lblAddMore?.isHidden = false
+                self.btnSpeaker.isHidden = true
+                self.btnFavorite.isHidden = true
+            }
+            else {
+                self.lblAddMore?.isHidden = true
+                self.btnSpeaker.isHidden = false
+                self.btnFavorite.isHidden = false
+            }
             
             if FileManager.default.fileExists(atPath: videoURL.path) {
                 let playerItem = AVPlayerItem(url: videoURL)
