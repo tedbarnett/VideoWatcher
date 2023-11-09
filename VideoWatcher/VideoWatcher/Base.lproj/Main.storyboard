@@ -1098,6 +1098,92 @@ Click the "+" sign above to begin this process.</string>
             </objects>
             <point key="canvasLocation" x="-1985" y="4052"/>
         </scene>
+        <!--Google Drive View Controller-->
+        <scene sceneID="AED-MD-fXE">
+            <objects>
+                <viewController storyboardIdentifier="GoogleDriveViewController" id="e8y-FJ-yLi" customClass="GoogleDriveViewController" customModule="VideoWatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8mD-Au-TlP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="CfJ-hm-xWj">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no videos in this folder." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDl-Hi-c1N">
+                                <rect key="frame" x="70.666666666666686" y="364" width="252" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nDR-mW-gqz"/>
+                        <color key="backgroundColor" red="0.058823529409999999" green="0.058823529409999999" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="CfJ-hm-xWj" firstAttribute="top" secondItem="nDR-mW-gqz" secondAttribute="top" id="2lG-Sx-anr"/>
+                            <constraint firstItem="CfJ-hm-xWj" firstAttribute="leading" secondItem="nDR-mW-gqz" secondAttribute="leading" id="Rkr-pq-B2V"/>
+                            <constraint firstAttribute="bottom" secondItem="CfJ-hm-xWj" secondAttribute="bottom" id="XsO-Ph-TVm"/>
+                            <constraint firstItem="YDl-Hi-c1N" firstAttribute="centerY" secondItem="8mD-Au-TlP" secondAttribute="centerY" id="pJo-lC-K7D"/>
+                            <constraint firstItem="nDR-mW-gqz" firstAttribute="trailing" secondItem="CfJ-hm-xWj" secondAttribute="trailing" id="sBF-0N-aCv"/>
+                            <constraint firstItem="YDl-Hi-c1N" firstAttribute="centerX" secondItem="8mD-Au-TlP" secondAttribute="centerX" id="snT-EH-ANt"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="activityIndicatorPhotoLib" destination="NXs-3h-h5O" id="ItU-2Q-diG"/>
+                        <outlet property="lblNoVideos" destination="YDl-Hi-c1N" id="OVi-XV-o2i"/>
+                        <outlet property="lblVideosImported" destination="Lp0-tG-5a2" id="DjQ-fT-Xac"/>
+                        <outlet property="tblFileList" destination="CfJ-hm-xWj" id="EPi-g7-yZZ"/>
+                        <outlet property="viewLoading" destination="C6Y-ev-X7Y" id="qNa-jr-y9t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u3e-ge-B3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="C6Y-ev-X7Y">
+                    <rect key="frame" x="0.0" y="0.0" width="397" height="164"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59Y-pi-R5h">
+                            <rect key="frame" x="78.666666666666686" y="22.666666666666671" width="240" height="119.00000000000001"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="NXs-3h-h5O">
+                                    <rect key="frame" x="101.33333333333333" y="25" width="36.999999999999986" height="37"/>
+                                    <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </activityIndicatorView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/200 videos imported" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lp0-tG-5a2">
+                                    <rect key="frame" x="35.333333333333329" y="78" width="169" height="19.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                    <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="NXs-3h-h5O" firstAttribute="top" secondItem="59Y-pi-R5h" secondAttribute="top" constant="25" id="E4F-Rx-hHp"/>
+                                <constraint firstAttribute="height" constant="119" id="Gcu-vP-Iby"/>
+                                <constraint firstItem="Lp0-tG-5a2" firstAttribute="centerX" secondItem="59Y-pi-R5h" secondAttribute="centerX" id="NSq-Kh-YTb"/>
+                                <constraint firstAttribute="width" constant="240" id="hZX-rg-Sio"/>
+                                <constraint firstItem="NXs-3h-h5O" firstAttribute="centerX" secondItem="59Y-pi-R5h" secondAttribute="centerX" id="qJt-Lp-sHB"/>
+                                <constraint firstItem="Lp0-tG-5a2" firstAttribute="top" secondItem="NXs-3h-h5O" secondAttribute="bottom" constant="16" id="yo7-3h-OlZ"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="2Q6-7Y-mRB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="59Y-pi-R5h" firstAttribute="centerY" secondItem="C6Y-ev-X7Y" secondAttribute="centerY" id="gk2-VT-8H0"/>
+                        <constraint firstItem="59Y-pi-R5h" firstAttribute="centerX" secondItem="C6Y-ev-X7Y" secondAttribute="centerX" id="jMP-Yn-FLk"/>
+                    </constraints>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="-515" y="5064"/>
+        </scene>
     </scenes>
     <resources>
         <image name="BarnettLabsIconTransparent" width="773" height="447"/>

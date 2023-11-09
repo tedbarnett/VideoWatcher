@@ -10,6 +10,8 @@ import AVFoundation
 import AVKit
 import PhotosUI
 import SwiftyDropbox
+import GoogleSignIn
+import GoogleAPIClientForREST_Drive
 
 protocol ImportVideoViewControllerDelegate: AnyObject {
     func startAllPanelFromImport()
@@ -38,6 +40,7 @@ class ImportVideoViewController: UIViewController {
     var player: AVPlayer?
     var playerViewController: AVPlayerViewController?
     let fileManager = FileManager.default
+    fileprivate var googleAPIs: GoogleDriveAPI?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,44 +139,12 @@ class ImportVideoViewController: UIViewController {
     }
     
     func moveItemsToImportedVideos() {
-//        do {
-//            // Get the URL for the Document Directory
-//            guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//                return
-//            }
-//            
-//            // List all items in the Document Directory
-//            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectoryUrl, includingPropertiesForKeys: nil, options: [])
-//            
-//            // Create the "ImportedVideos" folder if it doesn't exist
-//            let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
-//            try fileManager.createDirectory(at: importedVideosDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
-//            
-//            // Move the non-directory items to "ImportedVideos" folder
-//            for itemUrl in directoryContents {
-//                if itemUrl.hasDirectoryPath == false {
-//                    let destinationUrl = importedVideosDirectoryUrl.appendingPathComponent(itemUrl.lastPathComponent)
-//                    do {
-//                        try fileManager.moveItem(at: itemUrl, to: destinationUrl)
-//                        print("Moved \(itemUrl.lastPathComponent) to ImportedVideos")
-//                    }
-//                    catch {
-//                        print("Error: \(error)")
-//                    }
-//                }
-//                else {
-//                    print("Its a Folder: \(itemUrl.lastPathComponent)")
-//                }
-//            }
-//        } catch {
-//            print("Error: \(error)")
-//        }
         do {
             if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
                 let directoryContents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [])
                 
                 for itemUrl in directoryContents {
-                    // Get the lowercase path extension
+                    //0 Get the lowercase path extension
                     let itemPathExtension = itemUrl.pathExtension.lowercased()
                     
                     // Check if the item is a video file based on its file extension
@@ -291,6 +262,22 @@ class ImportVideoViewController: UIViewController {
         
         let GoogleDrive = UIAction(title: "Google Drive", image: nil) { _ in
             
+            if let authorizer = GIDSignIn.sharedInstance.currentUser?.fetcherAuthorizer {
+                print("Already signed in")
+                self.openGoogleDriveVideoList(sessionFetcherAuthorizer: authorizer)
+            }
+            else {
+                GIDSignIn.sharedInstance.signIn(withPresenting: self, hint: "DONTKNOW", additionalScopes: [kGTLRAuthScopeDrive]) { result, error in
+                    if error == nil {
+                        print(result as Any)
+                        print("Authenticate successfully")
+                        self.openGoogleDriveVideoList(sessionFetcherAuthorizer: (result?.user.fetcherAuthorizer)!)
+                    }
+                    else {
+                        print("Getting error: \(String(describing: error?.localizedDescription))")
+                    }
+                }
+            }
         }
         
         let Dropbox = UIAction(title: "Dropbox", image: nil) { _ in
@@ -323,6 +310,14 @@ class ImportVideoViewController: UIViewController {
             print("Already authorized 2")
             self.openDropboxVideoList()
         }
+    }
+    
+    func openGoogleDriveVideoList(sessionFetcherAuthorizer: GTMFetcherAuthorizationProtocol) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "GoogleDriveViewController") as! GoogleDriveViewController
+        vc.title = "Google Drive"
+        vc.sessionFetcherAuthorizer = sessionFetcherAuthorizer
+        vc.currentPath = GoogleDrive.kGoogleDriveRootFolder
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func openDropboxVideoList() {

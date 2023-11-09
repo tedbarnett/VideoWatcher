@@ -24,6 +24,8 @@
 		5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D55292A8F663100261490 /* SettingsViewController.swift */; };
 		5F3D552D2A8F670E00261490 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */; };
 		5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */; };
+		5F3FF0482AFB95CB0019AB2E /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = 5F3FF0472AFB95CB0019AB2E /* GoogleAPIClientForREST_Drive */; };
+		5F3FF04A2AFBA6640019AB2E /* GoogleDriveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FF0492AFBA6640019AB2E /* GoogleDriveAPI.swift */; };
 		5F40AC572A977E2100B1C003 /* DropboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC562A977E2100B1C003 /* DropboxViewController.swift */; };
 		5F40AC5B2A97824C00B1C003 /* DropboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F40AC592A97824C00B1C003 /* DropboxCell.swift */; };
 		5F40AC5C2A97824C00B1C003 /* DropboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */; };
@@ -43,6 +45,9 @@
 		5F6D47842A84FA1600CC1F82 /* CreateClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */; };
 		5F6D47882A84FAEB00CC1F82 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */; };
 		5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */; };
+		5F7721432AFCA45400D3EA97 /* GoogleDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7721422AFCA45400D3EA97 /* GoogleDriveViewController.swift */; };
+		5F7721462AFCA80700D3EA97 /* GoogleDriveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7721442AFCA80700D3EA97 /* GoogleDriveCell.swift */; };
+		5F7721472AFCA80700D3EA97 /* GoogleDriveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F7721452AFCA80700D3EA97 /* GoogleDriveCell.xib */; };
 		5F8075122A8E1C3200E646A4 /* MyStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */; };
 		5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */; };
 		5F8075162A8E1E4400E646A4 /* MyStatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */; };
@@ -52,6 +57,7 @@
 		5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B81972A825D3900730F1B /* FavoriteViewController.swift */; };
 		5F9B81A02A826B8D00730F1B /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9B819E2A826B8D00730F1B /* FavoriteCell.swift */; };
 		5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9B819F2A826B8D00730F1B /* FavoriteCell.xib */; };
+		5FB734952AFB863400FD5CBE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 5FB734942AFB863400FD5CBE /* GoogleSignIn */; };
 		5FFE5BBB2A8607A400CF095D /* VideoClip+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BB92A8607A400CF095D /* VideoClip+CoreDataClass.swift */; };
 		5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFE5BBA2A8607A400CF095D /* VideoClip+CoreDataProperties.swift */; };
 		5FFE5BBF2A86432000CF095D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5FFE5BBE2A86432000CF095D /* Kingfisher */; };
@@ -103,6 +109,7 @@
 		5F3D55292A8F663100261490 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5F3D552B2A8F670E00261490 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		5F3D552C2A8F670E00261490 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		5F3FF0492AFBA6640019AB2E /* GoogleDriveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveAPI.swift; sourceTree = "<group>"; };
 		5F40AC562A977E2100B1C003 /* DropboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxViewController.swift; sourceTree = "<group>"; };
 		5F40AC592A97824C00B1C003 /* DropboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCell.swift; sourceTree = "<group>"; };
 		5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropboxCell.xib; sourceTree = "<group>"; };
@@ -121,6 +128,9 @@
 		5F6D47832A84FA1600CC1F82 /* CreateClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClipViewController.swift; sourceTree = "<group>"; };
 		5F6D47862A84FAEB00CC1F82 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		5F6D47872A84FAEB00CC1F82 /* VideoTrimmerThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmerThumb.swift; sourceTree = "<group>"; };
+		5F7721422AFCA45400D3EA97 /* GoogleDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveViewController.swift; sourceTree = "<group>"; };
+		5F7721442AFCA80700D3EA97 /* GoogleDriveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveCell.swift; sourceTree = "<group>"; };
+		5F7721452AFCA80700D3EA97 /* GoogleDriveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoogleDriveCell.xib; sourceTree = "<group>"; };
 		5F8075112A8E1C3200E646A4 /* MyStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatsViewController.swift; sourceTree = "<group>"; };
 		5F8075132A8E1E4400E646A4 /* MyStatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatTableViewCell.swift; sourceTree = "<group>"; };
 		5F8075142A8E1E4400E646A4 /* MyStatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyStatTableViewCell.xib; sourceTree = "<group>"; };
@@ -146,8 +156,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F3FF0482AFB95CB0019AB2E /* GoogleAPIClientForREST_Drive in Frameworks */,
 				5FFE5BBF2A86432000CF095D /* Kingfisher in Frameworks */,
 				5F418ACB2A9C7A3600B9017D /* SwiftyDropbox in Frameworks */,
+				5FB734952AFB863400FD5CBE /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +275,7 @@
 				5F4CF3492A7D1AE300FDF5B1 /* CoreDataManager.swift */,
 				5F516D282A80B6740033E404 /* Extensions.swift */,
 				5F44B0632A8370BD00381E2D /* AppData.swift */,
+				5F3FF0492AFBA6640019AB2E /* GoogleDriveAPI.swift */,
 				5F6D47852A84FAC700CC1F82 /* Trimmer */,
 				5FFE5BC02A865C4A00CF095D /* ToastViewSwift */,
 			);
@@ -276,6 +289,8 @@
 				5F40AC5A2A97824C00B1C003 /* DropboxCell.xib */,
 				5F63D94A2AF37BCE003212FE /* VideoListCell.swift */,
 				5F63D94B2AF37BCE003212FE /* VideoListCell.xib */,
+				5F7721442AFCA80700D3EA97 /* GoogleDriveCell.swift */,
+				5F7721452AFCA80700D3EA97 /* GoogleDriveCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -372,6 +387,7 @@
 				5F4CF3382A7CC5AA00FDF5B1 /* ImportFromPhotoLibraryViewController.swift */,
 				5F4CF33A2A7CC8AE00FDF5B1 /* ImportFromFilesViewController.swift */,
 				5F40AC562A977E2100B1C003 /* DropboxViewController.swift */,
+				5F7721422AFCA45400D3EA97 /* GoogleDriveViewController.swift */,
 			);
 			path = "Initial load";
 			sourceTree = "<group>";
@@ -434,6 +450,8 @@
 			packageProductDependencies = (
 				5FFE5BBE2A86432000CF095D /* Kingfisher */,
 				5F418ACA2A9C7A3600B9017D /* SwiftyDropbox */,
+				5FB734942AFB863400FD5CBE /* GoogleSignIn */,
+				5F3FF0472AFB95CB0019AB2E /* GoogleAPIClientForREST_Drive */,
 			);
 			productName = VideoWatcher;
 			productReference = 5F0AD6962A78C81B00046C35 /* VideoWatcher.app */;
@@ -510,6 +528,8 @@
 			packageReferences = (
 				5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
+				5FB734932AFB863400FD5CBE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				5F3FF0462AFB95CB0019AB2E /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
 			);
 			productRefGroup = 5F0AD6972A78C81B00046C35 /* Products */;
 			projectDirPath = "";
@@ -538,6 +558,7 @@
 				5F51AF732A89F25300C79409 /* ManageVideoCell.xib in Resources */,
 				5F3D552E2A8F670E00261490 /* SettingsTableViewCell.xib in Resources */,
 				5F9B81A12A826B8D00730F1B /* FavoriteCell.xib in Resources */,
+				5F7721472AFCA80700D3EA97 /* GoogleDriveCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +590,7 @@
 				5F3A09492A7A2D7F0002C5F0 /* Utility.swift in Sources */,
 				5F40AC572A977E2100B1C003 /* DropboxViewController.swift in Sources */,
 				5FFE5BC72A865C5F00CF095D /* ToastDelegate.swift in Sources */,
+				5F7721432AFCA45400D3EA97 /* GoogleDriveViewController.swift in Sources */,
 				5F6D47892A84FAEB00CC1F82 /* VideoTrimmerThumb.swift in Sources */,
 				5F0AD6D52A78CAA600046C35 /* VideoWatcherCell.swift in Sources */,
 				5F3A094B2A7A2DE50002C5F0 /* Constant.swift in Sources */,
@@ -586,6 +608,7 @@
 				5F8075152A8E1E4400E646A4 /* MyStatTableViewCell.swift in Sources */,
 				5F0AD6A42A78C81B00046C35 /* VideoWatcher.xcdatamodeld in Sources */,
 				5F3D552A2A8F663100261490 /* SettingsViewController.swift in Sources */,
+				5F3FF04A2AFBA6640019AB2E /* GoogleDriveAPI.swift in Sources */,
 				5FFE5BCE2A865C7E00CF095D /* IconAppleToastView.swift in Sources */,
 				5F44B0642A8370BD00381E2D /* AppData.swift in Sources */,
 				5F40AC5B2A97824C00B1C003 /* DropboxCell.swift in Sources */,
@@ -597,6 +620,7 @@
 				5F955D752AFA125F0011560A /* VideoTable+CoreDataProperties.swift in Sources */,
 				5F9B81982A825D3900730F1B /* FavoriteViewController.swift in Sources */,
 				5F0AD69C2A78C81B00046C35 /* SceneDelegate.swift in Sources */,
+				5F7721462AFCA80700D3EA97 /* GoogleDriveCell.swift in Sources */,
 				5F63D94C2AF37BCE003212FE /* VideoListCell.swift in Sources */,
 				5FFE5BCF2A865C7E00CF095D /* TextAppleToastView.swift in Sources */,
 				5FFE5BBC2A8607A400CF095D /* VideoClip+CoreDataProperties.swift in Sources */,
@@ -956,12 +980,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5F3FF0462AFB95CB0019AB2E /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/google-api-objectivec-client-for-rest.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 9.0.0;
+			};
+		};
+		5FB734932AFB863400FD5CBE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
 			};
 		};
 		5FFE5BBD2A86432000CF095D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -975,10 +1015,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5F3FF0472AFB95CB0019AB2E /* GoogleAPIClientForREST_Drive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F3FF0462AFB95CB0019AB2E /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
+			productName = GoogleAPIClientForREST_Drive;
+		};
 		5F418ACA2A9C7A3600B9017D /* SwiftyDropbox */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5F418AC92A9C7A3600B9017D /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
 			productName = SwiftyDropbox;
+		};
+		5FB734942AFB863400FD5CBE /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FB734932AFB863400FD5CBE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 		5FFE5BBE2A86432000CF095D /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

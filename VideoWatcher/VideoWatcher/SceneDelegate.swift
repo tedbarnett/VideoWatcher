@@ -8,6 +8,8 @@
 import UIKit
 import SwiftyDropbox
 import SwiftyDropbox
+import GoogleSignIn
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -38,6 +40,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         for context in URLContexts {
             // stop iterating after the first handle-able url
             if DropboxClientsManager.handleRedirectURL(context.url, completion: oauthCompletion) { break }
+        }
+        
+        if let url = URLContexts.first?.url {
+            GIDSignIn.sharedInstance.handle(url)
         }
     }
 

@@ -123,7 +123,9 @@ class VideoWatcherViewController: UIViewController {
         if isDelete == false {
             let currentVideo = self.arrVideoData[index]
             print("currentVideo: ", currentVideo.videoURL ?? "")
-            self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
+            if currentVideo.isBlank == false {
+                self.appendVideoInPreviousList(panel: index, currentVideo: currentVideo)
+            }
         }
         else {
             //If video delete then no need to store it to previous list

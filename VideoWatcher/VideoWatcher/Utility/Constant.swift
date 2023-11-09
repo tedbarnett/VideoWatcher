@@ -18,3 +18,7 @@ struct DropBox {
     static let AppSecret = "wddlknspl51enqh"
     static let kDropboxRootFolder = ""
 }
+
+struct GoogleDrive {
+    static let kGoogleDriveRootFolder = "root"
+}
