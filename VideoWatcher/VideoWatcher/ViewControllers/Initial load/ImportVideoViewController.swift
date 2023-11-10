@@ -139,6 +139,50 @@ class ImportVideoViewController: UIViewController {
     }
     
     func moveItemsToImportedVideos() {
+        let fileManager = FileManager.default
+        
+        do {
+            // Get the URL for the Document Directory
+            guard let documentDirectoryUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+            
+            // List all items in the Document Directory
+            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectoryUrl, includingPropertiesForKeys: nil, options: [])
+            
+            // Create the "ImportedVideos" folder if it doesn't exist
+            let importedVideosDirectoryUrl = documentDirectoryUrl.appendingPathComponent(DirectoryName.ImportedVideos)
+            try fileManager.createDirectory(at: importedVideosDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
+            
+            // Move the non-directory items to "ImportedVideos" folder
+            for itemUrl in directoryContents {
+                
+                let itemPathExtension = itemUrl.pathExtension.lowercased()
+                
+                // Check if the item is a video file based on its file extension
+                let videoExtensions = ["mp4", "mov", "avi", "flv", "wmv", "mkv", "m4v"]
+                if videoExtensions.contains(itemPathExtension) {
+                    if itemUrl.hasDirectoryPath == false {
+                        let destinationUrl = importedVideosDirectoryUrl.appendingPathComponent(itemUrl.lastPathComponent)
+                        do {
+                            try fileManager.moveItem(at: itemUrl, to: destinationUrl)
+                            print("Moved \(itemUrl.lastPathComponent) to ImportedVideos")
+                        }
+                        catch {
+                            print("Error: \(error)")
+                        }
+                    }
+                    else {
+                        print("Its a Folder: \(itemUrl.lastPathComponent)")
+                    }
+                }
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
+    func moveItemsToImportedVideos1() {
         do {
             if let directoryURL = Utility.getDirectoryPath(folderName: DirectoryName.ImportedVideos) {
                 let directoryContents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [])
